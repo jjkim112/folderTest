@@ -18,7 +18,7 @@ const references = [
 export default function HoldemPubBase() {
   const [activeHeaderTab, setActiveHeaderTab] = useState(0);
   return (
-    <div className="p-10 text-white whitespace-pre-wrap">
+    <div className="p-3 text-white whitespace-pre-wrap">
       <div className="container">
         <h2 className="text-2xl">홀덤 펍 갈때 고민일때 이 것만은 알고 가자</h2>
         {abilitys.map((ability) => (

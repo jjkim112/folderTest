@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { SidebarContext } from 'src/contexts/SidebarContext';
 
 import {
@@ -12,10 +12,14 @@ import {
   lighten,
   darken,
   Tooltip,
+  SwipeableDrawer,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
 } from '@mui/material';
-
 import SidebarMenu from './SidebarMenu';
-import Logo from 'src/components/LogoSign';
 
 const SidebarWrapper = styled(Box)(
   ({ theme }) => `
@@ -31,7 +35,6 @@ const SidebarWrapper = styled(Box)(
 
 function Sidebar() {
   const { sidebarToggle, toggleSidebar } = useContext(SidebarContext);
-  const closeSidebar = () => toggleSidebar();
   const theme = useTheme();
 
   return (
@@ -64,7 +67,7 @@ function Sidebar() {
         }}
         anchor={theme.direction === 'rtl' ? 'right' : 'left'}
         open={sidebarToggle}
-        onClose={closeSidebar}
+        onClose={toggleSidebar}
         variant="temporary"
         elevation={9}
       >
@@ -80,9 +83,7 @@ function Sidebar() {
               sx={{
                 width: 52,
               }}
-            >
-              <Logo />
-            </Box>
+            ></Box>
           </Box>
           <Divider
             sx={{
