@@ -1,14 +1,14 @@
 import { useNavigate } from 'react-router-dom';
 import { HeaderTap } from '../../utils/header/header_tap';
 import { useState } from 'react';
-import PreFlopRangePage from '../pre_flop_range/PreFlopRangePage';
-import HandRankPage from '../hand_rank/HandRankPage';
 import HandRankings from './poker_hand_rankings/HandRankings';
 import HoldemPubBase from './holdem_pub_base/HoldemPubBase';
 import HoldemTermsBase from './terms_base/HoldemTermsBase';
 import HoldemPubBetRule from './holdem_pub_bet_rule/HoldemPubBetRule';
 import HoldemPubCardRule from './holdem_pub_card_rule/HoldemPubCardRule';
 import HoldemVisionAbility from './holdem_vision_ability/HoldemVisionAbility';
+import HandRankPage from 'src/page/hand_rank/HandRankPage';
+import PreFlopRangePage from 'src/page/pre_flop_range/PreFlopRangePage';
 type Section = {
   label: string;
 };

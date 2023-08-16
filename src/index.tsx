@@ -3,18 +3,11 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom';
-import HomePage from './page/home/HomePage';
-import QuotePage from './page/quote/QuotePage';
-import PokerCalPage from './page/poker_cal/PokerCalPage';
-import NotFound from './page/404';
-import { Header } from './page/Header';
-import HoldemBase from './page/holdem_base/holdem_base';
-import { HoldemPubPage } from './page/holdem_pub/HoldemPubPage';
 import { Provider } from 'react-redux';
 import { store } from './store/store';
 import firebase from 'firebase/compat/app';
-import HoldemPubOnePage from './page/holdem_pub/pub_page/HoldemPubOnePage';
-
+import { SidebarProvider } from './contexts/SidebarContext';
+import App from './App';
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
@@ -31,29 +24,13 @@ firebase.initializeApp(firebaseConfig);
 
 root.render(
   <React.StrictMode>
-    <div>
-      <div className="mx-auto bg-[rgb(30,41,59)]/[0.8] ">
-        <Provider store={store}>
-          <BrowserRouter>
-            <Header></Header>
-            <Routes>
-              <Route path="/" element={<HomePage />}></Route>
-              {/* <Route path="/hand-range" element={<HandRankPage />}></Route>
-        <Route path="/pre-flop-range" element={<PreFlopRangePage />}></Route> */}
-              <Route path="/holdem-base" element={<HoldemBase />}></Route>
-              <Route path="/quote" element={<QuotePage />}></Route>
-              <Route path="/poker-cal" element={<PokerCalPage />}></Route>
-              <Route path="/holdem-pub" element={<HoldemPubPage />}></Route>
-              <Route
-                path="/holdem-pub/detail/:id"
-                element={<HoldemPubOnePage />}
-              ></Route>
-              <Route path="*" element={<NotFound />}></Route>
-            </Routes>
-          </BrowserRouter>
-        </Provider>
-      </div>
-    </div>
+    <Provider store={store}>
+      <SidebarProvider>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </SidebarProvider>
+    </Provider>
   </React.StrictMode>
 );
 

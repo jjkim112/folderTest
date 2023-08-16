@@ -1,12 +1,11 @@
 import { useNavigate } from 'react-router-dom';
-import PokerCalPage from '../poker_cal/PokerCalPage';
-import QuotePage from '../quote/QuotePage';
 import { Game } from '../../domain/Game.model';
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/firestore';
 import { User } from '../../domain/User.model';
 import { UserGame } from '../../domain/UserGame.model';
 import { UserGameData } from '../../domain/UserGameData.model';
+import QuotePage from 'src/page/quote/QuotePage';
 
 function HomePage() {
   return (

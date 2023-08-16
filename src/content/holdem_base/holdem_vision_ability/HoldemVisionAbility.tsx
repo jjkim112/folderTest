@@ -83,7 +83,7 @@ function HoldemVisionAbility() {
           <h1 className="ability-title">1. 플러시 드로우(뽀쁠) 확률</h1>
 
           {flushDraw.map((v, i) => (
-            <div>
+            <div key={i}>
               <img src={v.image} alt="table1" />
               <div className="content">
                 <p>확률 : {v.percentage}</p>
@@ -102,7 +102,7 @@ function HoldemVisionAbility() {
           </h1>
 
           {straight.map((v, i) => (
-            <div>
+            <div key={i}>
               <img src={v.image} alt="table1" />
               <div className="content">
                 <p>확률 : {v.percentage}</p>
@@ -119,7 +119,7 @@ function HoldemVisionAbility() {
           <h1 className="ability-title">3. 뽀쁠에 양차</h1>
 
           {flushStraightDarw.map((v, i) => (
-            <div>
+            <div key={i}>
               <img src={v.image} alt="table1" />
               <div className="content">
                 <p>확률 : {v.percentage}</p>
@@ -138,7 +138,7 @@ function HoldemVisionAbility() {
           </h1>
 
           {thingShot.map((v, i) => (
-            <div>
+            <div key={i}>
               <img src={v.image} alt="table1" />
               <div className="content">
                 <p>확률 : {v.percentage}</p>

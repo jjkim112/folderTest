@@ -1,56 +1,16 @@
-import { useEffect, useState } from "react";
-import Slick from "../../utils/slider/Slick";
-import "./holdemPub.css";
-import { redirect } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
-import { Pub } from "../../domain/Pub.model";
-import { AppDispatch, RootState } from "../../store/store";
-import { useDispatch, useSelector } from "react-redux";
-import { DataService } from "../../data/DataService";
-import { refreshWholePub } from "../../reducer/pubSlice";
-import { refreshGames } from "../../reducer/gameSlice";
-import HoldemPubOnePage from "./pub_page/HoldemPubOnePage";
-import { setUsers } from "../../reducer/userSlice";
+import { useEffect, useState } from 'react';
+import Slick from '../../utils/slider/Slick';
+import './holdemPub.css';
+import { useNavigate } from 'react-router-dom';
+import { Pub } from '../../domain/Pub.model';
+import { AppDispatch, RootState } from '../../store/store';
+import { useDispatch, useSelector } from 'react-redux';
+import { DataService } from '../../data/DataService';
+import { refreshWholePub } from '../../reducer/pubSlice';
+import { setUsers } from '../../reducer/userSlice';
 
-const pubList = [
-  {
-    imgUrl: "/assets/images/wp_title.gif",
-    pubName: "슈에뜨 펍",
-    place: "제주",
-    popularityType: "인기좋음",
-    starRating: 5.0,
-    content: "djsakljdaklsjdlsajdjlksajdlajsldjlsajdasdasdasdasdsa",
-  },
-  {
-    imgUrl: "/assets/images/background.png",
-    pubName: "럭키 라운지펍",
-    place: "제주",
-    popularityType: "신규",
-    starRating: 4.0,
-    content: "djsakljdaklsjdlsajdjlksajdlajsldjlsajdasdasdasdasdsa",
-  },
-  {
-    imgUrl: "/assets/images/background.png",
-    pubName: "럭키 스튜디오",
-    place: "제주",
-    popularityType: "best2",
-    starRating: 3.2,
-    content: "djsakljdaklsjdlsajdjlksajdlajsldjlsajdasdasdasdasdsa",
-  },
-  {
-    imgUrl: "/assets/images/background.png",
-    pubName: "제주",
-    place: "제주",
-    popularityType: null,
-    starRating: 2.2,
-    content: "djsakljdaklsjdlsajdjlksajdlajsldjlsajdasdasdasdasdsa",
-  },
-];
-
-export function HoldemPubPage() {
+export default function HoldemPubPage() {
   const pubsData = useSelector((state: RootState) => state.pub.pubs);
-  const [pickPub, setPickPub] = useState<Pub>();
-  const gamesData = useSelector((state: RootState) => state.game.games);
 
   const dispatch = useDispatch<AppDispatch>();
 
@@ -85,7 +45,7 @@ export function HoldemPubPage() {
                 <div className="">
                   <div className=" h-[300px] overflow-hidden  rounded-tl-md rounded-tr-md ">
                     <img
-                      src={pubData.photos[0] ?? "/assets/images/background.png"}
+                      src={pubData.photos[0] ?? '/assets/images/background.png'}
                       alt={pubData.name}
                       className="w-full h-full object-fill"
                     />
@@ -109,7 +69,7 @@ export function HoldemPubPage() {
                       {true ? (
                         <div className="flex items-center justify-center  w-1/3 ">
                           <div className="w-full text-base font-bold text-gray-800 bg-blue-400 rounded-xl text-center">
-                            {"가장좋음"}
+                            {'가장좋음'}
                           </div>
                         </div>
                       ) : (
@@ -138,7 +98,7 @@ export function HoldemPubPage() {
                     <div className="h-full overflow-hidden rounded-tl-md rounded-bl-md">
                       <img
                         src={
-                          pubData.photos[0] ?? "/assets/images/background.png"
+                          pubData.photos[0] ?? '/assets/images/background.png'
                         }
                         alt={pubData.name}
                         className="w-full h-full object-[100%_100%]"
@@ -182,7 +142,7 @@ export function HoldemPubPage() {
                     <div className="bg-slate-500 h-full rounded-tr-md rounded-br-md p-5">
                       <img
                         src={
-                          pubData.photos[1] ?? "/assets/images/background.png"
+                          pubData.photos[1] ?? '/assets/images/background.png'
                         }
                         alt={pubData.name}
                         className="w-full h-full object-fill"

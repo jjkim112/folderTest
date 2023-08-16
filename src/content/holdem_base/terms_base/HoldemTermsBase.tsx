@@ -860,7 +860,7 @@ export default function HoldemTermsBase() {
               <p className="title">{value.key}</p>
               <div className="list">
                 {value.item.map((v, i) => (
-                  <dl className="item">
+                  <dl key={i} className="item">
                     <dt className="tit">{v.title}</dt>
                     <dd className="con">{v.content}</dd>
                   </dl>
