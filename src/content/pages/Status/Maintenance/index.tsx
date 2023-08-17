@@ -6,7 +6,6 @@ import {
   IconButton,
   Tooltip,
 } from '@mui/material';
-import Logo from 'src/components/LogoSign';
 
 import { styled } from '@mui/material/styles';
 import FacebookIcon from '@mui/icons-material/Facebook';
@@ -30,7 +29,6 @@ function StatusMaintenance() {
     <>
       <MainContent>
         <Container maxWidth="md">
-          <Logo />
           <Box textAlign="center">
             <Container maxWidth="xs">
               <Typography variant="h2" sx={{ mt: 4, mb: 2 }}>

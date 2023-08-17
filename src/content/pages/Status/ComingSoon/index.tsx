@@ -12,7 +12,6 @@ import {
   Button,
   FormHelperText,
 } from '@mui/material';
-import Logo from 'src/components/LogoSign';
 
 import { styled } from '@mui/material/styles';
 import FacebookIcon from '@mui/icons-material/Facebook';
@@ -100,7 +99,6 @@ function StatusComingSoon() {
     <>
       <MainContent>
         <Container maxWidth="md">
-          <Logo />
           <Box textAlign="center" mb={3}>
             <Container maxWidth="xs">
               <Typography variant="h1" sx={{ mt: 4, mb: 2 }}>

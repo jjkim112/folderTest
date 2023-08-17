@@ -10,32 +10,17 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { useNavigate, useParams } from 'react-router-dom';
 import { DataService } from 'src/data/DataService';
-import { GameTemplate } from 'src/domain/GameTemplate.model';
 import { Pub } from 'src/domain/Pub.model';
+import { Weeks, setOnePubData, setWeekPubData } from 'src/reducer/adminPub';
 import { refreshGames } from 'src/reducer/gameSlice';
 import { refreshWithPubId } from 'src/reducer/userSlice';
 import { AppDispatch, RootState } from 'src/store/store';
-
-type Section = {
-  label: string;
-};
-const tabs: Section[] = [
-  {
-    label: '랭킹',
-  },
-  {
-    label: '정보',
-  },
-];
 
 export default function HoldemPubOnePage() {
   const id = useParams().id;
   const [pickPub, setPickPub] = useState<Pub | null>(null);
   const pubsData = useSelector((state: RootState) => state.pub.pubs);
-  const gamesData = useSelector((state: RootState) => state.game.games);
-  const customUsersData = useSelector(
-    (state: RootState) => state.user.customUsers
-  );
+
   const dispatch = useDispatch<AppDispatch>();
   let navigate = useNavigate();
   const [visibility, setVisibility] = useState<boolean[]>(
@@ -58,38 +43,36 @@ export default function HoldemPubOnePage() {
     dispatch(refreshGames(getGameData));
     dispatch(refreshWithPubId(id!));
   };
-  const [activeHeaderTab, setActiveHeaderTab] = useState(0);
 
   useEffect(() => {
     goToPubPage();
   }, []);
 
-  const _getGameTemp = (pubId: string, tempId: string): GameTemplate | null => {
-    for (const onePub of pubsData) {
-      if (onePub.id === pubId) {
-        for (const gt of onePub.templates) {
-          if (gt.id === tempId) {
-            return gt;
-          }
-        }
-        return null;
-      }
-    }
-    return null;
-  };
-
   if (pickPub != null) {
     return (
       <div key={`${pickPub.id}detail`} className=" w-full text-white">
         <div className="p-2">
-          <button
-            className="border-2 bg-blue-700 text-black font-bold p-3 rounded-lg "
-            onClick={() => {
-              navigate(-1);
-            }}
-          >
-            ⬅️ 돌아가기
-          </button>
+          <div>
+            <button
+              className="border-2 bg-blue-700 text-black font-bold p-3 rounded-lg "
+              onClick={() => {
+                navigate(-1);
+              }}
+            >
+              ⬅️ 돌아가기
+            </button>
+            <button
+              className="mx-2 border-2 bg-green-500 text-black font-bold p-3 rounded-lg "
+              onClick={() => {
+                dispatch(setOnePubData(pickPub));
+
+                dispatch(setWeekPubData(pickPub));
+                navigate(`/admin/storeInfo/edit/${id}`);
+              }}
+            >
+              🔄️ 수정하기
+            </button>
+          </div>
           <div className="flex flex-col my-10 ">
             <img
               className=" w-[150px] h-[150px]"

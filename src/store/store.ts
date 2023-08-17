@@ -1,12 +1,14 @@
-import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
-import pubSlice from "../reducer/pubSlice";
-import gameSlice from "../reducer/gameSlice";
-import pokerCalSlice from "../reducer/pokerCalSlice";
-import userSlice from "../reducer/userSlice";
+import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
+import pubSlice from '../reducer/pubSlice';
+import gameSlice from '../reducer/gameSlice';
+import pokerCalSlice from '../reducer/pokerCalSlice';
+import userSlice from '../reducer/userSlice';
+import adminPubSlice from 'src/reducer/adminPub';
 
 export const store = configureStore({
   reducer: {
     pub: pubSlice.reducer,
+    admin: adminPubSlice.reducer,
     game: gameSlice.reducer,
     pokerCal: pokerCalSlice.reducer,
     user: userSlice.reducer,

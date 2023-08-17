@@ -33,8 +33,13 @@ const Crypto = Loader(lazy(() => import('src/content/home')));
 const StoreInfo = Loader(
   lazy(() => import('src/content/admin/storeInformation'))
 );
-const StoreInfoEdit = Loader(
+const StoreInfoDetail = Loader(
   lazy(() => import('src/content/admin/storeInformation/storeEdit'))
+);
+const StoreInfoEdit = Loader(
+  lazy(
+    () => import('src/content/admin/storeInformation/storeEdit/storeEditMain')
+  )
 );
 
 const Status404 = Loader(
@@ -124,6 +129,10 @@ const routes: RouteObject[] = [
       },
       {
         path: 'storeInfo/detail/:id',
+        element: <StoreInfoDetail />,
+      },
+      {
+        path: 'storeInfo/edit/:id',
         element: <StoreInfoEdit />,
       },
       {
