@@ -1,9 +1,10 @@
-import { useDispatch, useSelector } from 'react-redux';
-import { DataService } from 'src/data/DataService';
-import { refreshWholePub } from 'src/reducer/pubSlice';
-import { setUsers } from 'src/reducer/userSlice';
-import { AppDispatch, RootState } from 'src/store/store';
-import { useEffect } from 'react';
+import { useDispatch, useSelector } from "react-redux";
+import { DataService } from "src/data/DataService";
+import { refreshWholePub } from "src/reducer/pubSlice";
+import { setUsers } from "src/reducer/userSlice";
+import { AppDispatch, RootState } from "src/store/store";
+import { useEffect } from "react";
+import { AdminRequireLayout } from "../AdminRequireLayout";
 export default function AddGuest() {
   const pubsData = useSelector((state: RootState) => state.pub.pubs);
 
@@ -20,5 +21,9 @@ export default function AddGuest() {
   useEffect(() => {
     _initFunc();
   }, []);
-  return <div></div>;
+  return (
+    <AdminRequireLayout>
+      <div></div>
+    </AdminRequireLayout>
+  );
 }

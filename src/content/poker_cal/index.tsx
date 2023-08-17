@@ -9,7 +9,9 @@ import { AppDispatch, RootState } from "../../store/store";
 import { useDispatch, useSelector } from "react-redux";
 import {
   OnePlayer,
+  flopCommunityCards,
   refreshPokerCal,
+  resetCommunityCards,
   updateCommunitCards,
   updatePlayerCards,
 } from "../../reducer/pokerCalSlice";
@@ -63,6 +65,9 @@ const PokerCalPage = () => {
       return prev + curr;
     });
   };
+  const remainCards = useSelector(
+    (state: RootState) => state.pokerCal.remainCards
+  );
   const communityCards = useSelector(
     (state: RootState) => state.pokerCal.communityCards
   );
@@ -131,6 +136,12 @@ const PokerCalPage = () => {
       );
     }
   };
+  const _flopFunc = () => {
+    dispatch(flopCommunityCards());
+  };
+  const _resetFlopFunc = () => {
+    dispatch(resetCommunityCards());
+  };
 
   useEffect(() => {
     setTimeout(() => {
@@ -143,6 +154,24 @@ const PokerCalPage = () => {
       <div className="flex flex-col mx-auto">
         <div className="text-center text-4xl my-2">포커 계산기</div>
         <div className="text-center text-2xl my-2">커뮤니티 카드</div>
+        {/* <div className="flex flex-wrap w-40">
+          {remainCards.map((v) => ` (${v}) `)}
+        </div>
+        <div>{communityCards.map((v) => ` [${v}] `)}</div> */}
+        <div className="flex justify-center my-2">
+          <button
+            className="bg-slate-500 mx-1 px-4 border-[1px] border-red-100 rounded-2xl text-yellow-200"
+            onClick={_flopFunc}
+          >
+            카드 깔기
+          </button>
+          <button
+            className="bg-slate-500 mx-1 px-4 border-[1px] border-red-100 rounded-2xl text-yellow-200"
+            onClick={_resetFlopFunc}
+          >
+            리셋 (커뮤니티 카드)
+          </button>
+        </div>
         <CommunityCardPart
           communityCards={communityCards}
           clickFunc={(cardValue: any, cardIndex: any) => {

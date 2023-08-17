@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import basic from "../../utils/basic.json";
 import Card from "../../component/Card";
 import CardSetDialog from "../../component/CardSetDialog";
