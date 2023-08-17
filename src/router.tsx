@@ -30,7 +30,12 @@ const HoldemPubOnePage = Loader(
 
 const Crypto = Loader(lazy(() => import('src/content/home')));
 
-const Messenger = Loader(lazy(() => import('src/content/home')));
+const StoreInfo = Loader(
+  lazy(() => import('src/content/admin/storeInformation'))
+);
+const StoreInfoEdit = Loader(
+  lazy(() => import('src/content/admin/storeInformation/storeEdit'))
+);
 
 const Status404 = Loader(
   lazy(() => import('src/content/pages/Status/Status404'))
@@ -111,11 +116,15 @@ const routes: RouteObject[] = [
     children: [
       {
         path: '',
-        element: <Navigate to="crypto" replace />,
+        element: <Navigate to="storeInfo" replace />,
       },
       {
-        path: 'crypto',
-        element: <Crypto />,
+        path: 'storeInfo',
+        element: <StoreInfo />,
+      },
+      {
+        path: 'storeInfo/detail/:id',
+        element: <StoreInfoEdit />,
       },
       {
         path: 'crypto2',

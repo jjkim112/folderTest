@@ -192,45 +192,6 @@ function SidebarMenu() {
               component="div"
               disableSticky
             >
-              매장(인원) 관리 센터
-            </ListSubheader>
-          }
-        >
-          <SubMenuWrapper>
-            <List component="div">
-              <ListItem component="div">
-                <Button
-                  disableRipple
-                  component={RouterLink}
-                  onClick={closeSidebar}
-                  to="/admin/crypto"
-                  startIcon={<AccountCircleTwoToneIcon />}
-                >
-                  매장 손님 정보 관리
-                </Button>
-              </ListItem>
-              <ListItem component="div">
-                <Button
-                  disableRipple
-                  component={RouterLink}
-                  onClick={closeSidebar}
-                  to="/admin/crypto2"
-                  startIcon={<HowToRegTwoToneIcon />}
-                >
-                  매장 손님 정보 추가/삭제
-                </Button>
-              </ListItem>
-            </List>
-          </SubMenuWrapper>
-        </List>
-        <List
-          component="div"
-          subheader={
-            <ListSubheader
-              style={{ fontSize: '15px' }}
-              component="div"
-              disableSticky
-            >
               매장 정보 관리
             </ListSubheader>
           }
@@ -242,7 +203,7 @@ function SidebarMenu() {
                   disableRipple
                   component={RouterLink}
                   onClick={closeSidebar}
-                  to="/admin/crypto3"
+                  to="/admin/storeInfo"
                   startIcon={<TableChartTwoToneIcon />}
                 >
                   매장 정보 관리
@@ -257,6 +218,45 @@ function SidebarMenu() {
                   startIcon={<BrightnessLowTwoToneIcon />}
                 >
                   매장 정보 추가/삭제
+                </Button>
+              </ListItem>
+            </List>
+          </SubMenuWrapper>
+        </List>
+        <List
+          component="div"
+          subheader={
+            <ListSubheader
+              style={{ fontSize: '15px' }}
+              component="div"
+              disableSticky
+            >
+              매장(인원) 관리 센터
+            </ListSubheader>
+          }
+        >
+          <SubMenuWrapper>
+            <List component="div">
+              <ListItem component="div">
+                <Button
+                  disableRipple
+                  component={RouterLink}
+                  onClick={closeSidebar}
+                  to="/admin/crypto3"
+                  startIcon={<AccountCircleTwoToneIcon />}
+                >
+                  매장 손님 정보 관리
+                </Button>
+              </ListItem>
+              <ListItem component="div">
+                <Button
+                  disableRipple
+                  component={RouterLink}
+                  onClick={closeSidebar}
+                  to="/admin/crypto2"
+                  startIcon={<HowToRegTwoToneIcon />}
+                >
+                  매장 손님 정보 추가/삭제
                 </Button>
               </ListItem>
             </List>

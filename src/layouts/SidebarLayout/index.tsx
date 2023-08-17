@@ -19,7 +19,7 @@ const SidebarLayout: FC<SidebarLayoutProps> = () => {
           flex: 1,
           height: '100%',
 
-          background: theme.palette.mode === 'dark' ? 'black' : 'white',
+          background: '#a9adb5',
           marginBottom: `${theme.spacing(4)}`,
           boxShadow:
             theme.palette.mode === 'dark'
@@ -43,7 +43,7 @@ const SidebarLayout: FC<SidebarLayoutProps> = () => {
             flex: 1,
             pt: '10px',
             [theme.breakpoints.up('lg')]: {
-              ml: `260px`,
+              ml: `290px`,
               pt: `80px`,
             },
           }}

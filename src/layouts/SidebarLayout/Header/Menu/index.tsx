@@ -89,6 +89,17 @@ function HeaderMenu() {
             classes={{ root: 'MuiListItem-indicators' }}
             button
             component={NavLink}
+            to="/admin/storeInfo"
+          >
+            <ListItemText
+              primaryTypographyProps={{ noWrap: true }}
+              primary="매장 정보 관리"
+            />
+          </ListItem>
+          <ListItem
+            classes={{ root: 'MuiListItem-indicators' }}
+            button
+            component={NavLink}
             to="/admin/crypto"
           >
             <ListItemText
@@ -107,17 +118,7 @@ function HeaderMenu() {
               primary="손님 정보 추가/삭제"
             />
           </ListItem>
-          <ListItem
-            classes={{ root: 'MuiListItem-indicators' }}
-            button
-            component={NavLink}
-            to="/admin/crypto3"
-          >
-            <ListItemText
-              primaryTypographyProps={{ noWrap: true }}
-              primary="매장 정보 관리"
-            />
-          </ListItem>
+
           <ListItem
             classes={{ root: 'MuiListItem-indicators' }}
             button
