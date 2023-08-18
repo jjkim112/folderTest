@@ -66,10 +66,10 @@ function Slick({
       dotsClass: 'test-css',
       responsive: [
         {
-          breakpoint: 600, // 화면의 넓이가 600px 이상일 때
+          breakpoint: 1000, // 화면의 넓이가 600px 이상일 때
           settings: {
-            slidesToShow: 1,
-            slidesToScroll: 1,
+            slidesToShow: 3,
+            slidesToScroll: 3,
           },
         },
         {

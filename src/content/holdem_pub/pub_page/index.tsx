@@ -163,7 +163,7 @@ export default function HoldemPubOnePage() {
                           className="text-center text-xs  odd:bg-[#2d394bd1] even:bg-[#303950f7]"
                         >
                           <td className="w-1/4 py-2">{`${(
-                            ranking.totalPrize / 1000
+                            ranking.totalPrize / 10000
                           ).toLocaleString('ko-KR')}만원`}</td>
                           <td className="w-1/4 py-2">{ranking.id}</td>
                           <td className="w-1/4 py-2">
@@ -194,7 +194,13 @@ export default function HoldemPubOnePage() {
                         return (
                           <tr
                             key={game.id}
-                            className={`text-center text-xs   odd:bg-[#2d394bd1] even:bg-[#303950f7] hover:cursor-pointer`}
+                            className={`${
+                              filteredGameData.length !== 0
+                                ? selectedTournamentId === game.id
+                                  ? 'border-2'
+                                  : ''
+                                : ''
+                            } text-center text-xs   odd:bg-[#2d394bd1] even:bg-[#303950f7] hover:cursor-pointer`}
                             onClick={() => {
                               if (selectedTournamentId !== game.id) {
                                 setSelectedTournamentId(game.id);
@@ -239,6 +245,7 @@ export default function HoldemPubOnePage() {
                       <tr className="bg-[#2b3647] text-lg  ">
                         <th className="w-1/4 py-2 ">토너먼트</th>
                         <th className="w-1/4 py-2">등수</th>
+                        <th className="w-1/4 py-2">상금</th>
                         <th className="w-1/4 py-2">닉네임 </th>
                       </tr>
                     </thead>
@@ -257,6 +264,11 @@ export default function HoldemPubOnePage() {
                                 )?.title ?? '존재하지 않음'}
                               </td>
                               <td className="w-1/4 py-2"> {player.rank}</td>
+                              <td className="w-1/4 py-2">
+                                {`${(player.prize / 10000).toLocaleString(
+                                  'ko-KR'
+                                )}만원`}
+                              </td>
 
                               <td className="w-1/4 py-2">{player.id}</td>
                             </tr>

@@ -113,9 +113,9 @@ export default function GuestInfoEditMain() {
                       key={ranking.id}
                       className="text-center text-lg  odd:bg-[#2d394bd1] even:bg-[#303950f7]"
                     >
-                      <td className="w-1/4 py-2">{`${ranking.totalPrize.toLocaleString(
-                        'ko-KR'
-                      )}원`}</td>
+                      <td className="w-1/4 py-2">{`${(
+                        ranking.totalPrize / 10000
+                      ).toLocaleString('ko-KR')}만원`}</td>
                       <td className="w-1/4 py-2">{ranking.id}</td>
                       <td className="w-1/4 py-2">{ranking.howManyFirstRank}</td>
                       <td className="w-1/4 py-2">{ranking.howManyMoneyIn}</td>
@@ -202,7 +202,9 @@ export default function GuestInfoEditMain() {
                               ?.title ?? '존재하지 않음'}
                           </td>
                           <td className="w-1/4 py-2"> {player.rank}</td>
-
+                          <td className="w-1/4 py-2">{`${(
+                            player.prize / 10000
+                          ).toLocaleString('ko-KR')}만원`}</td>
                           <td className="w-1/4 py-2">{player.id}</td>
                         </tr>
                       );
