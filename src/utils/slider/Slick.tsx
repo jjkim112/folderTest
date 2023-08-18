@@ -14,6 +14,7 @@ interface sliderProps {
   autoplay?: boolean | number;
   /** 슬라이더 속도 */
   speed?: number;
+  slidesToShow?: number;
   /** 반복 여부 */
   loop?: boolean;
 }
@@ -22,6 +23,7 @@ function Slick({
   children,
   className,
   autoplay = false,
+  slidesToShow,
   speed = 300,
   loop = true,
 }: sliderProps) {
@@ -57,7 +59,7 @@ function Slick({
       dots: true,
       infinite: loop,
       speed: speed,
-      slidesToShow: 1,
+      slidesToShow: slidesToShow > 2 ? 3 : slidesToShow,
       slidesToScroll: 1,
       nextArrow: <SampleNextArrow />,
       prevArrow: <SamplePrevArrow />,
@@ -66,14 +68,21 @@ function Slick({
       dotsClass: 'test-css',
       responsive: [
         {
-          breakpoint: 1000, // 화면의 넓이가 600px 이상일 때
+          breakpoint: 1024,
           settings: {
-            slidesToShow: 3,
-            slidesToScroll: 3,
+            slidesToShow: slidesToShow > 2 ? 3 : slidesToShow,
+            slidesToScroll: 1,
           },
         },
         {
-          breakpoint: 320, // 화면의 넓이가 320px 이상일 때
+          breakpoint: 600,
+          settings: {
+            slidesToShow: slidesToShow > 2 ? 3 : slidesToShow,
+            slidesToScroll: 1,
+          },
+        },
+        {
+          breakpoint: 480,
           settings: {
             slidesToShow: 1,
             slidesToScroll: 1,

@@ -29,14 +29,14 @@ export default function HoldemPubPage() {
   return (
     <div className="flex flex-col">
       <section className="">
-        <div className="p-12">
+        <div className="p-10">
           <div className="text-2xl font-bold text-white pb-2 ">
             최근 인기 지점
           </div>
-          <Slick>
+          <Slick slidesToShow={pubsData.length}>
             {pubsData.map((pubData, index) => (
               <div
-                className=" flex flex-col justify-center items-center  w-full  "
+                className=" flex flex-col justify-center items-center  w-full  p-2 "
                 key={`${index}${pubData.id}`}
                 onClick={() => {
                   navigate(`/holdem-pub/detail/${pubData.id}`);
