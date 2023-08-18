@@ -1,6 +1,11 @@
-import { Timestamp } from "firebase/firestore";
+import { Timestamp } from 'firebase/firestore';
 
 export class Game {
+  map(
+    arg0: (game: any, i: any) => import('react/jsx-runtime').JSX.Element
+  ): import('react').ReactNode {
+    throw new Error('Method not implemented.');
+  }
   readonly id: string;
   readonly pubId: string;
   readonly gameTempId: string;
@@ -38,17 +43,17 @@ export class Game {
 
   static fromData(data: any): Game {
     try {
-      const id = data["id"];
-      const pubId = data["pubId"];
-      const gameTempId = data["gameTempId"];
-      const entry = data["entry"];
-      const date = (data["date"] as Timestamp).toDate();
-      const players = data["players"];
+      const id = data['id'];
+      const pubId = data['pubId'];
+      const gameTempId = data['gameTempId'];
+      const entry = data['entry'];
+      const date = (data['date'] as Timestamp).toDate();
+      const players = data['players'];
 
       return new Game(id, pubId, gameTempId, entry, date, players);
     } catch (error) {
       console.log(`[GameTemplate Model] fromData e: ${error}`);
-      return new Game("", "", "", 0, new Date(0), []);
+      return new Game('', '', '', 0, new Date(0), []);
     }
   }
 }

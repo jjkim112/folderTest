@@ -242,7 +242,7 @@ function SidebarMenu() {
                   disableRipple
                   component={RouterLink}
                   onClick={closeSidebar}
-                  to="/admin/crypto3"
+                  to="/admin/guestInfo"
                   startIcon={<AccountCircleTwoToneIcon />}
                 >
                   매장 손님 정보 관리

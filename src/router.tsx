@@ -1,12 +1,12 @@
-import { Suspense, lazy } from "react";
-import { Navigate } from "react-router-dom";
-import { RouteObject } from "react-router";
+import { Suspense, lazy } from 'react';
+import { Navigate } from 'react-router-dom';
+import { RouteObject } from 'react-router';
 
-import SidebarLayout from "src/layouts/SidebarLayout";
-import BaseLayout from "src/layouts/BaseLayout";
+import SidebarLayout from 'src/layouts/SidebarLayout';
+import BaseLayout from 'src/layouts/BaseLayout';
 
-import SuspenseLoader from "src/components/SuspenseLoader";
-import AdminPage from "./content/admin";
+import SuspenseLoader from 'src/components/SuspenseLoader';
+import AdminPage from './content/admin';
 
 const Loader = (Component) => (props) =>
   (
@@ -18,135 +18,144 @@ const Loader = (Component) => (props) =>
 //홀덤 페이지
 
 //메인페이지
-const HomePage = Loader(lazy(() => import("src/content/home")));
+const HomePage = Loader(lazy(() => import('src/content/home')));
 
-const HoldemBase = Loader(lazy(() => import("src/content/holdem_base")));
-const PokerCalPage = Loader(lazy(() => import("src/content/poker_cal")));
-const HoldemPubPage = Loader(lazy(() => import("src/content/holdem_pub")));
+const HoldemBase = Loader(lazy(() => import('src/content/holdem_base')));
+const PokerCalPage = Loader(lazy(() => import('src/content/poker_cal')));
+const HoldemPubPage = Loader(lazy(() => import('src/content/holdem_pub')));
 const HoldemPubOnePage = Loader(
-  lazy(() => import("src/content/holdem_pub/pub_page"))
+  lazy(() => import('src/content/holdem_pub/pub_page'))
 );
 
-//관리자
+//관리자 매장
 
-const Crypto = Loader(lazy(() => import("src/content/home")));
+const Crypto = Loader(lazy(() => import('src/content/home')));
 
 const StoreInfo = Loader(
-  lazy(() => import("src/content/admin/storeInformation"))
+  lazy(() => import('src/content/admin/storeInformation'))
 );
 const StoreInfoDetail = Loader(
-  lazy(() => import("src/content/admin/storeInformation/storeEdit"))
+  lazy(() => import('src/content/admin/storeInformation/storeEdit'))
 );
 const StoreInfoEdit = Loader(
   lazy(
-    () => import("src/content/admin/storeInformation/storeEdit/storeEditMain")
+    () => import('src/content/admin/storeInformation/storeEdit/storeEditMain')
   )
 );
 
+//관리자 손님
+
+const GuestInfo = Loader(
+  lazy(() => import('src/content/admin/guestInformation'))
+);
+const GuestInfoDetail = Loader(
+  lazy(() => import('src/content/admin/guestInformation/guestInfoEditMain'))
+);
+
 const Status404 = Loader(
-  lazy(() => import("src/content/pages/Status/Status404"))
+  lazy(() => import('src/content/pages/Status/Status404'))
 );
 const Status500 = Loader(
-  lazy(() => import("src/content/pages/Status/Status500"))
+  lazy(() => import('src/content/pages/Status/Status500'))
 );
 const StatusComingSoon = Loader(
-  lazy(() => import("src/content/pages/Status/ComingSoon"))
+  lazy(() => import('src/content/pages/Status/ComingSoon'))
 );
 const StatusMaintenance = Loader(
-  lazy(() => import("src/content/pages/Status/Maintenance"))
+  lazy(() => import('src/content/pages/Status/Maintenance'))
 );
 
 const routes: RouteObject[] = [
   {
-    path: "",
+    path: '',
     element: <BaseLayout />,
     children: [
       {
-        path: "/",
+        path: '/',
         element: <HomePage />,
       },
       {
-        path: "overview",
+        path: 'overview',
         element: <Navigate to="/" replace />,
       },
       {
-        path: "holdem-base",
+        path: 'holdem-base',
         element: <HoldemBase />,
       },
       {
-        path: "poker-cal",
+        path: 'poker-cal',
         element: <PokerCalPage />,
       },
       {
-        path: "holdem-pub",
+        path: 'holdem-pub',
         element: <HoldemPubPage />,
       },
       {
-        path: "holdem-pub/detail/:id",
+        path: 'holdem-pub/detail/:id',
         element: <HoldemPubOnePage />,
       },
       {
-        path: "status",
+        path: 'status',
         children: [
           {
-            path: "",
+            path: '',
             element: <Navigate to="404" replace />,
           },
           {
-            path: "404",
+            path: '404',
             element: <Status404 />,
           },
           {
-            path: "500",
+            path: '500',
             element: <Status500 />,
           },
           {
-            path: "maintenance",
+            path: 'maintenance',
             element: <StatusMaintenance />,
           },
           {
-            path: "coming-soon",
+            path: 'coming-soon',
             element: <StatusComingSoon />,
           },
         ],
       },
       {
-        path: "*",
+        path: '*',
         element: <Status404 />,
       },
     ],
   },
   {
-    path: "admin",
+    path: 'admin',
     element: <SidebarLayout />,
     children: [
       {
-        path: "",
+        path: '',
         // element: <Navigate to="storeInfo" replace />,
         element: <AdminPage />,
       },
       {
-        path: "storeInfo",
+        path: 'storeInfo',
         element: <StoreInfo />,
       },
       {
-        path: "storeInfo/detail/:id",
+        path: 'storeInfo/detail/:id',
         element: <StoreInfoDetail />,
       },
       {
-        path: "storeInfo/edit/:id",
+        path: 'storeInfo/edit/:id',
         element: <StoreInfoEdit />,
       },
       {
-        path: "crypto2",
-        element: <HoldemBase />,
+        path: 'guestInfo',
+        element: <GuestInfo />,
       },
       {
-        path: "crypto3",
-        element: <PokerCalPage />,
+        path: 'guestInfo/detail/:id',
+        element: <GuestInfoDetail />,
       },
       {
-        path: "crypto4",
+        path: 'crypto4',
         element: <HoldemPubPage />,
       },
     ],

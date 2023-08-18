@@ -111,7 +111,7 @@ function HeaderMenu() {
             classes={{ root: 'MuiListItem-indicators' }}
             button
             component={NavLink}
-            to="/admin/crypto2"
+            to="/admin/guestInfo"
           >
             <ListItemText
               primaryTypographyProps={{ noWrap: true }}

@@ -58,7 +58,24 @@ export default function HoldemPubOnePage() {
     dispatch(refreshWithPubId(id!));
   };
   const [activeHeaderTab, setActiveHeaderTab] = useState(0);
+  const [selectedTournamentId, setSelectedTournamentId] = useState(null);
+  const [count, setCount] = useState(0);
+  const [filteredGameData, setFilteredGameData] = useState([]);
+  useEffect(() => {
+    goToPubPage();
+  }, []);
+  useEffect(() => {
+    // filteredGameData를 갱신
+    if (selectedTournamentId !== null) {
+      const filteredData = gamesData.filter(
+        (game) => game.id === selectedTournamentId
+      );
 
+      setFilteredGameData(filteredData);
+    } else {
+      setFilteredGameData([]);
+    }
+  }, [selectedTournamentId, gamesData]);
   useEffect(() => {
     goToPubPage();
   }, []);
@@ -126,40 +143,130 @@ export default function HoldemPubOnePage() {
         <HeaderTap content={tabs} activeTab={setActiveHeaderTab} />
         <div className="p-2">
           {activeHeaderTab == 0 ? (
-            <div>
-              <div>플레이어 순위</div>
+            <div className="p-2">
               <div>
-                {customUsersData.map((user, i) => {
-                  return (
-                    <div key={i}>
-                      <div className="my-2" key={`${i}_${user.id}`}>
-                        {user.id}
-                      </div>
-                      <div>총 상금 : {user.totalPrize}</div>
-                      <div>머니인 횟수 : {user.howManyMoneyIn}</div>
-                      <div>1등 횟수 : {user.howManyFirstRank}</div>
-                    </div>
-                  );
-                })}
+                <div className="text-3xl">플레이어 순위</div>
+                <div className="flex justify-center my-8">
+                  <table className=" table-fixed w-full  rounded-lg overflow-hidden  ">
+                    <thead>
+                      <tr className="bg-[#2b3647] text-lg  ">
+                        <th className="w-1/4 py-2 ">총 상금</th>
+                        <th className="w-1/4 py-2">닉네임</th>
+                        <th className="w-1/4 py-2">점수</th>
+                        <th className="w-1/4 py-2">머니인</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {customUsersData.map((ranking) => (
+                        <tr
+                          key={ranking.id}
+                          className="text-center text-xs  odd:bg-[#2d394bd1] even:bg-[#303950f7]"
+                        >
+                          <td className="w-1/4 py-2">{`${(
+                            ranking.totalPrize / 1000
+                          ).toLocaleString('ko-KR')}만원`}</td>
+                          <td className="w-1/4 py-2">{ranking.id}</td>
+                          <td className="w-1/4 py-2">
+                            {ranking.howManyFirstRank}
+                          </td>
+                          <td className="w-1/4 py-2">
+                            {ranking.howManyMoneyIn}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+
+                <div className="text-2xl">토너먼트 우승자</div>
+                <div className="flex justify-center my-8">
+                  <table className=" table-fixed w-full  rounded-lg overflow-hidden  ">
+                    <thead>
+                      <tr className="bg-[#2b3647] text-lg  ">
+                        <th className="w-1/4 py-2 ">토너먼트</th>
+                        <th className="w-1/4 py-2">엔트리</th>
+                        <th className="w-1/4 py-2">일시</th>
+                        <th className="w-1/4 py-2">우승자 </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {gamesData.map((game, i) => {
+                        return (
+                          <tr
+                            key={game.id}
+                            className={`text-center text-xs   odd:bg-[#2d394bd1] even:bg-[#303950f7] hover:cursor-pointer`}
+                            onClick={() => {
+                              if (selectedTournamentId !== game.id) {
+                                setSelectedTournamentId(game.id);
+
+                                setCount(0);
+                              } else {
+                                if (count > 0) {
+                                  const filteredData = gamesData.filter(
+                                    (game) => game.id === selectedTournamentId
+                                  );
+                                  setFilteredGameData(filteredData);
+                                  setCount(0);
+                                } else {
+                                  setCount((prevNumber) => prevNumber + 1);
+                                  setFilteredGameData([]);
+                                }
+                              }
+                            }}
+                          >
+                            <td className="w-1/4 py-2">
+                              {_getGameTemp(pickPub?.id ?? '', game.gameTempId)
+                                ?.title ?? '존재하지 않음'}
+                            </td>
+                            <td className="w-1/4 py-2"> {game.entry}</td>
+                            <td className="w-1/4 py-2">
+                              {game.date.toUTCString()}
+                            </td>
+                            <td className="w-1/4 py-2">{game.players[0].id}</td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
+                </div>
+                <div className="text-2xl">
+                  토너먼트 히스토리(위에 토너먼트 클릭시 화면에 표시)
+                </div>
+
+                <div className="flex justify-center my-8">
+                  <table className=" table-fixed w-full  rounded-lg overflow-hidden  ">
+                    <thead>
+                      <tr className="bg-[#2b3647] text-lg  ">
+                        <th className="w-1/4 py-2 ">토너먼트</th>
+                        <th className="w-1/4 py-2">등수</th>
+                        <th className="w-1/4 py-2">닉네임 </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {filteredGameData.map((game, i) =>
+                        game.players.map((player) => {
+                          return (
+                            <tr
+                              key={`${player.id}dsadsadsa`}
+                              className="text-center text-xs  odd:bg-[#2d394bd1] even:bg-[#303950f7]"
+                            >
+                              <td className="w-1/4 py-2">
+                                {_getGameTemp(
+                                  pickPub?.id ?? '',
+                                  game.gameTempId
+                                )?.title ?? '존재하지 않음'}
+                              </td>
+                              <td className="w-1/4 py-2"> {player.rank}</td>
+
+                              <td className="w-1/4 py-2">{player.id}</td>
+                            </tr>
+                          );
+                        })
+                      )}
+                    </tbody>
+                  </table>
+                </div>
               </div>
-              <div>토너먼트 히스토리</div>
-              {gamesData.map((game, i) => {
-                return (
-                  <div
-                    className="rounded-3xl p-2 my-2 bg-gray-300"
-                    key={`${i}_${game.id}`}
-                  >
-                    <div>
-                      {' '}
-                      {_getGameTemp(pickPub?.id ?? '', game.gameTempId)
-                        ?.title ?? '존재하지 않음'}{' '}
-                    </div>
-                    <div> 엔트리 : {game.entry}</div>
-                    <div> 일시 : {game.date.toUTCString()} </div>
-                    <div> 우승자 : {game.players[0].id}</div>
-                  </div>
-                );
-              })}
             </div>
           ) : (
             <>
