@@ -29,8 +29,8 @@ export default function HoldemPubPage() {
   return (
     <div className="flex flex-col">
       <section className="">
-        <div className="p-1">
-          <div className="text-2xl font-bold text-white pb-2 ">
+        <div className="p-1 flex flex-col justify-center">
+          <div className="text-2xl font-bold text-white pb-2 self-start ">
             최근 인기 지점
           </div>
           <Slick slidesToShow={pubsData.length}>
