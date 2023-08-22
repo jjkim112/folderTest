@@ -44,7 +44,7 @@ const PreFlopRangePage = () => {
 
   return (
     <div className="flex flex-col items-center h-screen">
-      <div className="mx-auto text-center text-4xl my-4">
+      <div className="mx-auto text-center text-4xl my-4 text-[#f0e68c]">
         프리플랍 레인지 (9-way)
       </div>
       <TypeSel selPosition={selPosition} setSelPosition={setSelPosition} />

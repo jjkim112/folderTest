@@ -29,7 +29,7 @@ export default function HoldemPubPage() {
   return (
     <div className="flex flex-col">
       <section className="">
-        <div className="p-10">
+        <div className="p-1">
           <div className="text-2xl font-bold text-white pb-2 ">
             최근 인기 지점
           </div>

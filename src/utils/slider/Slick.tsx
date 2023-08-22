@@ -38,7 +38,12 @@ function Slick({
     return (
       <div
         className={className}
-        style={{ ...style, display: 'block' }}
+        style={{
+          ...style,
+          bottom: 1,
+          right: 1,
+          zIndex: 9999,
+        }}
         onClick={onClick}
       />
     );
@@ -49,7 +54,12 @@ function Slick({
     return (
       <div
         className={className}
-        style={{ ...style, display: 'block' }}
+        style={{
+          ...style,
+          bottom: 1,
+          left: 1,
+          zIndex: 9999,
+        }}
         onClick={onClick}
       />
     );

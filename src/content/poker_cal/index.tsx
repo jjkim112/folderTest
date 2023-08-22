@@ -152,8 +152,12 @@ const PokerCalPage = () => {
   return (
     <div className="flex flex-col mx-auto h-screen">
       <div className="flex flex-col mx-auto h-full">
-        <div className="text-center text-4xl my-2">포커 계산기</div>
-        <div className="text-center text-2xl my-2">커뮤니티 카드</div>
+        <div className="text-center text-4xl my-2 text-[#f0e68c]">
+          포커 계산기
+        </div>
+        <div className="text-center text-2xl my-2 text-[#f0e68c]">
+          커뮤니티 카드
+        </div>
         {/* <div className="flex flex-wrap w-40">
           {remainCards.map((v) => ` (${v}) `)}
         </div>

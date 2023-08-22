@@ -81,6 +81,7 @@ function HeaderMenu() {
           display: {
             xs: 'none',
             md: 'block',
+            lg: 'block',
           },
         }}
       >

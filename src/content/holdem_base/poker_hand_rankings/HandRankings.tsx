@@ -120,7 +120,7 @@ function HandRankings() {
           return (
             <div
               key={i}
-              className=" flex flex-col justify-center m-3 items-center text-center text-white whitespace-pre-wrap"
+              className=" flex flex-col justify-center m-3 items-center text-center text-[#f0e68c] whitespace-pre-wrap"
             >
               <div
                 ref={(el) => (divRefs.current[i] = el)}

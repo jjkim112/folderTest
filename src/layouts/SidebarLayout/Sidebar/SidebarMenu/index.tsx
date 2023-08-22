@@ -214,7 +214,7 @@ function SidebarMenu() {
                   disableRipple
                   component={RouterLink}
                   onClick={closeSidebar}
-                  to="/admin/crypto4"
+                  to="/admin/storeInfo/infoEdit"
                   startIcon={<BrightnessLowTwoToneIcon />}
                 >
                   매장 정보 추가/삭제

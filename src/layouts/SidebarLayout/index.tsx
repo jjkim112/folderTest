@@ -1,5 +1,5 @@
 import { FC, ReactNode } from 'react';
-import { Box, alpha, lighten, useTheme } from '@mui/material';
+import { Box, alpha, lighten, useMediaQuery, useTheme } from '@mui/material';
 import { Outlet } from 'react-router-dom';
 
 import Sidebar from './Sidebar';
@@ -11,7 +11,7 @@ interface SidebarLayoutProps {
 
 const SidebarLayout: FC<SidebarLayoutProps> = () => {
   const theme = useTheme();
-
+  const matches = useMediaQuery('(min-width:900px)');
   return (
     <>
       <Box
@@ -42,7 +42,7 @@ const SidebarLayout: FC<SidebarLayoutProps> = () => {
             display: 'block',
             flex: 1,
             pt: '20px',
-            [theme.breakpoints.up('lg')]: {
+            [theme.breakpoints.up('md')]: {
               ml: `290px`,
               pt: `80px`,
             },

@@ -36,6 +36,12 @@ const HeaderWrapper = styled(Box)(
          
             height: 80px;
         }
+        @media (min-width: 900px) {
+          left: 280px;
+          width: auto;
+       
+          height: 80px;
+      }
 `
 );
 
@@ -73,7 +79,7 @@ function Header() {
           component="span"
           sx={{
             ml: 2,
-            display: { lg: 'none', xs: 'inline-block' },
+            display: { lg: 'none', md: 'none', xs: 'inline-block' },
           }}
         >
           <Tooltip arrow title="Toggle Menu">

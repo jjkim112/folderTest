@@ -37,10 +37,13 @@ const StoreInfo = Loader(
 const StoreInfoDetail = Loader(
   lazy(() => import('src/content/admin/storeInformation/storeEdit'))
 );
-const StoreInfoEdit = Loader(
+const StoreInfoDetailEdit = Loader(
   lazy(
     () => import('src/content/admin/storeInformation/storeEdit/storeEditMain')
   )
+);
+const StoreInfoEdit = Loader(
+  lazy(() => import('src/content/admin/storeInformation/storeInfoEdit'))
 );
 
 //관리자 손님
@@ -144,6 +147,10 @@ const routes: RouteObject[] = [
       },
       {
         path: 'storeInfo/edit/:id',
+        element: <StoreInfoDetailEdit />,
+      },
+      {
+        path: 'storeInfo/infoEdit',
         element: <StoreInfoEdit />,
       },
       {

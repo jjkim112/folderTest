@@ -15,6 +15,7 @@ import { HeaderTap } from '../../../utils/header/header_tap';
 import { GameTemplate } from '../../../domain/GameTemplate.model';
 import { Game } from '../../../domain/Game.model';
 import { refreshWithPubId } from '../../../reducer/userSlice';
+import { FirebasePub } from 'src/data/firebase/FirebasePub';
 type Section = {
   label: string;
 };
@@ -46,6 +47,7 @@ export default function HoldemPubOnePage() {
     newVisibility[index] = !newVisibility[index];
     setVisibility(newVisibility);
   };
+
   const goToPubPage = async () => {
     pubsData.map((v, i) => {
       if (v.id === id) {
@@ -76,9 +78,6 @@ export default function HoldemPubOnePage() {
       setFilteredGameData([]);
     }
   }, [selectedTournamentId, gamesData]);
-  useEffect(() => {
-    goToPubPage();
-  }, []);
 
   const _getGameTemp = (pubId: string, tempId: string): GameTemplate | null => {
     for (const onePub of pubsData) {
@@ -97,49 +96,55 @@ export default function HoldemPubOnePage() {
   if (pickPub != null) {
     return (
       <div key={`${pickPub.id}detail`} className=" w-full text-white">
-        <div className="p-2">
+        <div className="p-4 bg-slate-700 rounded-lg shadow-lg text-white">
           <button
-            className="border-2 bg-blue-700 text-black font-bold p-3 rounded-lg "
+            className="border-2 bg-white text-slate-700 font-bold p-3 rounded-lg mb-4"
             onClick={() => {
               navigate('/holdem-pub');
             }}
           >
             ⬅️ 돌아가기
           </button>
-          <div className="flex flex-col my-10 ">
+          <div className="flex flex-col md:flex-row items-center gap-x-8">
             <img
-              className=" w-[150px] h-[150px]"
+              className="w-[150px] h-[150px] md:w-[200px] md:h-[200px] rounded-lg shadow-lg"
               src={pickPub.photos[0]}
-              alt="디테일 그림"
+              alt="상점 이미지"
             />
-            <div className="mt-1">
-              <div>{pickPub.name}</div>
-              <h3>
-                <AiFillPhone className="inline" /> {pickPub.phone}
-              </h3>
-              <h3>
-                <AiFillEnvironment className="inline" /> {pickPub.address}
-              </h3>
-
-              <div className="flex flex-row  m-2">
-                <a href={`${pickPub.links[1].url}`}>
+            <div className="flex flex-col justify-center mt-4 md:mt-0">
+              <h2 className="text-2xl md:text-3xl font-bold tracking-tighter">
+                {pickPub.name}
+              </h2>
+              <div className="text-base md:text-lg mt-2">
+                <h3 className="flex items-center gap-x-2">
+                  <AiFillPhone className="inline" />
+                  <span>{pickPub.phone}</span>
+                </h3>
+                <h3 className="flex items-center gap-x-2 mt-4">
+                  <AiFillEnvironment className="inline" />
+                  <span>{pickPub.address}</span>
+                </h3>
+              </div>
+              <div className="flex flex-row items-center justify-center md:justify-start mt-4 space-x-4">
+                <a href={pickPub.links[1].url}>
                   <img
-                    className="w-[50px] mr-4"
-                    src="\assets\images\icon-instagram.png"
-                    alt="instagram"
+                    className="w-[50px] rounded-full shadow-lg hover:opacity-80 transition-opacity duration-300 ease-in-out"
+                    src="/assets/images/icon-instagram.png"
+                    alt="인스타그램 링크"
                   />
                 </a>
-                <a href={`${pickPub.links[0].url}`}>
+                <a href={pickPub.links[0].url}>
                   <img
-                    className="w-[50px]"
-                    src="\assets\images\icon-kakao.png"
-                    alt="kakao"
+                    className="w-[50px] rounded-full shadow-lg hover:opacity-80 transition-opacity duration-300 ease-in-out"
+                    src="/assets/images/icon-kakao.png"
+                    alt="카카오톡 링크"
                   />
                 </a>
               </div>
             </div>
           </div>
         </div>
+
         <HeaderTap content={tabs} activeTab={setActiveHeaderTab} />
         <div className="p-2 h-full">
           {activeHeaderTab == 0 ? (
@@ -281,7 +286,7 @@ export default function HoldemPubOnePage() {
               </div>
             </div>
           ) : (
-            <>
+            <div className="h-full">
               <div>요일 별 오픈 토너먼트</div>
               <div className="py-2">
                 {pickPub.days.map((daysValue, daysIndex) => (
@@ -328,7 +333,7 @@ export default function HoldemPubOnePage() {
                   </div>
                 ))}
               </div>
-            </>
+            </div>
           )}
         </div>
       </div>

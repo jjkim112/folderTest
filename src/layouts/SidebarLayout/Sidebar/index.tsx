@@ -44,6 +44,7 @@ function Sidebar() {
           display: {
             xs: 'none',
             lg: 'inline-block',
+            md: 'inline-block',
           },
           position: 'fixed',
           left: 0,
