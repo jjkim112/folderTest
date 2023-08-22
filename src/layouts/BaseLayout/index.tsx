@@ -12,7 +12,7 @@ interface BaseLayoutProps {
 const BaseLayout: FC<BaseLayoutProps> = ({ children }) => {
   return (
     <div>
-      <div className="mx-auto bg-[rgb(30,41,59)]/[0.8] ">
+      <div className="mx-auto  w-full bg-[rgb(30,41,59)]/[0.8] ">
         <Header />
         {children || <Outlet />}
       </div>

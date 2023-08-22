@@ -150,8 +150,8 @@ const PokerCalPage = () => {
   }, [communityCards, players]);
 
   return (
-    <div className="flex flex-col mx-auto h-screen">
-      <div className="flex flex-col mx-auto h-full">
+    <div className="flex flex-col w-full mx-auto h-screen">
+      <div className="flex flex-col  w-full mx-auto h-full">
         <div className="text-center text-4xl my-2 text-[#f0e68c]">
           포커 계산기
         </div>
@@ -207,7 +207,7 @@ const PokerCalPage = () => {
             setDialogOpen(true);
           }}
         />
-        <div className="middle  mx-auto">
+        <div className="flex flex-col justify-center items-center w-full  ">
           {players.map((v, i) => {
             const detail = getHandDetail(v.hand);
             return (
@@ -272,7 +272,7 @@ const PokerCalPage = () => {
 
 const CommunityCardPart = ({ communityCards, clickFunc }: any) => {
   return (
-    <div className="flex">
+    <div className="flex  justify-center  w-full ">
       {communityCards.map((v: any, i: any) => {
         return (
           <div className="mx-2" key={`${v}_${i}`}>
@@ -296,7 +296,7 @@ interface ActionPartProps {
 const ActionPart = ({ players }: ActionPartProps) => {
   const dispatch = useDispatch<AppDispatch>();
   return (
-    <div className="flex justify-center text-center ">
+    <div className="flex  justify-center text-center ">
       <div
         className="flex justify-center text-center items-center border-2 w-24 h-12"
         onClick={() => {
@@ -323,7 +323,7 @@ const ActionPart = ({ players }: ActionPartProps) => {
 
 const OnePlayerPart = ({ player, detail, clickFunc, delFunc }: any) => {
   return (
-    <div className="flex items-center">
+    <div className="flex justify-center items-center w-full">
       <div className="w-36 mx-2 my-2 flex justify-center items-center rounded-xl">
         <OneCardDiv
           card={player.hand[0]}
