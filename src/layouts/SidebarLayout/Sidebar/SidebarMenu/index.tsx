@@ -214,7 +214,7 @@ function SidebarMenu() {
                   disableRipple
                   component={RouterLink}
                   onClick={closeSidebar}
-                  to="/admin/storeInfo/infoEdit"
+                  to="/admin/storeInfoEdit"
                   startIcon={<BrightnessLowTwoToneIcon />}
                 >
                   매장 정보 추가/삭제
@@ -253,7 +253,7 @@ function SidebarMenu() {
                   disableRipple
                   component={RouterLink}
                   onClick={closeSidebar}
-                  to="/admin/crypto2"
+                  to="/admin/guestInfoEdit"
                   startIcon={<HowToRegTwoToneIcon />}
                 >
                   매장 손님 정보 추가/삭제

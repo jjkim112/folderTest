@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
 
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { DataService } from 'src/data/DataService';
 import { Pub } from 'src/domain/Pub.model';
 import { refreshGames } from 'src/reducer/gameSlice';
@@ -10,7 +10,6 @@ import { refreshWithPubId } from 'src/reducer/userSlice';
 import { AppDispatch, RootState } from 'src/store/store';
 import { useDaumPostcodePopup } from 'react-daum-postcode';
 import { AdminRequireLayout } from '../../AdminRequireLayout';
-import { set } from 'date-fns';
 import { FirebasePub } from 'src/data/firebase/FirebasePub';
 
 export default function StoreInfoEdit() {

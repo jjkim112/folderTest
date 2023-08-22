@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import './holdemPubBase.css';
 const abilitys = [
   '1. 참가비를 낼수 있는 만큼의 자금',
@@ -16,11 +15,12 @@ const references = [
   '5. 애드온 : 매장 마다 룰이 다를수 있음, 보통 게임 시작 후\n\n5-1 리엔트리또는 리바이인 한 후 에드온을 받는 방법\n\n5-2 게임 중 내가 돈을 많이 가지고 시작하기 위해 애드온을 하는 방법\n\n5-3 특정 블라인드에 가능 한 경우\n\n참고: 애드온있는 매장이라면 잘 물어보고 할 것 ',
 ];
 export default function HoldemPubBase() {
-  const [activeHeaderTab, setActiveHeaderTab] = useState(0);
   return (
     <div className="p-3 text-white whitespace-pre-wrap">
       <div className="container">
-        <h2 className="text-2xl">홀덤 펍 갈때 고민일때 이 것만은 알고 가자</h2>
+        <div className="text-2xl">
+          홀덤 펍 갈때 고민일때 이 것만은 알고 가자
+        </div>
         {abilitys.map((ability) => (
           <div key={ability} className="sentence">
             {ability}

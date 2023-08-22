@@ -55,6 +55,11 @@ const GuestInfoDetail = Loader(
   lazy(() => import('src/content/admin/guestInformation/guestInfoEditMain'))
 );
 
+const GuestInfoEdit = Loader(
+  lazy(() => import('src/content/admin/guestInformation/guestInfoEditMain'))
+);
+
+//에러페이지
 const Status404 = Loader(
   lazy(() => import('src/content/pages/Status/Status404'))
 );
@@ -150,7 +155,7 @@ const routes: RouteObject[] = [
         element: <StoreInfoDetailEdit />,
       },
       {
-        path: 'storeInfo/infoEdit',
+        path: 'storeInfoEdit',
         element: <StoreInfoEdit />,
       },
       {
@@ -162,8 +167,8 @@ const routes: RouteObject[] = [
         element: <GuestInfoDetail />,
       },
       {
-        path: 'crypto4',
-        element: <HoldemPubPage />,
+        path: 'guestInfoEdit',
+        element: <GuestInfoEdit />,
       },
     ],
   },
