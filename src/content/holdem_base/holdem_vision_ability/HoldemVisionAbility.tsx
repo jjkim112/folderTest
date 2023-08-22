@@ -60,20 +60,22 @@ function HoldemVisionAbility() {
 
   return (
     <div className="p-2">
-      <div className="p-2 border-2 rounded-2xl">
-        <div className="font-bold text-2xl mb-3">아웃츠 계산 방식</div>
-        <div className="font-bold text-white text-base mb-3">
-          아웃츠 내가 기대하는 숫자의 갯수를 의미. 다른 사람의 패는 알수
-          없으므로 신경쓰지 않음
+      <div className="info-container p-2">
+        <div className="info-title font-bold text-2xl mb-3">
+          아웃츠 계산 방식
         </div>
-        <div className=" text-white text-base mb-3">
+        <div className="info-content font-bold text-white text-base mb-3">
+          아웃츠 내가 기대하는 숫자의 갯수를 의미. 다른 사람의 패는 알 수
+          없으므로 신경 쓰지 않음.
+        </div>
+        <div className="info-ex content text-white text-base mb-3">
           * 여집합으로 고려, '1-(0.81)(0.81) = 0.35 (근사값)'
         </div>
-        <div className=" text-white text-base mb-3">
+        <div className="info-content text-white text-base mb-3">
           내가 기대하지 않는 것들이 뜰 확률에서 1을 빼주면 내가 기대하는 숫자의
           퍼센트가 나온다.
         </div>
-        <div className=" text-white text-base mb-3">
+        <div className="info-formula content text-white text-base mb-3">
           1 - ((47-아웃츠 갯수)/47) * ((46-아웃츠 갯수)/46)
         </div>
       </div>
@@ -86,9 +88,13 @@ function HoldemVisionAbility() {
             <div key={i}>
               <img src={v.image} alt="table1" />
               <div className="content">
-                <p>확률 : {v.percentage}</p>
-                <p>아웃츠 : {v.outs}</p>
-                <p>계산 식: {v.formula}</p>
+                <ul>
+                  <li>
+                    <p className="title">확률 : {v.percentage}</p>
+                    <p>아웃츠 : {v.outs}</p>
+                    <p>계산 식 : {v.formula}</p>
+                  </li>
+                </ul>
               </div>
             </div>
           ))}
@@ -105,9 +111,13 @@ function HoldemVisionAbility() {
             <div key={i}>
               <img src={v.image} alt="table1" />
               <div className="content">
-                <p>확률 : {v.percentage}</p>
-                <p>아웃츠 : {v.outs}</p>
-                <p>계산 식: {v.formula}</p>
+                <ul>
+                  <li>
+                    <p className="title">확률 : {v.percentage}</p>
+                    <p>아웃츠 : {v.outs}</p>
+                    <p>계산 식 : {v.formula}</p>
+                  </li>
+                </ul>
               </div>
             </div>
           ))}
@@ -122,9 +132,13 @@ function HoldemVisionAbility() {
             <div key={i}>
               <img src={v.image} alt="table1" />
               <div className="content">
-                <p>확률 : {v.percentage}</p>
-                <p>아웃츠 : {v.outs}</p>
-                <p>계산 식: {v.formula}</p>
+                <ul>
+                  <li>
+                    <p className="title">확률 : {v.percentage}</p>
+                    <p>아웃츠 : {v.outs}</p>
+                    <p>계산 식 : {v.formula}</p>
+                  </li>
+                </ul>
               </div>
             </div>
           ))}
@@ -141,9 +155,13 @@ function HoldemVisionAbility() {
             <div key={i}>
               <img src={v.image} alt="table1" />
               <div className="content">
-                <p>확률 : {v.percentage}</p>
-                <p>아웃츠 : {v.outs}</p>
-                <p>계산 식: {v.formula}</p>
+                <ul>
+                  <li>
+                    <p className="title">확률 : {v.percentage}</p>
+                    <p>아웃츠 : {v.outs}</p>
+                    <p>계산 식 : {v.formula}</p>
+                  </li>
+                </ul>
               </div>
             </div>
           ))}

@@ -43,7 +43,7 @@ const PreFlopRangePage = () => {
   }, []);
 
   return (
-    <div className="flex flex-col items-center h-full">
+    <div className="flex flex-col items-center h-screen">
       <div className="mx-auto text-center text-4xl my-4">
         프리플랍 레인지 (9-way)
       </div>

@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
-import basic from "../../utils/basic.json";
-import Card from "../../component/Card";
-import CardSetDialog from "../../component/CardSetDialog";
-import handData from "./hand_data.json";
+import { useEffect, useState } from 'react';
+import basic from '../../utils/basic.json';
+import Card from '../../component/Card';
+import CardSetDialog from '../../component/CardSetDialog';
+import handData from './hand_data.json';
 
 interface HandRankInputProps {}
 
@@ -12,9 +12,9 @@ const HandRankInput: React.FC<HandRankInputProps> = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [selCard, setSelCard] = useState(0);
 
-  const [cards, setCards] = useState<string[]>(["", ""]);
+  const [cards, setCards] = useState<string[]>(['', '']);
 
-  const [rank, setRank] = useState<string>("0");
+  const [rank, setRank] = useState<string>('0');
 
   const isCard = (card: string): boolean => {
     // c2, dt, ha, s9 : true,  s1, tt, eq : false
@@ -35,13 +35,13 @@ const HandRankInput: React.FC<HandRankInputProps> = () => {
 
   const isPocket = (): boolean => {
     // pocket check
-    let tempNum = "";
+    let tempNum = '';
     let isPocket = false;
     for (let i = 0; i < cards.length; i++) {
       if (!isCard(cards[i])) break;
       const num = cards[i].charAt(1);
 
-      if (tempNum === "") {
+      if (tempNum === '') {
         tempNum = num;
       } else {
         if (tempNum === num) {
@@ -56,7 +56,7 @@ const HandRankInput: React.FC<HandRankInputProps> = () => {
   const getOriginCard = (): string => {
     const card = cards[selCard];
     if (!isCard(card)) {
-      return "";
+      return '';
     }
 
     return card.charAt(1);
@@ -96,11 +96,11 @@ const HandRankInput: React.FC<HandRankInputProps> = () => {
     setIsSuited(isSuitedValue);
     setCards((prev) => {
       if (isSuitedValue) {
-        prev[0] = isCard(prev[0]) ? `s${prev[0].charAt(1)}` : "";
-        prev[1] = isCard(prev[1]) ? `s${prev[1].charAt(1)}` : "";
+        prev[0] = isCard(prev[0]) ? `s${prev[0].charAt(1)}` : '';
+        prev[1] = isCard(prev[1]) ? `s${prev[1].charAt(1)}` : '';
       } else {
-        prev[0] = isCard(prev[0]) ? `s${prev[0].charAt(1)}` : "";
-        prev[1] = isCard(prev[1]) ? `d${prev[1].charAt(1)}` : "";
+        prev[0] = isCard(prev[0]) ? `s${prev[0].charAt(1)}` : '';
+        prev[1] = isCard(prev[1]) ? `d${prev[1].charAt(1)}` : '';
       }
       updateRank(prev[0], prev[1]);
 
@@ -127,19 +127,19 @@ const HandRankInput: React.FC<HandRankInputProps> = () => {
 
   const updateRank = (card1: string, card2: string) => {
     if (isCard(card1) && isCard(card2)) {
-      let cardsText = "";
+      let cardsText = '';
       if (isPocket()) {
         const num = card1.charAt(1);
         cardsText = `${num}${num}p`;
       } else {
         cardsText = `${card1.charAt(1)}${card2.charAt(1)}${
-          card1.charAt(0) === card2.charAt(0) ? "s" : "o"
+          card1.charAt(0) === card2.charAt(0) ? 's' : 'o'
         }`;
       }
 
       cardsText = transToRealCardText(cardsText);
 
-      let percentage: string = "0";
+      let percentage: string = '0';
       for (let i = 0; i < handData.length; i++) {
         if (handData[i].card === cardsText) {
           percentage = handData[i].sum.toString();
@@ -189,7 +189,7 @@ interface TypeSelProps {
 
 const TypeSel: React.FC<TypeSelProps> = (props) => {
   return (
-    <div className="flex justify-center py-2">
+    <div className="flex justify-center py-2 ">
       <BasicBtn
         name="suited"
         isSel={props.isSuited ?? false}
@@ -219,12 +219,12 @@ const BasicBtn: React.FC<BasicBtnProps> = ({ name, isSel, onClick }) => {
     <button
       className={
         isSel
-          ? "block mx-2 bg-blue-200 rounded-xl border-2 border-yellow-200 cursor-pointer px-2 py-1"
-          : "block mx-2 hover:bg-blue-200 rounded-xl border-2 border-gray-100 cursor-pointer px-2 py-1"
+          ? 'block mx-2 bg-blue-200 rounded-xl border-2 border-yellow-200 cursor-pointer px-2 py-1'
+          : 'block mx-2 hover:bg-blue-200 rounded-xl border-2 border-gray-100 cursor-pointer px-2 py-1'
       }
       onClick={onClick}
     >
-      {name ?? ""}
+      {name ?? ''}
     </button>
   );
 };
@@ -235,7 +235,7 @@ interface ResultRankProps {
 
 const ResultRank: React.FC<ResultRankProps> = (props) => {
   return (
-    <div className="flex justify-center text-2xl font-bold">
+    <div className="flex justify-center text-2xl font-bold text-white pb-3">
       상위 {props.rank} % 핸드
     </div>
   );

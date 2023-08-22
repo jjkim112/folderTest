@@ -95,7 +95,7 @@ function HandRankings() {
     });
   };
   return (
-    <div>
+    <div className="bg-slate-700 w-full h-full">
       <div className="max-w-screen-lg mx-auto w-1/5 overflow-y-auto hidden lg:block ">
         <div className="fixed top-14 left-3 m-1 p-2 bg-slate-700 z-50 w-1/6   ">
           <div className="flex flex-col  justify-between">

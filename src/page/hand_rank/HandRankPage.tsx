@@ -11,7 +11,7 @@ const HandRankPage: React.FC = () => {
   const [isInput, setIsInput] = useState<boolean>(true);
 
   return (
-    <div className="flex-col">
+    <div className=" h-screen">
       <TopBar isInput={isInput} setIsInput={setIsInput} />
       {isInput ? <HandRankInput /> : <HandRankSlider />}
     </div>

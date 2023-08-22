@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 
 export default function AdminPage() {
   const [text, setText] = useState('');
+  let navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
   return (
     <div className="flex-col justify-center items-center">
@@ -23,7 +24,8 @@ export default function AdminPage() {
       <button
         onClick={() => {
           dispatch(inputPw(text));
-          setText('');
+
+          navigate('/admin/storeInfo');
         }}
       >
         비번 입력

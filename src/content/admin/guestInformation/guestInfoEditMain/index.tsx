@@ -186,6 +186,7 @@ export default function GuestInfoEditMain() {
                   <tr className="bg-[#2b3647] text-lg  ">
                     <th className="w-1/4 py-2 ">토너먼트</th>
                     <th className="w-1/4 py-2">등수</th>
+                    <th className="w-1/4 py-2">획득금액</th>
                     <th className="w-1/4 py-2">닉네임 </th>
                   </tr>
                 </thead>

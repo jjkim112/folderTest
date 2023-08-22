@@ -1,12 +1,12 @@
-import { useContext, useEffect, useRef, useState } from "react";
-import basic from "../../utils/basic.json";
-import { getResult } from "../../utils/poker_func";
-import { json } from "react-router-dom";
-import Card from "../../component/Card";
-import "./style.css";
-import CardSetDialog from "./CardSetDialog";
-import { AppDispatch, RootState } from "../../store/store";
-import { useDispatch, useSelector } from "react-redux";
+import { useContext, useEffect, useRef, useState } from 'react';
+import basic from '../../utils/basic.json';
+import { getResult } from '../../utils/poker_func';
+import { json } from 'react-router-dom';
+import Card from '../../component/Card';
+import './style.css';
+import CardSetDialog from './CardSetDialog';
+import { AppDispatch, RootState } from '../../store/store';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   OnePlayer,
   flopCommunityCards,
@@ -14,7 +14,7 @@ import {
   resetCommunityCards,
   updateCommunitCards,
   updatePlayerCards,
-} from "../../reducer/pokerCalSlice";
+} from '../../reducer/pokerCalSlice';
 
 class detailInfo {
   hand: any;
@@ -53,7 +53,7 @@ const getRealHands = (hands: any): any[] => {
   });
 };
 
-let prevHash = "";
+let prevHash = '';
 var setCardFunc = () => {}; // dialog props
 
 const PokerCalPage = () => {
@@ -78,7 +78,7 @@ const PokerCalPage = () => {
 
   var [dialogOpen, setDialogOpen] = useState(false);
 
-  var [dialogSelCard, setDialogSelCard] = useState("");
+  var [dialogSelCard, setDialogSelCard] = useState('');
 
   var dialogInputSetFunc = (func: any) => {
     setCardFunc = func;
@@ -150,8 +150,8 @@ const PokerCalPage = () => {
   }, [communityCards, players]);
 
   return (
-    <div className="flex flex-col mx-auto">
-      <div className="flex flex-col mx-auto">
+    <div className="flex flex-col mx-auto h-screen">
+      <div className="flex flex-col mx-auto h-full">
         <div className="text-center text-4xl my-2">포커 계산기</div>
         <div className="text-center text-2xl my-2">커뮤니티 카드</div>
         {/* <div className="flex flex-wrap w-40">
@@ -183,8 +183,8 @@ const PokerCalPage = () => {
 
             setDialogSelCard(cardValue);
             dialogInputSetFunc((targetCard: any) => {
-              var delCard = "";
-              var addCard = "";
+              var delCard = '';
+              var addCard = '';
               if (targetCard == cardValue) {
                 delCard = targetCard;
               } else {
@@ -193,7 +193,7 @@ const PokerCalPage = () => {
               }
               var temp = Array.from(communityCards);
               if (targetCard == cardValue) {
-                temp[cardIndex] = "";
+                temp[cardIndex] = '';
               } else {
                 temp[cardIndex] = targetCard;
               }
@@ -203,58 +203,58 @@ const PokerCalPage = () => {
             setDialogOpen(true);
           }}
         />
-      </div>
-      <div className="middle px-4 mx-auto">
-        {players.map((v, i) => {
-          const detail = getHandDetail(v.hand);
-          return (
-            <OnePlayerPart
-              player={v}
-              key={`${i}_${v.hand}`}
-              detail={detail}
-              clickFunc={(cardValue: any, handIndex: any) => {
-                setDialogSelCard(cardValue);
-                dialogInputSetFunc((targetCard: any) => {
-                  var delCard = "";
-                  var addCard = "";
-                  if (targetCard == cardValue) {
-                    delCard = targetCard;
-                  } else {
-                    delCard = cardValue;
-                    addCard = targetCard;
-                  }
+        <div className="middle  mx-auto">
+          {players.map((v, i) => {
+            const detail = getHandDetail(v.hand);
+            return (
+              <OnePlayerPart
+                player={v}
+                key={`${i}_${v.hand}`}
+                detail={detail}
+                clickFunc={(cardValue: any, handIndex: any) => {
+                  setDialogSelCard(cardValue);
+                  dialogInputSetFunc((targetCard: any) => {
+                    var delCard = '';
+                    var addCard = '';
+                    if (targetCard == cardValue) {
+                      delCard = targetCard;
+                    } else {
+                      delCard = cardValue;
+                      addCard = targetCard;
+                    }
 
-                  var tempList: OnePlayer[] = Array.from(
-                    players.map((v) => v.clone)
-                  );
+                    var tempList: OnePlayer[] = Array.from(
+                      players.map((v) => v.clone)
+                    );
 
-                  if (targetCard == cardValue) {
-                    tempList[i].hand[handIndex] = "";
-                  } else {
-                    tempList[i].hand[handIndex] = targetCard;
-                  }
-                  dispatch(updatePlayerCards(tempList));
-                });
-                setDialogOpen(true);
-              }}
-              delFunc={() => {
-                console.log("del func");
-                const card1 = players[i].hand[0];
-                const card2 = players[i].hand[1];
-                var temp = Array.from(players.map((v) => v.clone));
-                temp.splice(i, 1);
-                dispatch(updatePlayerCards(temp));
-              }}
-            />
-          );
-        })}
-      </div>
-
-      <div className="w-full mb-2">
-        <div className=" flex justify-center ">
-          <ActionPart players={players} />
+                    if (targetCard == cardValue) {
+                      tempList[i].hand[handIndex] = '';
+                    } else {
+                      tempList[i].hand[handIndex] = targetCard;
+                    }
+                    dispatch(updatePlayerCards(tempList));
+                  });
+                  setDialogOpen(true);
+                }}
+                delFunc={() => {
+                  console.log('del func');
+                  const card1 = players[i].hand[0];
+                  const card2 = players[i].hand[1];
+                  var temp = Array.from(players.map((v) => v.clone));
+                  temp.splice(i, 1);
+                  dispatch(updatePlayerCards(temp));
+                }}
+              />
+            );
+          })}
+        </div>
+        <div className="w-full mb-2">
+          <div className=" flex justify-center ">
+            <ActionPart players={players} />
+          </div>
         </div>
       </div>
+
       {dialogOpen && (
         <CardSetDialog
           cardSetFunc={setCardFunc}
@@ -297,7 +297,7 @@ const ActionPart = ({ players }: ActionPartProps) => {
         className="flex justify-center text-center items-center border-2 w-24 h-12"
         onClick={() => {
           var temp = Array.from(players.map((v) => v.clone));
-          temp.push(new OnePlayer(["", ""]));
+          temp.push(new OnePlayer(['', '']));
 
           dispatch(updatePlayerCards(temp));
         }}
@@ -363,7 +363,7 @@ const OneCardDiv = ({ card, cardClickFunc }: any) => {
         // event.target.style.border = "none";
       }}
     >
-      <Card card={isCard(card) ? card : ""} width="80px" height="120px" />
+      <Card card={isCard(card) ? card : ''} width="60px" height="100px" />
     </div>
   );
 };

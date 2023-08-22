@@ -13,7 +13,7 @@ const HandRankSlider: React.FC = () => {
   const [percentage, setPercentage] = useState<number>(30);
 
   return (
-    <div className="justify-center items-center">
+    <div className="justify-center items-center ">
       <WholeRangeChart percentage={percentage} />
       <RangeText value={percentage} />
       <Box className="mx-auto" sx={{ width: 300 }}>

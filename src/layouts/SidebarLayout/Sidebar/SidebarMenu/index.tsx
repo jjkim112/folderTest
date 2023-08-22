@@ -175,7 +175,7 @@ function SidebarMenu() {
                   disableRipple
                   component={RouterLink}
                   onClick={closeSidebar}
-                  to="/overview"
+                  to="/admin/"
                   startIcon={<DesignServicesTwoToneIcon />}
                 >
                   로그인 화면

@@ -1,13 +1,13 @@
-import { ReactNode, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { useAdmin } from "src/reducer/authSlice";
+import { ReactNode, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAdmin } from 'src/reducer/authSlice';
 
 export const AdminRequireLayout = ({ children }: { children: ReactNode }) => {
   const isAdmin = useAdmin();
   let navigate = useNavigate();
   useEffect(() => {
     if (!isAdmin) {
-      navigate("/");
+      navigate('/admin/');
     }
   }, []);
   return <div>{children}</div>;

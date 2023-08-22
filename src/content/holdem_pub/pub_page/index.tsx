@@ -141,7 +141,7 @@ export default function HoldemPubOnePage() {
           </div>
         </div>
         <HeaderTap content={tabs} activeTab={setActiveHeaderTab} />
-        <div className="p-2">
+        <div className="p-2 h-full">
           {activeHeaderTab == 0 ? (
             <div className="p-2">
               <div>

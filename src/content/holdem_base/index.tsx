@@ -43,7 +43,7 @@ function HoldemBase() {
   ];
   const [activeHeaderTab, setActiveHeaderTab] = useState(0);
   return (
-    <div>
+    <div className="h-full">
       <HeaderTap content={tabs} activeTab={setActiveHeaderTab} />
       <HoldemBaseSel sel={`${tabs[activeHeaderTab].label}`}></HoldemBaseSel>
     </div>
@@ -54,8 +54,6 @@ type selProps = {
 };
 
 export function HoldemBaseSel({ sel }: selProps): JSX.Element {
-  console.log(sel);
-
   switch (sel) {
     case '핸드 순위':
       return <HandRankPage></HandRankPage>;
