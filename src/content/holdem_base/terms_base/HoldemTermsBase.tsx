@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './HoldemTermsBase.css';
 const terms = [
   {
@@ -424,7 +424,7 @@ const terms = [
           '일반적으로 플랍을 보기 전, 헤즈업 플레이를 위해 한 명의 플레이어를 제외하고 폴드시키려는 의도로 이루어진 베팅 또는 레이즈를 말합니다. 보통 림프한 상대에게 레이즈하면서 발생합니다.',
       },
       {
-        title: '안 봤다 올인 (Isolation)',
+        title: '안 봤다 올인 (No-Look All-in)',
         content: '패를 확인하지 않고 모든 칩을 올인 한다는 뜻',
       },
       {
@@ -632,10 +632,7 @@ const terms = [
         title: '쿼즈 (Quads)',
         content: '포 카드와 같은 용어입니다.',
       },
-      {
-        title: '커넥터 (Connector)',
-        content: '연속적인 두 장의 카드를 말합니다.',
-      },
+
       {
         title: '크라잉 콜 (Crying call)',
         content:
@@ -733,7 +730,7 @@ const terms = [
       {
         title: '팟 오즈 (Pot odds)',
         content:
-          '현재 베팅을 콜하는데 필요한 금액에 대한, 팟 금액의 비율을 말합니다.',
+          '현재 베팅을 콜하는데 필요한 금액에 대한, 팟 금액의 비율을 말합니다. if (현재 팟+콜해야 하는 금액) * (뜰 확률) > (콜해야 하는 금액) than 콜 if (현재 팟+콜해야 하는 금액) * (뜰 확률) < (콜해야 하는 금액) than 폴드',
       },
       {
         title: '팟 커밋 (Pot-committed)',
@@ -900,30 +897,121 @@ const terms = [
   },
 ];
 
+type termsType = {
+  key: string;
+  item: {
+    title: string;
+    content: string;
+  }[];
+}[];
+
 export default function HoldemTermsBase() {
-  const [activeHeaderTab, setActiveHeaderTab] = useState(0);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedItem, setSelectedItem] = useState<termsType>(terms);
+  const [selectedItemKey, setSelectedItemKey] = useState('');
+  const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(event.target.value);
+    if (selectedItemKey !== '') {
+      const newterms: termsType = [
+        terms.find((term) => term.key === selectedItemKey),
+      ];
+      setSelectedItem(
+        newterms
+          .map((alpahbetTerm) => {
+            const item = alpahbetTerm.item.filter((term) => {
+              const regex = new RegExp(event.target.value, 'i');
+              return regex.test(term.title) || regex.test(term.content);
+            });
+
+            if (item.length) {
+              return {
+                key: alpahbetTerm.key,
+                item,
+              };
+            }
+            return null;
+          })
+          .filter((i) => i !== null)
+      );
+    } else {
+      setSelectedItem(
+        terms
+          .map((alpahbetTerm) => {
+            const item = alpahbetTerm.item.filter((term) => {
+              const regex = new RegExp(event.target.value, 'i');
+              return regex.test(term.title) || regex.test(term.content);
+            });
+            if (item.length) {
+              return {
+                key: alpahbetTerm.key,
+                item,
+              };
+            }
+            return null;
+          })
+          .filter((i) => i !== null)
+      );
+    }
+  };
+
   return (
     <div className="common-container holdem-term">
       <div className="page-header">
-        <h2 className="title">홀덤 용어</h2>
+        <h2 className="title">
+          <span className="text-red-500">‼️</span>홀덤 용어
+        </h2>
       </div>
-
+      <div className=" text-black ">
+        <input
+          type="text"
+          value={searchTerm}
+          onChange={handleSearch}
+          className="w-full p-2 pr-10 border-2 rounded-md  focus:outline-none focus:border-blue-500"
+          placeholder="검색어를 입력하세요"
+        />
+      </div>
+      <div className="grid grid-cols-5 gap-2 my-2 ">
+        <button
+          className="rounded-md bg-gray-400 text-white p-1 mb-5 hover:bg-black mr-2 max-md:text-sm"
+          onClick={() => {
+            setSelectedItemKey('');
+            setSelectedItem(terms);
+          }}
+        >
+          전체
+        </button>
+        {terms.map(({ key }) => (
+          <button
+            className="rounded-md bg-cyan-700 text-white px-3 py-2 mb-5 hover:bg-yellow-400 mr-2"
+            key={key}
+            onClick={() => {
+              setSelectedItemKey(key);
+              setSelectedItem([terms.find((term) => term.key === key)]);
+            }}
+          >
+            {key}
+          </button>
+        ))}
+      </div>
       <div className="term-info">
-        <div></div>
-        <div className="mt-16">
-          {terms.map((value, i) => (
-            <div key={i} className="category">
-              <p className="title">{value.key}</p>
-              <div className="list">
-                {value.item.map((v, i) => (
-                  <dl key={i} className="item">
-                    <dt className="tit">{v.title}</dt>
-                    <dd className="con">{v.content}</dd>
-                  </dl>
-                ))}
+        <div className="mt-7">
+          {!selectedItem.length ? (
+            <div>일치하는 항목이 없습니다.</div>
+          ) : (
+            selectedItem.map((value, i) => (
+              <div key={i} className="category">
+                <p className="title">{value.key}</p>
+                <div className="list">
+                  {value.item.map((v, i) => (
+                    <dl key={i} className="item">
+                      <dt className="tit">{v.title}</dt>
+                      <dd className="con">{v.content}</dd>
+                    </dl>
+                  ))}
+                </div>
               </div>
-            </div>
-          ))}
+            ))
+          )}
         </div>
       </div>
     </div>
