@@ -103,7 +103,7 @@ export default function GuestInfoEditMain() {
                   <tr className="bg-[#2b3647] text-lg  ">
                     <th className="w-1/4 py-2 ">총 상금</th>
                     <th className="w-1/4 py-2">닉네임</th>
-                    <th className="w-1/4 py-2">점수</th>
+                    <th className="w-1/4 py-2">랭크</th>
                     <th className="w-1/4 py-2">머니인 횟수</th>
                   </tr>
                 </thead>

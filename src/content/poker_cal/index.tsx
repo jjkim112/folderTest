@@ -275,7 +275,7 @@ const CommunityCardPart = ({ communityCards, clickFunc }: any) => {
     <div className="flex  justify-center  w-full ">
       {communityCards.map((v: any, i: any) => {
         return (
-          <div className="mx-2" key={`${v}_${i}`}>
+          <div className="mx-2 " key={`${v}_${i}`}>
             <OneCardDiv
               card={v}
               cardClickFunc={() => {

@@ -53,7 +53,7 @@ export default function HoldemPubBetRule() {
     {
       title: '앤티(Ante)',
       content:
-        '토너먼트에서 블라인드가 어느 순간까지 도달 했을 때 빅블라인드가 빅블라인드 금액만큼 추가로 내는 금액. 앤티 금액은 펍 마다 다양',
+        '토너먼트에서 블라인드와 앤티가 있는 경우, 보통 빅블라인드가 빅블라인드 금액만큼 추가로 내는 금액\n\n빅 블라인드가 내지 않는 경우도 존재하며 앤티 금액은 펍 마다 다양한 앤티 룰이 있다',
     },
     {
       title: '스몰 블라인드(Small Bilind,SB)',
@@ -69,7 +69,7 @@ export default function HoldemPubBetRule() {
   const pot = [
     {
       title: '팟(Pot)',
-      content: '테이블에 쌓여있는 돈',
+      content: '테이블에 쌓여있는 돈, 승리시 팟에 쌓여 있는 돈을 가져감',
     },
   ];
   const call = [
@@ -82,7 +82,8 @@ export default function HoldemPubBetRule() {
   const raise = [
     {
       title: '레이즈(raise)',
-      content: '레이즈는 돈을 콜보다 증가시켜 배팅하는 행위',
+      content:
+        '레이즈는 돈을 앞서 (다른 플에이어)낸 금액 보다 증가시켜 배팅하는 행위',
     },
     {
       title: '레이즈 행동의 이유',
@@ -112,7 +113,7 @@ export default function HoldemPubBetRule() {
     {
       title: '최소 리레이즈 금액:',
       content:
-        '기본적으로 리레이즈는 최소한 이전 플레이어의 레이즈 금액만큼 증가가 필요, 예를 들어, 빅 블라인드가 200이고 첫 번째 레이즈한 플레이어가 400를 베팅했다면, 다음 플레이어가 레이즈하려면 적어도 200를 추가(600이상)로 베팅',
+        '기본적으로 리레이즈는 최소한 이전 플레이어의 레이즈 금액만큼 증가가 필요, 예를 들어, 빅 블라인드가 200이고 첫 번째 레이즈한 플레이어가 400를 베팅했다면, 다음 플레이어가 레이즈하려면 적어도 200을 더하여 (600이상)추가로 베팅',
     },
   ];
   const delEnd = [
@@ -136,7 +137,7 @@ export default function HoldemPubBetRule() {
     {
       title: '콜,레이즈',
       content:
-        '레이즈를 했거나 콜을 하게되면 팟에 쌓이게 됩니다. 배팅에 콜을 한 금액은 이후 어떤 상황에서도 회수가 불가능',
+        '레이즈를 했거나 콜을 하게되면 팟에 쌓이게 됩니다. 배팅에 콜을 한 금액은 (승리가 아닌)어떤 상황에서도 회수가 불가능',
     },
     {
       title: '승리 후 지급',
@@ -150,7 +151,7 @@ export default function HoldemPubBetRule() {
   ];
 
   return (
-    <div className="p-2">
+    <div className="p-2 whitespace-pre-wrap">
       <section className="pb-3">
         <div className="article-container">
           <h1 className="article-title">{'1. 홀덤 자리별 이름 (9 way)'}</h1>
@@ -235,7 +236,7 @@ export default function HoldemPubBetRule() {
             </div>
           ))}
           <p className="warning">
-            주의. 6만을 베팅했다면 레이즈는 최소 12만부터 가능하다.
+            주의.빅 블라인드가 6만이라면 첫 레이즈는 최소 12만부터 가능하다.
           </p>
         </div>
       </section>

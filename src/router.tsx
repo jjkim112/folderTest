@@ -55,9 +55,7 @@ const GuestInfoDetail = Loader(
   lazy(() => import('src/content/admin/guestInformation/guestInfoEditMain'))
 );
 
-const GuestInfoEdit = Loader(
-  lazy(() => import('src/content/admin/guestInformation/guestInfoEditMain'))
-);
+const GuestInfoEdit = Loader(lazy(() => import('src/content/admin/addGuest')));
 
 //에러페이지
 const Status404 = Loader(
