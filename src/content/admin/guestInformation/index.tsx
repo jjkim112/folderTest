@@ -1,11 +1,12 @@
-import { useDispatch, useSelector } from 'react-redux';
-import { DataService } from 'src/data/DataService';
-import { refreshWholePub } from 'src/reducer/pubSlice';
-import { setUsers } from 'src/reducer/userSlice';
-import { AppDispatch, RootState } from 'src/store/store';
-import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { AdminRequireLayout } from '../AdminRequireLayout';
+import { useDispatch, useSelector } from "react-redux";
+import { DataService } from "src/data/DataService";
+import { refreshWholePub } from "src/reducer/pubSlice";
+import { setUsers } from "src/reducer/userSlice";
+import { AppDispatch, RootState } from "src/store/store";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { AdminRequireLayout } from "../AdminRequireLayout";
+
 export default function GuestInformation() {
   const pubsData = useSelector((state: RootState) => state.pub.pubs);
 
@@ -39,7 +40,7 @@ export default function GuestInformation() {
                 <div className="w-1/5 h-full">
                   <div className="h-full overflow-hidden rounded-tl-md rounded-bl-md">
                     <img
-                      src={pubData.photos[0] ?? '/assets/images/background.png'}
+                      src={pubData.photos[0] ?? "/assets/images/background.png"}
                       alt={pubData.name}
                       className="w-full h-full object-[100%_100%]"
                     />
@@ -53,9 +54,7 @@ export default function GuestInformation() {
                       </p>
                       <div className=" ">
                         <div className=" text-sm font-bold text-white  rounded-xl text-center overflow-hidden text-ellipsis box-content line-clamp-2 ">
-                          지점 설명 지점설명 지점 설명 지점설명 지점 설명
-                          지점설명 지점 설명 지점설명 지점 설명 지점설명 지점
-                          설명 지점설명 지점 설명 지점설명 지점 설명 지점설명
+                          {pubData.description}
                         </div>
                       </div>
                     </div>
@@ -81,7 +80,7 @@ export default function GuestInformation() {
                 <div className="w-1/5 h-full">
                   <div className="bg-slate-500 h-full rounded-tr-md rounded-br-md p-5">
                     <img
-                      src={pubData.photos[1] ?? '/assets/images/background.png'}
+                      src={pubData.photos[1] ?? "/assets/images/background.png"}
                       alt={pubData.name}
                       className="w-full h-full object-fill"
                     />
