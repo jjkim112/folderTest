@@ -16,6 +16,7 @@ import { GameTemplate } from '../../../domain/GameTemplate.model';
 import { Game } from '../../../domain/Game.model';
 import { refreshWithPubId } from '../../../reducer/userSlice';
 import { FirebasePub } from 'src/data/firebase/FirebasePub';
+import MapTest from 'src/utils/map/Map';
 type Section = {
   label: string;
 };
@@ -105,7 +106,7 @@ export default function HoldemPubOnePage() {
           >
             ⬅️ 돌아가기
           </button>
-          <div className="flex flex-col md:flex-row items-center gap-x-8">
+          <div className="flex flex-col md:flex-row items-center gap-x-8 pb-3">
             <img
               className="w-[150px] h-[150px] md:w-[200px] md:h-[200px] rounded-lg shadow-lg"
               src={pickPub.photos[0]}
@@ -143,6 +144,7 @@ export default function HoldemPubOnePage() {
               </div>
             </div>
           </div>
+          <MapTest lat={pickPub.lat} lon={pickPub.lon}></MapTest>
         </div>
 
         <HeaderTap content={tabs} activeTab={setActiveHeaderTab} />

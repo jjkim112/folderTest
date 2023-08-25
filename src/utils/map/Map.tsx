@@ -1,6 +1,11 @@
 import { useEffect, useState } from 'react';
 
-const MapTest = () => {
+type MapProps = {
+  lat: number;
+  lon: number;
+};
+
+const MapTest = ({ lat, lon }: MapProps) => {
   const { naver } = window;
   const [myLocation, setMyLocation] = useState<
     { latitude: number; longitude: number } | string
@@ -11,18 +16,30 @@ const MapTest = () => {
     { lat: 33.5162356, lng: 126.5269451 },
     { lat: 33.5162356, lng: 126.5279351 },
   ];
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.src = `http://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${process.env.REACT_APP_NAVER_MAP_CLIENT_ID}`;
+    script.async = true;
+
+    document.head.appendChild(script);
+
+    return () => {
+      document.head.removeChild(script);
+    };
+  }, []);
   // 현재 위치 받아오기
   useEffect(() => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((position) => {
-        setMyLocation({
-          latitude: position.coords.latitude,
-          longitude: position.coords.longitude,
-        });
-      });
-    } else {
-      window.alert('현재위치를 알수 없습니다.');
-    }
+    // if (navigator.geolocation) {
+    //   navigator.geolocation.getCurrentPosition((position) => {
+    //     setMyLocation({
+    //       latitude: position.coords.latitude,
+    //       longitude: position.coords.longitude,
+    //     });
+    //   });
+    // } else {
+
+    // }
+    setMyLocation({ latitude: lat, longitude: lon });
   }, []);
 
   useEffect(() => {
@@ -145,7 +162,7 @@ const MapTest = () => {
     }
   }, [myLocation]);
 
-  return <div id="map" style={{ width: '100%', height: '500px' }} />;
+  return <div id="map" style={{ width: '50%', height: '300px' }} />;
 };
 
 export default MapTest;
