@@ -14,12 +14,7 @@ type MapProps = {
 const MapTest = ({ lat, lon }: MapProps) => {
   const navermaps = useNavermaps();
   return (
-    <MapDiv
-      style={{
-        width: '100%',
-        height: '600px',
-      }}
-    >
+    <MapDiv className="w-1/2 h-72 max-md:w-full">
       <NaverMap defaultCenter={new navermaps.LatLng(lat, lon)} defaultZoom={15}>
         <Marker defaultPosition={new navermaps.LatLng(lat, lon)} />
       </NaverMap>

@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { DataService } from '../../data/DataService';
 import { refreshWholePub } from '../../reducer/pubSlice';
 import { setUsers } from '../../reducer/userSlice';
+import MapMakers from 'src/utils/map/MapMaker';
 
 export default function HoldemPubPage() {
   const pubsData = useSelector((state: RootState) => state.pub.pubs);
@@ -82,6 +83,9 @@ export default function HoldemPubPage() {
             ))}
           </Slick>
         </div>
+        <section className="p-1">
+          <MapMakers pubsData={pubsData}></MapMakers>
+        </section>
         <section className="p-1">
           <div className="text-3xl font-bold text-white pb-2">홈덤 지점</div>
           <div className="flex flex-col items-center">
