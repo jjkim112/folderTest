@@ -1,28 +1,28 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 import {
   AiFillPhone,
   AiFillEnvironment,
   AiFillCaretDown,
   AiFillCaretUp,
-} from 'react-icons/ai';
-import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate, useParams } from 'react-router-dom';
-import { DataService } from 'src/data/DataService';
-import { GameTemplate } from 'src/domain/GameTemplate.model';
-import { Pub } from 'src/domain/Pub.model';
-import { refreshGames } from 'src/reducer/gameSlice';
-import { refreshWithPubId } from 'src/reducer/userSlice';
-import { AppDispatch, RootState } from 'src/store/store';
+} from "react-icons/ai";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
+import { DataService } from "src/data/DataService";
+import { GameTemplate } from "src/domain/GameTemplate.model";
+import { Pub } from "src/domain/Pub.model";
+import { refreshGames } from "src/reducer/gameSlice";
+import { refreshWithPubId } from "src/reducer/userSlice";
+import { AppDispatch, RootState } from "src/store/store";
 
 type Section = {
   label: string;
 };
 const tabs: Section[] = [
   {
-    label: '랭킹',
+    label: "랭킹",
   },
   {
-    label: '정보',
+    label: "정보",
   },
 ];
 
@@ -115,7 +115,7 @@ export default function GuestInfoEditMain() {
                     >
                       <td className="w-1/4 py-2">{`${(
                         ranking.totalPrize / 10000
-                      ).toLocaleString('ko-KR')}만원`}</td>
+                      ).toLocaleString("ko-KR")}만원`}</td>
                       <td className="w-1/4 py-2">{ranking.id}</td>
                       <td className="w-1/4 py-2">{ranking.howManyFirstRank}</td>
                       <td className="w-1/4 py-2">{ranking.howManyMoneyIn}</td>
@@ -162,8 +162,8 @@ export default function GuestInfoEditMain() {
                         }}
                       >
                         <td className="w-1/4 py-2">
-                          {_getGameTemp(pickPub?.id ?? '', game.gameTempId)
-                            ?.title ?? '존재하지 않음'}
+                          {_getGameTemp(pickPub?.id ?? "", game.gameTempId)
+                            ?.title ?? "존재하지 않음"}
                         </td>
                         <td className="w-1/4 py-2"> {game.entry}</td>
                         <td className="w-1/4 py-2">
@@ -199,13 +199,13 @@ export default function GuestInfoEditMain() {
                           className="text-center text-lg  odd:bg-[#2d394bd1] even:bg-[#303950f7]"
                         >
                           <td className="w-1/4 py-2">
-                            {_getGameTemp(pickPub?.id ?? '', game.gameTempId)
-                              ?.title ?? '존재하지 않음'}
+                            {_getGameTemp(pickPub?.id ?? "", game.gameTempId)
+                              ?.title ?? "존재하지 않음"}
                           </td>
                           <td className="w-1/4 py-2"> {player.rank}</td>
                           <td className="w-1/4 py-2">{`${(
                             player.prize / 10000
-                          ).toLocaleString('ko-KR')}만원`}</td>
+                          ).toLocaleString("ko-KR")}만원`}</td>
                           <td className="w-1/4 py-2">{player.id}</td>
                         </tr>
                       );
@@ -223,7 +223,7 @@ export default function GuestInfoEditMain() {
       <div className="w-full h-full flex flex-col justify-center  text-center p-10">
         <div> 잘못된 페인지 접근 입니다.</div>
         <br />
-        <button className="bg-white" onClick={() => navigate('/admin/')}>
+        <button className="bg-white" onClick={() => navigate("/admin/")}>
           이전페이지로
         </button>
       </div>
