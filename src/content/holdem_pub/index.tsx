@@ -12,7 +12,6 @@ import MapMakers from 'src/utils/map/MapMaker';
 
 export default function HoldemPubPage() {
   const pubsData = useSelector((state: RootState) => state.pub.pubs);
-
   const dispatch = useDispatch<AppDispatch>();
 
   const _initFunc = async () => {
@@ -83,7 +82,7 @@ export default function HoldemPubPage() {
             ))}
           </Slick>
         </div>
-        <section className="p-1">
+        <section className="p-2">
           <MapMakers pubsData={pubsData}></MapMakers>
         </section>
         <section className="p-1">
