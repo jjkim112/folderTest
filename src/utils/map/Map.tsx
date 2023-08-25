@@ -14,23 +14,16 @@ type MapProps = {
 const MapTest = ({ lat, lon }: MapProps) => {
   const navermaps = useNavermaps();
   return (
-    <NavermapsProvider
-      ncpClientId={`${process.env.REACT_APP_NAVER_MAP_CLIENT_ID}`}
+    <MapDiv
+      style={{
+        width: '100%',
+        height: '600px',
+      }}
     >
-      <MapDiv
-        style={{
-          width: '100%',
-          height: '600px',
-        }}
-      >
-        <NaverMap
-          defaultCenter={new navermaps.LatLng(lat, lon)}
-          defaultZoom={15}
-        >
-          <Marker defaultPosition={new navermaps.LatLng(lat, lon)} />
-        </NaverMap>
-      </MapDiv>
-    </NavermapsProvider>
+      <NaverMap defaultCenter={new navermaps.LatLng(lat, lon)} defaultZoom={15}>
+        <Marker defaultPosition={new navermaps.LatLng(lat, lon)} />
+      </NaverMap>
+    </MapDiv>
   );
 };
 export default MapTest;
