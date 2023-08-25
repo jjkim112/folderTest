@@ -67,6 +67,7 @@ export default function HoldemPubOnePage() {
   useEffect(() => {
     goToPubPage();
   }, []);
+
   useEffect(() => {
     // filteredGameData를 갱신
     if (selectedTournamentId !== null) {

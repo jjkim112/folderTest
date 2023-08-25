@@ -16,17 +16,7 @@ const MapTest = ({ lat, lon }: MapProps) => {
     { lat: 33.5162356, lng: 126.5269451 },
     { lat: 33.5162356, lng: 126.5279351 },
   ];
-  useEffect(() => {
-    const script = document.createElement('script');
-    script.src = `http://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${process.env.REACT_APP_NAVER_MAP_CLIENT_ID}`;
-    script.async = true;
 
-    document.head.appendChild(script);
-
-    return () => {
-      document.head.removeChild(script);
-    };
-  }, []);
   // 현재 위치 받아오기
   useEffect(() => {
     // if (navigator.geolocation) {
