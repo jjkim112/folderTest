@@ -33,29 +33,38 @@ const MapTest = ({ lat, lon }: MapProps) => {
   }, []);
 
   useEffect(() => {
-    if (typeof myLocation !== 'string') {
-      const currentPosition = [myLocation.latitude, myLocation.longitude];
+    if (window.naver && window.naver.maps) {
+      // window.naver.maps 객체 사용
 
-      const map = new naver.maps.Map('map', {
-        center: new naver.maps.LatLng(currentPosition[0], currentPosition[1]),
-        zoomControl: true,
-      });
+      if (typeof myLocation !== 'string') {
+        const currentPosition = [myLocation.latitude, myLocation.longitude];
 
-      const currentMarker = new naver.maps.Marker({
-        position: new naver.maps.LatLng(currentPosition[0], currentPosition[1]),
-        map,
-      });
+        const map = new naver.maps.Map('map', {
+          center: new naver.maps.LatLng(currentPosition[0], currentPosition[1]),
+          zoomControl: true,
+        });
 
-      // 주변 마커 나타내기
-      for (let i = 0; i < otherLatLngs.length; i++) {
-        const otherMarkers = new naver.maps.Marker({
+        const currentMarker = new naver.maps.Marker({
           position: new naver.maps.LatLng(
-            otherLatLngs[i].lat,
-            otherLatLngs[i].lng
+            currentPosition[0],
+            currentPosition[1]
           ),
           map,
         });
+
+        // 주변 마커 나타내기
+        for (let i = 0; i < otherLatLngs.length; i++) {
+          const otherMarkers = new naver.maps.Marker({
+            position: new naver.maps.LatLng(
+              otherLatLngs[i].lat,
+              otherLatLngs[i].lng
+            ),
+            map,
+          });
+        }
       }
+    } else {
+      console.error('Naver Maps API has not been loaded.');
     }
   }, [myLocation]);
 
