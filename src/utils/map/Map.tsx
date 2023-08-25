@@ -152,7 +152,7 @@ const MapTest = ({ lat, lon }: MapProps) => {
     }
   }, [myLocation]);
 
-  return <div id="map" style={{ width: '50%', height: '300px' }} />;
+  return <div id="map" className="w-1/2 h-72 max-md:w-full" />;
 };
 
 export default MapTest;
