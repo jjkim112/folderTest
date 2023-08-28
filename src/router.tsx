@@ -21,6 +21,7 @@ const Loader = (Component) => (props) =>
 const HomePage = Loader(lazy(() => import('src/content/home')));
 
 const HoldemBase = Loader(lazy(() => import('src/content/holdem_base')));
+const HoldemUtil = Loader(lazy(() => import('src/content/holem_util')));
 const PokerCalPage = Loader(lazy(() => import('src/content/poker_cal')));
 const HoldemPubPage = Loader(lazy(() => import('src/content/holdem_pub')));
 const HoldemPubOnePage = Loader(
@@ -87,6 +88,10 @@ const routes: RouteObject[] = [
       {
         path: 'holdem-base',
         element: <HoldemBase />,
+      },
+      {
+        path: 'holdem-util',
+        element: <HoldemUtil />,
       },
       {
         path: 'poker-cal',

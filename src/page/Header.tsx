@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { HeaderTap } from '../utils/header/header_tap';
-
+import React, { SyntheticEvent, useEffect, useState } from 'react';
+import { Box, Tab, Tabs } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 type IntroductionTab = {
   label: string;
   mainLink?: string;
@@ -18,6 +17,10 @@ const tabs: IntroductionTab[] = [
     mainLink: '/holdem-base',
   },
   {
+    label: '홀덤 유틸',
+    mainLink: '/holdem-util',
+  },
+  {
     label: '홀덤 펍/지점',
     mainLink: '/holdem-pub',
   },
@@ -30,46 +33,42 @@ const tabs: IntroductionTab[] = [
 
 export const Header = () => {
   const [activeHeaderTab, setActiveHeaderTab] = useState(0);
-  const sampleLocation = useLocation();
-  let navigate = useNavigate();
-  const handleClickHeaderTab = (index: number) => {
-    setActiveHeaderTab(index);
-  };
-
-  useEffect(() => {
-    console.log(sampleLocation.pathname.split('/'));
-
-    const splitPath = sampleLocation.pathname.split('/');
-    console.log(`/${splitPath[1]}`);
-    tabs.map((v, i) => {
-      if (v.mainLink === `/${splitPath[1]}`) {
-        setActiveHeaderTab(i);
-      }
-    });
-  }, []);
+  const navigator = useNavigate();
+  function handleClickTab(
+    event: SyntheticEvent<Element, Event>,
+    value: any
+  ): void {
+    setActiveHeaderTab(value);
+  }
 
   return (
-    <div className="bg-slate-800">
-      <div className="flex flex-col justify-center items-center bg-black p-2 ">
-        <div className="flex mb-4  text-gray-50  ">
-          {tabs.map((tab, index) => (
-            <button
+    <Box
+      bgcolor={'black'}
+      color={'white'}
+      display="flex"
+      justifyContent="center"
+    >
+      <Tabs
+        value={activeHeaderTab}
+        onChange={handleClickTab}
+        variant="scrollable"
+        scrollButtons
+        allowScrollButtonsMobile
+        aria-label="scrollable force tabs example"
+      >
+        {tabs ? (
+          tabs.map((tab, index) => (
+            <Tab
               key={index}
-              className={`mr-4 cursor-pointer ${
-                activeHeaderTab === index
-                  ? 'pb-1 border-b-2 border-blue-500'
-                  : ''
-              } text-center`}
-              onClick={() => {
-                handleClickHeaderTab(index);
-                navigate(tab.mainLink!);
-              }}
-            >
-              <span className="text-sm font-medium">{tab.label}</span>
-            </button>
-          ))}
-        </div>
-      </div>
-    </div>
+              label={tab.label}
+              style={{ color: activeHeaderTab === index ? 'white' : 'gray' }}
+              onClick={() => navigator(tab.mainLink)}
+            />
+          ))
+        ) : (
+          <Tab label="없음" />
+        )}
+      </Tabs>
+    </Box>
   );
 };

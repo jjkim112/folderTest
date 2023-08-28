@@ -28,17 +28,7 @@ function HoldemBase() {
       label: '용어 정리',
     },
     {
-      label: '핸드 순위',
-    },
-    {
       label: '비전 핸드 확률',
-    },
-
-    {
-      label: '프리플랍 핸드',
-    },
-    {
-      label: '포커(족보) 랭킹',
     },
   ];
   const [activeHeaderTab, setActiveHeaderTab] = useState(0);
@@ -55,17 +45,10 @@ type selProps = {
 
 export function HoldemBaseSel({ sel }: selProps): JSX.Element {
   switch (sel) {
-    case '핸드 순위':
-      return <HandRankPage></HandRankPage>;
-
-    case '프리플랍 핸드':
-      return <PreFlopRangePage></PreFlopRangePage>;
     case '홀덤 베팅 방식':
       return <HoldemPubBetRule></HoldemPubBetRule>;
     case '홀덤 플레이 방식':
       return <HoldemPubCardRule></HoldemPubCardRule>;
-    case '포커(족보) 랭킹':
-      return <HandRankings></HandRankings>;
     case '비전 핸드 확률':
       return <HoldemVisionAbility></HoldemVisionAbility>;
     case '펍 방문시':

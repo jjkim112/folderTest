@@ -1,12 +1,23 @@
 .rangeGrid {
   display: grid;
-  margin: 20px 0px;
+  margin: 20px 10px;
   justify-content: center;
   align-content: center;
-  gap: 1px;
   font-size: 12px;
   grid-template-columns: repeat(13, 1fr);
   grid-template-rows: repeat(13, 1fr);
+}
+
+@media only screen and (max-width: 289px) {
+
+  .rangeGrid {
+    display: grid;
+    justify-content: center;
+    align-content: center;
+    font-size: xx-small;
+    grid-template-columns: repeat(13, 1fr);
+    grid-template-rows: repeat(13, 1fr);
+  }
 }
 
 .notContainItem {
