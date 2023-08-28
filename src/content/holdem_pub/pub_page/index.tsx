@@ -13,9 +13,7 @@ import { refreshGames } from '../../../reducer/gameSlice';
 import { useNavigate, useParams } from 'react-router-dom';
 import { HeaderTap } from '../../../utils/header/header_tap';
 import { GameTemplate } from '../../../domain/GameTemplate.model';
-import { Game } from '../../../domain/Game.model';
 import { refreshWithPubId } from '../../../reducer/userSlice';
-import { FirebasePub } from 'src/data/firebase/FirebasePub';
 import MapTest from 'src/utils/map/Map';
 type Section = {
   label: string;

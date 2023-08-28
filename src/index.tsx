@@ -7,6 +7,7 @@ import { Provider } from 'react-redux';
 import { store } from './store/store';
 import firebase from 'firebase/compat/app';
 import { SidebarProvider } from './contexts/SidebarContext';
+import { NavermapsProvider } from 'react-naver-maps';
 import App from './App';
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -25,11 +26,15 @@ firebase.initializeApp(firebaseConfig);
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <SidebarProvider>
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
-      </SidebarProvider>
+      <NavermapsProvider
+        ncpClientId={`${process.env.REACT_APP_NAVER_MAP_CLIENT_ID}`}
+      >
+        <SidebarProvider>
+          <BrowserRouter>
+            <App />
+          </BrowserRouter>
+        </SidebarProvider>
+      </NavermapsProvider>
     </Provider>
   </React.StrictMode>
 );

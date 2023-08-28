@@ -982,7 +982,7 @@ export default function HoldemTermsBase() {
         </button>
         {terms.map(({ key }) => (
           <button
-            className="rounded-md bg-cyan-700 text-white px-3 py-2 mb-5 hover:bg-yellow-400 mr-2"
+            className="rounded-md bg-cyan-700 text-white px-3 py-2 mb-5 hover:bg-yel mr-2"
             key={key}
             onClick={() => {
               setSelectedItemKey(key);
@@ -994,16 +994,18 @@ export default function HoldemTermsBase() {
         ))}
       </div>
       <div className="term-info">
-        <div className="mt-7">
+        <div className="">
           {!selectedItem.length ? (
             <div>일치하는 항목이 없습니다.</div>
           ) : (
             selectedItem.map((value, i) => (
-              <div key={i} className="category">
+              <div key={i} className="category ">
                 <p className="title">{value.key}</p>
                 <div className="list">
                   {value.item.map((v, i) => (
-                    <dl key={i} className="item">
+                    <dl key={i} className="item ">
+                      <dd className="side-border-top"></dd>
+                      <dd className="side-border-bottom"></dd>
                       <dt className="tit">{v.title}</dt>
                       <dd className="con">{v.content}</dd>
                     </dl>
