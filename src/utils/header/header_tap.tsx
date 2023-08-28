@@ -22,7 +22,12 @@ export const HeaderTap = ({ content, activeTab }: HeaderTapProps) => {
   }
 
   return (
-    <Box bgcolor={'black'} color={'white'}>
+    <Box
+      bgcolor={'black'}
+      color={'white'}
+      display="flex"
+      justifyContent="center"
+    >
       <Tabs
         value={activeHeaderTab}
         onChange={handleClickTab}

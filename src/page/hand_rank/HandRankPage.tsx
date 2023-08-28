@@ -8,7 +8,7 @@ interface TopBarProps {
 }
 
 const HandRankPage: React.FC = () => {
-  const [isInput, setIsInput] = useState<boolean>(true);
+  const [isInput, setIsInput] = useState<boolean>(false);
 
   return (
     <div className=" h-screen">
