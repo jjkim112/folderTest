@@ -5,9 +5,9 @@ import {
   ListItemText,
   Menu,
   MenuItem,
-} from '@mui/material';
-import { NavLink } from 'react-router-dom';
-import { styled } from '@mui/material/styles';
+} from "@mui/material";
+import { NavLink } from "react-router-dom";
+import { styled } from "@mui/material/styles";
 
 const ListWrapper = styled(Box)(
   ({ theme }) => `
@@ -16,7 +16,7 @@ const ListWrapper = styled(Box)(
         }
         
         .MuiListItem-root {
-            transition: ${theme.transitions.create(['color', 'fill'])};
+            transition: ${theme.transitions.create(["color", "fill"])};
             
             &.MuiListItem-indicators {
                 padding: ${theme.spacing(1, 2)};
@@ -66,15 +66,15 @@ function HeaderMenu() {
       <ListWrapper
         sx={{
           display: {
-            xs: 'none',
-            md: 'block',
-            lg: 'block',
+            xs: "none",
+            md: "block",
+            lg: "block",
           },
         }}
       >
         <List disablePadding component={Box} display="flex">
           <ListItem
-            classes={{ root: 'MuiListItem-indicators' }}
+            classes={{ root: "MuiListItem-indicators" }}
             button
             component={NavLink}
             to="/admin/storeInfo"
@@ -84,8 +84,8 @@ function HeaderMenu() {
               primary="매장 정보 관리"
             />
           </ListItem>
-          <ListItem
-            classes={{ root: 'MuiListItem-indicators' }}
+          {/* <ListItem
+            classes={{ root: "MuiListItem-indicators" }}
             button
             component={NavLink}
             to="/admin/storeInfoEdit"
@@ -94,8 +94,8 @@ function HeaderMenu() {
               primaryTypographyProps={{ noWrap: true }}
               primary="매장 정보 추가/삭제"
             />
-          </ListItem>
-          <ListItem
+          </ListItem> */}
+          {/* <ListItem
             classes={{ root: 'MuiListItem-indicators' }}
             button
             component={NavLink}
@@ -105,8 +105,8 @@ function HeaderMenu() {
               primaryTypographyProps={{ noWrap: true }}
               primary="손님 정보 관리"
             />
-          </ListItem>
-          <ListItem
+          </ListItem> */}
+          {/* <ListItem
             classes={{ root: 'MuiListItem-indicators' }}
             button
             component={NavLink}
@@ -116,7 +116,7 @@ function HeaderMenu() {
               primaryTypographyProps={{ noWrap: true }}
               primary="손님 정보 추가/삭제"
             />
-          </ListItem>
+          </ListItem> */}
         </List>
       </ListWrapper>
     </>

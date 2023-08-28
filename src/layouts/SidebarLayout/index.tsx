@@ -1,9 +1,9 @@
-import { FC, ReactNode } from 'react';
-import { Box, alpha, lighten, useMediaQuery, useTheme } from '@mui/material';
-import { Outlet } from 'react-router-dom';
+import { FC, ReactNode } from "react";
+import { Box, alpha, lighten, useMediaQuery, useTheme } from "@mui/material";
+import { Outlet } from "react-router-dom";
 
-import Sidebar from './Sidebar';
-import Header from './Header';
+import Sidebar from "./Sidebar";
+import Header from "./Header";
 
 interface SidebarLayoutProps {
   children?: ReactNode;
@@ -11,38 +11,38 @@ interface SidebarLayoutProps {
 
 const SidebarLayout: FC<SidebarLayoutProps> = () => {
   const theme = useTheme();
-  const matches = useMediaQuery('(min-width:900px)');
+  const matches = useMediaQuery("(min-width:900px)");
   return (
     <>
       <Box
         sx={{
           flex: 1,
-          height: '100%',
+          height: "100%",
 
-          background: '#a9adb5',
+          background: "#a9adb5",
           marginBottom: `${theme.spacing(4)}`,
           boxShadow:
-            theme.palette.mode === 'dark'
+            theme.palette.mode === "dark"
               ? `0 1px 0 ${alpha(
-                  lighten('#c92323', 0.7),
+                  lighten("#c92323", 0.7),
                   0.15
                 )}, 0px 2px 4px -3px rgba(0, 0, 0, 0.2), 0px 5px 12px -4px rgba(0, 0, 0, .1)`
               : `0px 2px 4px -3px ${alpha(
-                  '#7e98ca',
+                  "#7e98ca",
                   0.1
-                )}, 0px 5px 12px -4px ${alpha('#a9adb5', 0.05)}`,
+                )}, 0px 5px 12px -4px ${alpha("#a9adb5", 0.05)}`,
         }}
       >
         <Header />
         <Sidebar />
         <Box
           sx={{
-            position: 'relative',
+            position: "relative",
             zIndex: 5,
-            display: 'block',
+            display: "block",
             flex: 1,
-            pt: '20px',
-            [theme.breakpoints.up('md')]: {
+            pt: "20px",
+            [theme.breakpoints.up("md")]: {
               ml: `290px`,
               pt: `80px`,
             },

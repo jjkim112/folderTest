@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext } from "react";
 
 import {
   ListSubheader,
@@ -8,16 +8,16 @@ import {
   styled,
   Button,
   ListItem,
-} from '@mui/material';
-import { NavLink as RouterLink } from 'react-router-dom';
-import { SidebarContext } from 'src/contexts/SidebarContext';
+} from "@mui/material";
+import { NavLink as RouterLink } from "react-router-dom";
+import { SidebarContext } from "src/contexts/SidebarContext";
 
-import DesignServicesTwoToneIcon from '@mui/icons-material/DesignServicesTwoTone';
-import BrightnessLowTwoToneIcon from '@mui/icons-material/BrightnessLowTwoTone';
-import MmsTwoToneIcon from '@mui/icons-material/MmsTwoTone';
-import TableChartTwoToneIcon from '@mui/icons-material/TableChartTwoTone';
-import AccountCircleTwoToneIcon from '@mui/icons-material/AccountCircleTwoTone';
-import HowToRegTwoToneIcon from '@mui/icons-material/HowToRegTwoTone';
+import DesignServicesTwoToneIcon from "@mui/icons-material/DesignServicesTwoTone";
+import BrightnessLowTwoToneIcon from "@mui/icons-material/BrightnessLowTwoTone";
+import MmsTwoToneIcon from "@mui/icons-material/MmsTwoTone";
+import TableChartTwoToneIcon from "@mui/icons-material/TableChartTwoTone";
+import AccountCircleTwoToneIcon from "@mui/icons-material/AccountCircleTwoTone";
+import HowToRegTwoToneIcon from "@mui/icons-material/HowToRegTwoTone";
 
 const MenuWrapper = styled(Box)(
   ({ theme }) => `
@@ -70,7 +70,7 @@ const SubMenuWrapper = styled(Box)(
 
           .MuiButton-startIcon,
           .MuiButton-endIcon {
-            transition: ${theme.transitions.create(['color'])};
+            transition: ${theme.transitions.create(["color"])};
 
             .MuiSvgIcon-root {
               font-size: inherit;
@@ -93,7 +93,7 @@ const SubMenuWrapper = styled(Box)(
 
           &.active,
           &:hover {
-            background-color: ${alpha('#ffffff', 0.06)};
+            background-color: ${alpha("#ffffff", 0.06)};
             color: white;
 
             .MuiButton-startIcon,
@@ -134,8 +134,8 @@ const SubMenuWrapper = styled(Box)(
                 background: white;
                 opacity: 0;
                 transition: ${theme.transitions.create([
-                  'transform',
-                  'opacity',
+                  "transform",
+                  "opacity",
                 ])};
                 width: 6px;
                 height: 6px;
@@ -188,7 +188,7 @@ function SidebarMenu() {
           component="div"
           subheader={
             <ListSubheader
-              style={{ fontSize: '15px' }}
+              style={{ fontSize: "15px" }}
               component="div"
               disableSticky
             >
@@ -209,7 +209,7 @@ function SidebarMenu() {
                   매장 정보 관리
                 </Button>
               </ListItem>
-              <ListItem component="div">
+              {/* <ListItem component="div">
                 <Button
                   disableRipple
                   component={RouterLink}
@@ -219,7 +219,7 @@ function SidebarMenu() {
                 >
                   매장 정보 추가/삭제
                 </Button>
-              </ListItem>
+              </ListItem> */}
             </List>
           </SubMenuWrapper>
         </List>
@@ -227,7 +227,7 @@ function SidebarMenu() {
           component="div"
           subheader={
             <ListSubheader
-              style={{ fontSize: '15px' }}
+              style={{ fontSize: "15px" }}
               component="div"
               disableSticky
             >
@@ -235,7 +235,7 @@ function SidebarMenu() {
             </ListSubheader>
           }
         >
-          <SubMenuWrapper>
+          {/* <SubMenuWrapper>
             <List component="div">
               <ListItem component="div">
                 <Button
@@ -260,7 +260,7 @@ function SidebarMenu() {
                 </Button>
               </ListItem>
             </List>
-          </SubMenuWrapper>
+          </SubMenuWrapper> */}
         </List>
       </MenuWrapper>
     </>
