@@ -1,20 +1,21 @@
-import { useContext, useEffect, useRef, useState } from 'react';
-import basic from '../../utils/basic.json';
-import { getResult } from '../../utils/poker_func';
-import { json } from 'react-router-dom';
-import Card from '../../component/Card';
-import './style.css';
-import CardSetDialog from './CardSetDialog';
-import { AppDispatch, RootState } from '../../store/store';
-import { useDispatch, useSelector } from 'react-redux';
+import { useContext, useEffect, useRef, useState } from "react";
+import basic from "../../utils/basic.json";
+import { getResult } from "../../utils/poker_func";
+import { json } from "react-router-dom";
+import Card from "../../component/Card";
+import "./style.css";
+import CardSetDialog from "./CardSetDialog";
+import { AppDispatch, RootState } from "../../store/store";
+import { useDispatch, useSelector } from "react-redux";
 import {
   OnePlayer,
   flopCommunityCards,
+  randomPickSet,
   refreshPokerCal,
   resetCommunityCards,
   updateCommunitCards,
   updatePlayerCards,
-} from '../../reducer/pokerCalSlice';
+} from "../../reducer/pokerCalSlice";
 
 class detailInfo {
   hand: any;
@@ -53,7 +54,7 @@ const getRealHands = (hands: any): any[] => {
   });
 };
 
-let prevHash = '';
+let prevHash = "";
 var setCardFunc = () => {}; // dialog props
 
 const PokerCalPage = () => {
@@ -65,8 +66,8 @@ const PokerCalPage = () => {
       return prev + curr;
     });
   };
-  const remainCards = useSelector(
-    (state: RootState) => state.pokerCal.remainCards
+  const randomPick = useSelector(
+    (state: RootState) => state.pokerCal.randomPick
   );
   const communityCards = useSelector(
     (state: RootState) => state.pokerCal.communityCards
@@ -78,7 +79,7 @@ const PokerCalPage = () => {
 
   var [dialogOpen, setDialogOpen] = useState(false);
 
-  var [dialogSelCard, setDialogSelCard] = useState('');
+  var [dialogSelCard, setDialogSelCard] = useState("");
 
   var dialogInputSetFunc = (func: any) => {
     setCardFunc = func;
@@ -97,9 +98,27 @@ const PokerCalPage = () => {
     return v;
   };
 
+  const handDetailInit = () => {
+    setHandDetails(
+      players.map((v: OnePlayer, i: any) => {
+        return new detailInfo(v.hand, 0, 0);
+      })
+    );
+  };
+  const isGoodCommuCards = (cards: string[]): boolean => {
+    var processList = cards.map((v) => (isCard(v) ? 1 : 0));
+    return (
+      processList.toString() === [0, 0, 0, 0, 0].toString() ||
+      processList.toString() === [1, 1, 1, 0, 0].toString() ||
+      processList.toString() === [1, 1, 1, 1, 0].toString() ||
+      processList.toString() === [1, 1, 1, 1, 1].toString()
+    );
+  };
+
   const refreshHandDetails = () => {
     const realHands = getRealHands(players.map((v, i) => v.hand));
     if (realHands.length < 2) {
+      handDetailInit();
       return;
     }
 
@@ -108,22 +127,9 @@ const PokerCalPage = () => {
       ...communityCards,
     ];
 
-    var process = 0;
-    for (let index = 0; index < communityCards.length; index++) {
-      const cardStr = communityCards[index];
-      if (isCard(cardStr)) {
-        process++;
-      } else {
-        break;
-      }
-    }
-    if (!(process == 0 || process == 3 || process == 4 || process == 5)) {
+    if (!isGoodCommuCards(communityCards)) {
+      handDetailInit();
       return;
-    }
-    for (let index = 0; index < process; index++) {
-      if (!isCard(communityCards[index])) {
-        return;
-      }
     }
 
     if (toCardHash(cardSerialize) != prevHash) {
@@ -141,6 +147,22 @@ const PokerCalPage = () => {
   };
   const _resetFlopFunc = () => {
     dispatch(resetCommunityCards());
+  };
+
+  const _pickFlop = () => {
+    const setNum = 1 - randomPick[0];
+    let tempList = [...[setNum, setNum, setNum], ...randomPick.slice(3, 5)];
+    dispatch(randomPickSet(tempList));
+  };
+  const _pickTurn = () => {
+    const setNum = 1 - randomPick[3];
+    let tempList = [...randomPick.slice(0, 3), setNum, randomPick[4]];
+    dispatch(randomPickSet(tempList));
+  };
+  const _pickRiver = () => {
+    const setNum = 1 - randomPick[4];
+    let tempList = [...randomPick.slice(0, 4), setNum];
+    dispatch(randomPickSet(tempList));
   };
 
   useEffect(() => {
@@ -162,33 +184,62 @@ const PokerCalPage = () => {
           {remainCards.map((v) => ` (${v}) `)}
         </div>
         <div>{communityCards.map((v) => ` [${v}] `)}</div> */}
-        <div className="flex justify-center my-2">
-          <button
-            className="bg-slate-500 mx-1 px-4 border-[1px] border-red-100 rounded-2xl text-yellow-200"
-            onClick={_flopFunc}
-          >
-            카드 깔기
+        <div className="flex justify-center">
+          <button className="px-4  text-blue-200 underline" onClick={_flopFunc}>
+            카드깔기
           </button>
           <button
-            className="bg-slate-500 mx-1 px-4 border-[1px] border-red-100 rounded-2xl text-yellow-200"
+            className="px-4  text-blue-200 underline"
             onClick={_resetFlopFunc}
           >
-            리셋 (커뮤니티 카드)
+            리셋
+          </button>
+        </div>
+        <div className="flex justify-center my-2">
+          <button
+            className={`${
+              randomPick.slice(0, 3).toString() === [0, 0, 0].toString()
+                ? "bg-slate-500 mx-1 px-4 border-[1px] border-red-100 rounded-2xl text-yellow-200"
+                : "bg-gray-400 mx-1 px-4 border-[1px] border-gray-600 rounded-2xl text-gray-200"
+            }`}
+            onClick={_pickFlop}
+          >
+            플랍3장
+          </button>
+          <button
+            className={`${
+              randomPick.slice(3, 4).toString() === [0].toString()
+                ? "bg-slate-500 mx-1 px-4 border-[1px] border-red-100 rounded-2xl text-yellow-200"
+                : "bg-gray-400 mx-1 px-4 border-[1px] border-gray-600 rounded-2xl text-gray-200"
+            }`}
+            onClick={_pickTurn}
+          >
+            턴1장
+          </button>
+          <button
+            className={`${
+              randomPick.slice(4, 5).toString() === [0].toString()
+                ? "bg-slate-500 mx-1 px-4 border-[1px] border-red-100 rounded-2xl text-yellow-200"
+                : "bg-gray-400 mx-1 px-4 border-[1px] border-gray-600 rounded-2xl text-gray-200"
+            }`}
+            onClick={_pickRiver}
+          >
+            리버1장
           </button>
         </div>
         <CommunityCardPart
           communityCards={communityCards}
           clickFunc={(cardValue: any, cardIndex: any) => {
-            for (let i: number = 0; i <= cardIndex - 1; i++) {
-              if (!isCard(communityCards[i])) {
-                return;
-              }
-            }
+            // for (let i: number = 0; i <= cardIndex - 1; i++) {
+            //   if (!isCard(communityCards[i])) {
+            //     return;
+            //   }
+            // }
 
             setDialogSelCard(cardValue);
             dialogInputSetFunc((targetCard: any) => {
-              var delCard = '';
-              var addCard = '';
+              var delCard = "";
+              var addCard = "";
               if (targetCard == cardValue) {
                 delCard = targetCard;
               } else {
@@ -197,7 +248,7 @@ const PokerCalPage = () => {
               }
               var temp = Array.from(communityCards);
               if (targetCard == cardValue) {
-                temp[cardIndex] = '';
+                temp[cardIndex] = "";
               } else {
                 temp[cardIndex] = targetCard;
               }
@@ -218,8 +269,8 @@ const PokerCalPage = () => {
                 clickFunc={(cardValue: any, handIndex: any) => {
                   setDialogSelCard(cardValue);
                   dialogInputSetFunc((targetCard: any) => {
-                    var delCard = '';
-                    var addCard = '';
+                    var delCard = "";
+                    var addCard = "";
                     if (targetCard == cardValue) {
                       delCard = targetCard;
                     } else {
@@ -232,7 +283,7 @@ const PokerCalPage = () => {
                     );
 
                     if (targetCard == cardValue) {
-                      tempList[i].hand[handIndex] = '';
+                      tempList[i].hand[handIndex] = "";
                     } else {
                       tempList[i].hand[handIndex] = targetCard;
                     }
@@ -241,7 +292,7 @@ const PokerCalPage = () => {
                   setDialogOpen(true);
                 }}
                 delFunc={() => {
-                  console.log('del func');
+                  console.log("del func");
                   const card1 = players[i].hand[0];
                   const card2 = players[i].hand[1];
                   var temp = Array.from(players.map((v) => v.clone));
@@ -301,7 +352,7 @@ const ActionPart = ({ players }: ActionPartProps) => {
         className="flex justify-center text-center items-center border-2 w-24 h-12"
         onClick={() => {
           var temp = Array.from(players.map((v) => v.clone));
-          temp.push(new OnePlayer(['', '']));
+          temp.push(new OnePlayer(["", ""]));
 
           dispatch(updatePlayerCards(temp));
         }}
@@ -367,7 +418,7 @@ const OneCardDiv = ({ card, cardClickFunc }: any) => {
         // event.target.style.border = "none";
       }}
     >
-      <Card card={isCard(card) ? card : ''} width="60px" height="100px" />
+      <Card card={isCard(card) ? card : ""} width="60px" height="100px" />
     </div>
   );
 };
