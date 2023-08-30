@@ -1013,7 +1013,9 @@ export default function HoldemTermsBase() {
       </div>
       <div className="grid grid-cols-5 gap-2 my-2 ">
         <button
-          className="rounded-md bg-gray-400 text-white p-1 mb-5 hover:bg-black mr-2 max-md:text-sm"
+          className={`rounded-md  ${
+            selectedItemKey === '' ? 'bg-black' : 'bg-gray-400'
+          }  text-white p-1 mb-5 hover:bg-black mr-2 max-md:text-sm`}
           onClick={() => {
             setSelectedItemKey('');
             setSelectedItem(terms);
@@ -1023,7 +1025,9 @@ export default function HoldemTermsBase() {
         </button>
         {terms.map(({ key }) => (
           <button
-            className="rounded-md bg-cyan-700 text-white px-3 py-2 mb-5 hover:bg-yel mr-2"
+            className={`rounded-md bg-cyan-700  ${
+              selectedItemKey === key ? 'bg-slate-700' : 'bg-cyan-700'
+            }  text-white px-3 py-2 mb-5 hover:bg-yel mr-2`}
             key={key}
             onClick={() => {
               setSelectedItemKey(key);

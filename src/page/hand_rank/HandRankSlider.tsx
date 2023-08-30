@@ -89,7 +89,7 @@ interface XwayProps {
 }
 const Xway: React.FC<XwayProps> = (props) => {
   return (
-    <div className="grid grid-cols-3 gap-1  text-2xl m-2  ">
+    <div className="grid grid-cols-3 gap-1 text-2xl m-2 sm:w-full md:w-1/2 lg:w-1/3 ">
       <BasicBtn
         name="2"
         isSel={props.value === '2'}
@@ -151,8 +151,8 @@ const BasicBtn: React.FC<BasicBtnProps> = ({ name, isSel, onClick }) => {
     <button
       className={
         isSel
-          ? 'block mx-2 bg-red-200 shadow-xl rounded-full border-2 border-gray-400 cursor-pointer px-2 py-1'
-          : 'block mx-2 hover:bg-red-200 shadow-xl rounded-full bg-white       border-2 border-gray-400 cursor-pointer px-2 py-1'
+          ? 'w-20 block mx-2 bg-red-200 shadow-xl rounded-full border-2 border-gray-400 cursor-pointer px-2 py-1'
+          : 'w-20 block mx-2 hover:bg-red-200 shadow-xl rounded-full bg-white       border-2 border-gray-400 cursor-pointer px-2 py-1'
       }
       onClick={onClick}
     >
@@ -165,9 +165,9 @@ interface RangeTextProps {
 }
 const RangeText: React.FC<RangeTextProps> = (props) => {
   return (
-    <div className="flex justify-center text-2xl mb-5">
+    <div className="flex justify-center text-white text-2xl mb-5 font-extrabold">
       상위
-      <div className="flex justify-center w-20 font-extrabold">
+      <div className="flex justify-center w-20 text-yellow-500 ">
         {' '}
         {props.value}{' '}
       </div>
