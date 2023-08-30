@@ -122,7 +122,7 @@ export default function HoldemPubOnePage() {
                 </h3>
                 <h3 className="flex items-center gap-x-2 mt-4">
                   <AiFillEnvironment className="inline" />
-                  <span>{pickPub.address}</span>
+                  <span>{pickPub.addressBasic}</span>
                 </h3>
               </div>
               <div className="flex flex-row items-center justify-center md:justify-start mt-4 space-x-4">

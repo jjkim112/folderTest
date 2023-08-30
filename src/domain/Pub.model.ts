@@ -1,6 +1,6 @@
-import { OpenDay } from "./Days.model";
-import { Game } from "./Game.model";
-import { GameTemplate } from "./GameTemplate.model";
+import { OpenDay } from './Days.model';
+import { Game } from './Game.model';
+import { GameTemplate } from './GameTemplate.model';
 
 export type Links = {
   name: string;
@@ -12,7 +12,8 @@ export class Pub {
   name: string;
   description: string;
   phone: string;
-  address: string;
+  addressBasic: string;
+  addressDetail: string;
   lat: number;
   lon: number;
   links: Links[];
@@ -26,7 +27,8 @@ export class Pub {
     name: string,
     description: string,
     phone: string,
-    address: string,
+    addressBasic: string,
+    addressDetail: string,
     lat: number,
     lon: number,
     links: Links[],
@@ -39,7 +41,8 @@ export class Pub {
     this.name = name;
     this.description = description;
     this.phone = phone;
-    this.address = address;
+    this.addressBasic = addressBasic;
+    this.addressDetail = addressDetail;
     this.lat = lat;
     this.lon = lon;
     this.links = links;
@@ -55,7 +58,8 @@ export class Pub {
       this.name,
       this.description,
       this.phone,
-      this.address,
+      this.addressBasic,
+      this.addressDetail,
       this.lat,
       this.lon,
       this.links,
@@ -71,9 +75,12 @@ export class Pub {
       name: this.name,
       description: this.description,
       phone: this.phone,
-      address: this.address,
+      addressBasic: this.addressBasic,
+      addressDetail: this.addressDetail,
       coordinate: { lat: this.lat, lon: this.lon },
-      links: this.links,
+      links: this.links.map((v) => {
+        return { name: v.name, url: v.url };
+      }),
       photos: this.photos,
       days: this.days.map((v) => v.toMap),
       templates: this.templates.map((v) => v.toMap),
@@ -83,24 +90,25 @@ export class Pub {
 
   static fromData(data: any): Pub {
     try {
-      const id: string = data["id"];
-      const name: string = data["name"];
-      const description: string = data["description"];
-      const phone: string = data["phone"];
-      const address: string = data["address"];
+      const id: string = data['id'];
+      const name: string = data['name'];
+      const description: string = data['description'];
+      const phone: string = data['phone'];
+      const addressBasic: string = data['addressBasic'];
+      const addressDetail: string = data['addressDetail'];
       let lat: number = 0;
       let lon: number = 0;
-      if (data["coordinate"] !== undefined) {
-        lat = data["coordinate"]["lat"] ?? 0;
-        lon = data["coordinate"]["lon"] ?? 0;
+      if (data['coordinate'] !== undefined) {
+        lat = data['coordinate']['lat'] ?? 0;
+        lon = data['coordinate']['lon'] ?? 0;
       }
-      const links: Links[] = data["links"];
-      const photos: string[] = data["photos"];
-      const days: OpenDay[] = (data["days"] as []).map((v) =>
+      const links: Links[] = data['links'];
+      const photos: string[] = data['photos'];
+      const days: OpenDay[] = (data['days'] as []).map((v) =>
         OpenDay.fromData(v)
       );
 
-      const templates: GameTemplate[] = (data["templates"] as []).map((v) =>
+      const templates: GameTemplate[] = (data['templates'] as []).map((v) =>
         GameTemplate.fromData(v)
       );
       //   const games: Game[] = (data["games"] as []).map((v) => Game.fromData(v));
@@ -110,7 +118,8 @@ export class Pub {
         name,
         description,
         phone,
-        address,
+        addressBasic,
+        addressDetail,
         lat,
         lon,
         links,
@@ -121,7 +130,7 @@ export class Pub {
       );
     } catch (error) {
       console.log(`[Pub Model] fromData e: ${error}`);
-      return new Pub("", "", "", "", "", 0, 0, [], [], [], [], []);
+      return new Pub('', '', '', '', '', '', 0, 0, [], [], [], [], []);
     }
   }
 }

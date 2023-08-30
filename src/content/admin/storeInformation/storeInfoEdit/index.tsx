@@ -33,7 +33,7 @@ export default function StoreInfoEdit() {
 
     newPickPub.name = shopName;
     newPickPub.phone = tell;
-    newPickPub.address = fristAddress + ' ' + secondAddress;
+    newPickPub.addressBasic = fristAddress + ' ' + secondAddress;
 
     await FirebasePub.updatePub(newPickPub.id, newPickPub.toMap);
   };
@@ -67,12 +67,14 @@ export default function StoreInfoEdit() {
         setPickPub(v);
         setTell(v.phone);
         setShopName(v.name);
-        setShopAddress(v.address);
+        setShopAddress(v.addressBasic);
       }
     });
 
     const getGameData = await DataService.fetchGamesInfo(id!);
+
     dispatch(refreshGames(getGameData));
+
     dispatch(refreshWithPubId(id!));
   };
 

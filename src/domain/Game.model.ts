@@ -9,7 +9,10 @@ export class Game {
   readonly id: string;
   readonly pubId: string;
   readonly gameTempId: string;
-
+  title: string;
+  subTitle: string;
+  description: string;
+  note: string;
   entry: number;
   date: Date;
   players: GamePlayerThumb[];
@@ -18,6 +21,10 @@ export class Game {
     id: string,
     pubId: string,
     gameTempId: string,
+    title: string,
+    subTitle: string,
+    description: string,
+    note: string,
     entry: number,
     date: Date,
     players: GamePlayerThumb[]
@@ -25,6 +32,10 @@ export class Game {
     this.id = id;
     this.pubId = pubId;
     this.gameTempId = gameTempId;
+    this.title = title;
+    this.subTitle = subTitle;
+    this.description = description;
+    this.note = note;
     this.entry = entry;
     this.date = date;
     this.players = players;
@@ -35,6 +46,10 @@ export class Game {
       id: this.id,
       pubId: this.pubId,
       gameTempId: this.gameTempId,
+      title: this.title,
+      subTitle: this.subTitle,
+      description: this.description,
+      note: this.note,
       entry: this.entry,
       date: this.date,
       players: this.players,
@@ -46,14 +61,29 @@ export class Game {
       const id = data['id'];
       const pubId = data['pubId'];
       const gameTempId = data['gameTempId'];
+      const title = data['title'];
+      const subTitle = data['subTitle'];
+      const description = data['description'];
+      const note = data['note'];
       const entry = data['entry'];
       const date = (data['date'] as Timestamp).toDate();
       const players = data['players'];
 
-      return new Game(id, pubId, gameTempId, entry, date, players);
+      return new Game(
+        id,
+        pubId,
+        gameTempId,
+        title,
+        subTitle,
+        description,
+        note,
+        entry,
+        date,
+        players
+      );
     } catch (error) {
       console.log(`[GameTemplate Model] fromData e: ${error}`);
-      return new Game('', '', '', 0, new Date(0), []);
+      return new Game('', '', '', '', '', '', '', 0, new Date(0), []);
     }
   }
 }
@@ -61,5 +91,6 @@ export class Game {
 export interface GamePlayerThumb {
   id: string;
   prize: number;
+  note: string;
   rank: number;
 }

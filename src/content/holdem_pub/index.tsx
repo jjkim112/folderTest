@@ -57,7 +57,7 @@ export default function HoldemPubPage() {
                       </p>
                       <div className="flex items-center justify-center  w-1/3 ">
                         <div className="w-full text-base font-bold text-gray-800 bg-blue-400 rounded-xl text-center">
-                          {pubData.address.substring(0, 2)}
+                          {pubData.addressBasic.substring(0, 2)}
                         </div>
                       </div>
                     </div>
@@ -116,9 +116,7 @@ export default function HoldemPubPage() {
                         </p>
                         <div className=" ">
                           <div className=" text-sm font-bold text-white  rounded-xl text-center overflow-hidden text-ellipsis box-content line-clamp-2 ">
-                            지점 설명 지점설명 지점 설명 지점설명 지점 설명
-                            지점설명 지점 설명 지점설명 지점 설명 지점설명 지점
-                            설명 지점설명 지점 설명 지점설명 지점 설명 지점설명
+                            {pubData.description}
                           </div>
                         </div>
                       </div>
@@ -131,7 +129,7 @@ export default function HoldemPubPage() {
                         {true ? (
                           <div className=" ">
                             <div className="w-full text-sm font-bold text-white bg-blue-400 rounded-xl text-center p-2">
-                              {pubData.address.substring(0, 2)}
+                              {pubData.addressBasic.substring(0, 2)}
                             </div>
                           </div>
                         ) : (
