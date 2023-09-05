@@ -234,7 +234,9 @@ export default function HoldemPubOnePage() {
                             <td className="w-1/4 py-2">
                               {game.date.toUTCString()}
                             </td>
-                            <td className="w-1/4 py-2">{game.players[0].id}</td>
+                            <td className="w-1/4 py-2">
+                              {game.players[0].name}
+                            </td>
                           </tr>
                         );
                       })}
@@ -276,7 +278,7 @@ export default function HoldemPubOnePage() {
                                 )}만원`}
                               </td>
 
-                              <td className="w-1/4 py-2">{player.id}</td>
+                              <td className="w-1/4 py-2">{player.name}</td>
                             </tr>
                           );
                         })

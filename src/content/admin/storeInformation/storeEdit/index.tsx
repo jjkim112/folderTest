@@ -74,7 +74,18 @@ export default function HoldemPubOnePage() {
                   navigate(`/admin/storeInfo/edit/${id}`);
                 }}
               >
-                🔄️ 수정하기
+                🔄️ 매장 정보 수정
+              </button>
+              <button
+                className="mx-2 border-2 bg-green-500 text-black font-bold p-3 rounded-lg "
+                onClick={() => {
+                  dispatch(setOnePubData(pickPub));
+
+                  dispatch(setWeekPubData(pickPub));
+                  navigate(`/admin/storeInfo/tournamentRegister/${id}`);
+                }}
+              >
+                🔄️ 토너 정보 수정
               </button>
             </div>
             <div className="flex flex-col my-10 ">

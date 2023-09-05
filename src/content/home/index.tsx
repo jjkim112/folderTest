@@ -73,7 +73,8 @@ const TestBtn = () => {
                   oneGame.entry,
                   oneGame.gameTempId,
                   player.prize,
-                  player.rank
+                  player.rank,
+                  ''
                 ),
                 oneGame.id,
                 pubDoc.id

@@ -1,4 +1,4 @@
-import { UserGameData } from "./UserGameData.model";
+import { UserGameData } from './UserGameData.model';
 
 export class UserGame {
   datas: UserGameData;
@@ -21,14 +21,14 @@ export class UserGame {
 
   static fromData(data: any): UserGame {
     try {
-      const datas = data["datas"];
-      const gameId = data["gameId"];
-      const pubId = data["pubId"];
+      const datas = data['datas'];
+      const gameId = data['gameId'];
+      const pubId = data['pubId'];
       return new UserGame(UserGameData.fromData(datas), gameId, pubId);
     } catch (error) {
-      var errorGameData = new UserGameData(new Date(0), 0, "", 0, 0);
+      var errorGameData = new UserGameData(new Date(0), 0, '', 0, 0, '');
       console.log(`[UserGames Model] fromData e: ${error}`);
-      return new UserGame(errorGameData, "", "");
+      return new UserGame(errorGameData, '', '');
     }
   }
 }

@@ -1,9 +1,9 @@
-import { Game, GamePlayerThumb } from "../domain/Game.model";
-import { GameTemplate } from "../domain/GameTemplate.model";
-import { Pub } from "../domain/Pub.model";
-import { User } from "../domain/User.model";
-import { FirebasePub } from "./firebase/FirebasePub";
-import { FirebaseUser } from "./firebase/FirebaseUser";
+import { Game, GamePlayerThumb } from '../domain/Game.model';
+import { GameTemplate } from '../domain/GameTemplate.model';
+import { Pub } from '../domain/Pub.model';
+import { User } from '../domain/User.model';
+import { FirebasePub } from './firebase/FirebasePub';
+import { FirebaseUser } from './firebase/FirebaseUser';
 
 export class DataService {
   static addPub = async (
@@ -60,7 +60,7 @@ export class DataService {
   static updatePubInfo = async (pubId: string): Promise<boolean> => {
     try {
       const isSuccess = await FirebasePub.updatePub(pubId, {
-        name: "wwp 제주 지점!",
+        name: 'wwp 제주 지점!',
       });
       return isSuccess;
     } catch (e) {
@@ -72,6 +72,7 @@ export class DataService {
     pubId: string,
     gameTempId: string,
     entry: number,
+    note: string,
     players: GamePlayerThumb[]
   ): Promise<boolean> => {
     try {
@@ -83,6 +84,7 @@ export class DataService {
         gameTempId: gameTempId,
         entry: entry,
         date: nowDate,
+        note: note,
         players: players,
       });
 
@@ -95,7 +97,9 @@ export class DataService {
           pubId,
           gameTempId,
           entry,
-          new Date(nowDate)
+
+          new Date(nowDate),
+          note
         );
       }
 

@@ -69,6 +69,7 @@ export class Pub {
       this.games
     );
   }
+
   get toMap() {
     return {
       id: this.id,

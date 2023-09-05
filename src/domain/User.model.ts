@@ -1,4 +1,4 @@
-import { UserGame } from "./UserGame.model";
+import { UserGame } from './UserGame.model';
 
 export class User {
   readonly id: string;
@@ -21,16 +21,16 @@ export class User {
 
   static fromData(data: any): User {
     try {
-      const id: string = data["id"];
-      const nickname: string = data["nickname"];
-      const games: UserGame[] = (data["games"] as any[]).map((v, _) => {
+      const id: string = data['id'];
+      const nickname: string = data['nickname'];
+      const games: UserGame[] = (data['games'] as any[]).map((v, _) => {
         return UserGame.fromData(v);
       });
 
       return new User(id, nickname, games);
     } catch (error) {
       console.log(`[User Model] fromData e: ${error}`);
-      return new User("", "", []);
+      return new User('', '', []);
     }
   }
 }

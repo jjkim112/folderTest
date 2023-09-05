@@ -34,6 +34,9 @@ const Crypto = Loader(lazy(() => import('src/content/home')));
 const StoreInfo = Loader(
   lazy(() => import('src/content/admin/storeInformation'))
 );
+const TournamentRegister = Loader(
+  lazy(() => import('src/content/admin/storeAddTournament/tournamentRegister'))
+);
 const StoreInfoDetail = Loader(
   lazy(() => import('src/content/admin/storeInformation/storeEdit'))
 );
@@ -147,6 +150,10 @@ const routes = [
       {
         path: 'storeInfo',
         element: <StoreInfo />,
+      },
+      {
+        path: 'storeInfo/tournamentRegister/:id',
+        element: <TournamentRegister />,
       },
       {
         path: 'storeInfo/detail/:id',
