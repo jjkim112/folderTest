@@ -14,6 +14,7 @@ const BaseLayout: FC<BaseLayoutProps> = ({ children }) => {
     <div>
       <div className="mx-auto  w-full h-full  ">
         <Header />
+
         {children || <Outlet />}
       </div>
     </div>

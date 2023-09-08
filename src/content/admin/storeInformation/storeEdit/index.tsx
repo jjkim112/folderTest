@@ -1,24 +1,25 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from 'react';
 import {
   AiFillPhone,
   AiFillEnvironment,
   AiFillCaretDown,
   AiFillCaretUp,
-} from "react-icons/ai";
+} from 'react-icons/ai';
 
-import { useDispatch, useSelector } from "react-redux";
-
-import { useNavigate, useParams } from "react-router-dom";
-import { DataService } from "src/data/DataService";
-import { Pub } from "src/domain/Pub.model";
-import { Weeks, setOnePubData, setWeekPubData } from "src/reducer/adminPub";
-import { refreshGames } from "src/reducer/gameSlice";
-import { refreshWithPubId } from "src/reducer/userSlice";
-import { AppDispatch, RootState } from "src/store/store";
-import { AdminRequireLayout } from "../../AdminRequireLayout";
-
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate, useParams } from 'react-router-dom';
+import { DataService } from 'src/data/DataService';
+import { Pub } from 'src/domain/Pub.model';
+import { setOnePubData, setWeekPubData } from 'src/reducer/adminPub';
+import { refreshGames } from 'src/reducer/gameSlice';
+import { refreshWithPubId } from 'src/reducer/userSlice';
+import { AppDispatch, RootState } from 'src/store/store';
+import { AdminRequireLayout } from '../../AdminRequireLayout';
+type Params = {
+  id: string;
+};
 export default function HoldemPubOnePage() {
-  const id = useParams().id;
+  const { id } = useParams<Params>();
   const [pickPub, setPickPub] = useState<Pub | null>(null);
   const pubsData = useSelector((state: RootState) => state.pub.pubs);
 
@@ -34,6 +35,7 @@ export default function HoldemPubOnePage() {
     setVisibility(newVisibility);
   };
   const goToPubPage = async () => {
+    console.log('dsadsa');
     pubsData.map((v, i) => {
       if (v.id === id) {
         setPickPub(v);
@@ -58,7 +60,7 @@ export default function HoldemPubOnePage() {
               <button
                 className="border-2 bg-blue-700 text-black font-bold p-3 rounded-lg "
                 onClick={() => {
-                  navigate(-1);
+                  navigate('/admin/storeInfo');
                 }}
               >
                 ⬅️ 돌아가기
@@ -72,7 +74,18 @@ export default function HoldemPubOnePage() {
                   navigate(`/admin/storeInfo/edit/${id}`);
                 }}
               >
-                🔄️ 수정하기
+                🔄️ 매장 정보 수정
+              </button>
+              <button
+                className="mx-2 border-2 bg-green-500 text-black font-bold p-3 rounded-lg "
+                onClick={() => {
+                  dispatch(setOnePubData(pickPub));
+
+                  dispatch(setWeekPubData(pickPub));
+                  navigate(`/admin/storeInfo/tournamentRegister/${id}`);
+                }}
+              >
+                🔄️ 토너 정보 수정
               </button>
             </div>
             <div className="flex flex-col my-10 ">
@@ -83,11 +96,14 @@ export default function HoldemPubOnePage() {
               />
               <div className="mt-1">
                 <div>{pickPub.name}</div>
+                <div>{pickPub.description.trim()}</div>
                 <h3>
-                  <AiFillPhone className="inline" /> {pickPub.phone}
+                  <AiFillPhone className="inline" /> {pickPub.phone.trim()}
                 </h3>
                 <h3>
-                  <AiFillEnvironment className="inline" /> {pickPub.address}
+                  <AiFillEnvironment className="inline" />
+                  {pickPub.addressBasic.trim()}{' '}
+                  {' ' + pickPub.addressDetail.trim()}
                 </h3>
 
                 <div className="flex flex-row  m-2">
@@ -116,10 +132,11 @@ export default function HoldemPubOnePage() {
                 <div>
                   <div className="flex flex-col justify-center text-center py-1 pb-4">
                     <div className="bg-slate-800 rounded-tr-md  rounded-tl-md py-4">
-                      {gamesValue.title}
+                      {gamesValue.title.trim()}
                     </div>
+
                     <div className="bg-slate-800 py-4">
-                      {gamesValue.subTitle}
+                      {gamesValue.subTitle.trim()}
                     </div>
                     <div className="bg-slate-800 rounded-br-md  rounded-bl-md py-4">
                       {gamesValue.info}
@@ -134,10 +151,10 @@ export default function HoldemPubOnePage() {
               <div className="p-2 text-3xl">요일 별 오픈 토너먼트</div>
               <div className="py-2">
                 {pickPub.days.map((daysValue, daysIndex) => (
-                  <div key={daysIndex} className="py-2">
+                  <div key={`${daysIndex}_x`} className="py-2">
                     {visibility[daysIndex] ? (
                       <h1 onClick={() => toggleVisibility(daysIndex)}>
-                        <AiFillCaretUp className="inline" />{" "}
+                        <AiFillCaretUp className="inline" />{' '}
                         {`  ${daysValue.day}`}
                       </h1>
                     ) : (
@@ -148,7 +165,7 @@ export default function HoldemPubOnePage() {
                     )}
                     {visibility[daysIndex] &&
                       daysValue.games.map((gamesValue, gamesIndex) => (
-                        <div key={`${gamesIndex}_${gamesValue.length}`}>
+                        <div key={`${gamesIndex}_${gamesValue.length}x`}>
                           <div>
                             {pickPub.templates.map(
                               (templatesValue, templatesIndex) =>
@@ -189,7 +206,7 @@ export default function HoldemPubOnePage() {
         <br />
         <button
           className="bg-white"
-          onClick={() => navigate("/admin/storeInfo")}
+          onClick={() => navigate('/admin/storeInfo')}
         >
           이전페이지로
         </button>

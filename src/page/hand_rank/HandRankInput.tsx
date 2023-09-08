@@ -98,7 +98,7 @@ const HandRankInput: React.FC<HandRankInputProps> = () => {
   }
   const Xway: React.FC<XwayProps> = (props) => {
     return (
-      <div className="grid grid-cols-3 gap-1   text-2xl m-2 w-2/3  ">
+      <div className="grid grid-cols-3 gap-1   text-2xl m-2  ">
         <BasicBtn
           name="2"
           isSel={props.value === '2'}

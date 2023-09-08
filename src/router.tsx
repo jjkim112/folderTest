@@ -1,6 +1,5 @@
 import { Suspense, lazy } from 'react';
 import { Navigate } from 'react-router-dom';
-import { RouteObject } from 'react-router';
 
 import SidebarLayout from 'src/layouts/SidebarLayout';
 import BaseLayout from 'src/layouts/BaseLayout';
@@ -34,6 +33,9 @@ const Crypto = Loader(lazy(() => import('src/content/home')));
 
 const StoreInfo = Loader(
   lazy(() => import('src/content/admin/storeInformation'))
+);
+const TournamentRegister = Loader(
+  lazy(() => import('src/content/admin/storeAddTournament/tournamentRegister'))
 );
 const StoreInfoDetail = Loader(
   lazy(() => import('src/content/admin/storeInformation/storeEdit'))
@@ -72,7 +74,7 @@ const StatusMaintenance = Loader(
   lazy(() => import('src/content/pages/Status/Maintenance'))
 );
 
-const routes: RouteObject[] = [
+const routes = [
   {
     path: '',
     element: <BaseLayout />,
@@ -148,6 +150,10 @@ const routes: RouteObject[] = [
       {
         path: 'storeInfo',
         element: <StoreInfo />,
+      },
+      {
+        path: 'storeInfo/tournamentRegister/:id',
+        element: <TournamentRegister />,
       },
       {
         path: 'storeInfo/detail/:id',

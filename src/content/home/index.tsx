@@ -5,22 +5,46 @@ import 'firebase/compat/firestore';
 import { User } from '../../domain/User.model';
 import { UserGame } from '../../domain/UserGame.model';
 import { UserGameData } from '../../domain/UserGameData.model';
-import QuotePage from 'src/page/quote/QuotePage';
+import React, { useEffect } from 'react';
+import Paper from '@mui/material/Paper';
+import InputBase from '@mui/material/InputBase';
+import Divider from '@mui/material/Divider';
+import IconButton from '@mui/material/IconButton';
+import MenuIcon from '@mui/icons-material/Menu';
+import SearchIcon from '@mui/icons-material/Search';
+import DirectionsIcon from '@mui/icons-material/Directions';
+import './home.css';
 
 function HomePage() {
   return (
-    <div
-      className="min-w-screen min-h-screen bg-red-800 flex-col justify-center items-center"
-      style={{
-        backgroundImage: `url("/assets/images/background.png")`,
-        backgroundSize: '100% 100%',
-        backgroundPosition: 'center center',
-        backgroundRepeat: 'no-repeat',
-      }}
-    >
-      {/* <TestBtn /> */}
-      <HomeTitle />
-      <QuotePage />
+    <div className="relative h-full w-full flex flex-col justify-center ">
+      <div className="main-container">
+        <img
+          src="/assets/images/wp_title.gif"
+          alt="Descriptionimage"
+          className="logo"
+        />
+        <Paper
+          component="form"
+          sx={{
+            p: '2px 4px',
+            display: 'flex',
+            alignItems: 'center',
+            borderRadius: 20,
+
+            width: '70%',
+          }}
+        >
+          <IconButton sx={{ p: '10px' }} aria-label="menu">
+            <SearchIcon />
+          </IconButton>
+          <InputBase
+            sx={{ ml: 1, flex: 1 }}
+            placeholder="검색을해보세용"
+            inputProps={{ 'aria-label': '검색을해보세용' }}
+          />
+        </Paper>
+      </div>
     </div>
   );
 }
@@ -49,7 +73,8 @@ const TestBtn = () => {
                   oneGame.entry,
                   oneGame.gameTempId,
                   player.prize,
-                  player.rank
+                  player.rank,
+                  ''
                 ),
                 oneGame.id,
                 pubDoc.id

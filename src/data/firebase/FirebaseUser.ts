@@ -1,16 +1,16 @@
-import { Firestore, QueryDocumentSnapshot } from "firebase/firestore";
-import { Pub } from "../../domain/Pub.model";
-import firebase from "firebase/compat/app";
-import "firebase/compat/firestore";
-import { Game, GamePlayerThumb } from "../../domain/Game.model";
-import { User } from "../../domain/User.model";
-import { UserGame } from "../../domain/UserGame.model";
-import { UserGameData } from "../../domain/UserGameData.model";
+import { Firestore, QueryDocumentSnapshot } from 'firebase/firestore';
+import { Pub } from '../../domain/Pub.model';
+import firebase from 'firebase/compat/app';
+import 'firebase/compat/firestore';
+import { Game, GamePlayerThumb } from '../../domain/Game.model';
+import { User } from '../../domain/User.model';
+import { UserGame } from '../../domain/UserGame.model';
+import { UserGameData } from '../../domain/UserGameData.model';
 
 export class FirebaseUser {
   static getWholeUserData = async (): Promise<User[]> => {
     const firestore = firebase.firestore();
-    const pubCol = firestore.collection("wwp_users");
+    const pubCol = firestore.collection('wwp_users');
     const pubDocsData = await pubCol.get();
 
     let tempList: User[] = [];
@@ -28,7 +28,7 @@ export class FirebaseUser {
   ): Promise<boolean> => {
     try {
       const firestore = firebase.firestore();
-      const newUserDoc = firestore.collection("wwp_users").doc(newUserId);
+      const newUserDoc = firestore.collection('wwp_users').doc(newUserId);
       const newUserDocData = await newUserDoc.get();
       if (!newUserDocData.exists) {
         await newUserDoc.set(inputData);
@@ -48,10 +48,11 @@ export class FirebaseUser {
     pubId: string,
     gameTempId: string,
     entry: number,
-    date: Date
+    date: Date,
+    note: string
   ): Promise<boolean> => {
     const firestore = firebase.firestore();
-    const userCol = firestore.collection("wwp_users");
+    const userCol = firestore.collection('wwp_users');
 
     try {
       for (const onePlayer of players) {
@@ -67,7 +68,8 @@ export class FirebaseUser {
                 entry,
                 gameTempId,
                 onePlayer.prize,
-                onePlayer.rank
+                onePlayer.rank,
+                note
               ),
               newId,
               pubId
@@ -88,6 +90,7 @@ export class FirebaseUser {
                   gameTempId: gameTempId,
                   prize: onePlayer.prize,
                   rank: onePlayer.rank,
+                  note: note,
                 },
               },
             ],
@@ -108,7 +111,7 @@ export class FirebaseUser {
   ): Promise<boolean> => {
     try {
       const firestore = firebase.firestore();
-      const updateUserDoc = firestore.collection("wwp_users").doc(UserId);
+      const updateUserDoc = firestore.collection('wwp_users').doc(UserId);
       const updateUserDocData = await updateUserDoc.get();
       if (updateUserDocData.exists) {
         await updateUserDoc.update(updateData);

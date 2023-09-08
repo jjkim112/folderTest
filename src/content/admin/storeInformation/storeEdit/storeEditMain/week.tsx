@@ -1,27 +1,9 @@
 import React from 'react';
-import styled from 'styled-components';
 
 interface WeekDayBoxProps {
   selectedDays: string[];
   onDaySelect: (days: string[]) => void;
 }
-
-const StyledBox = styled.div<{ isSelected: boolean }>`
-  display: inline-block;
-  width: 40px;
-  height: 40px;
-  margin: 5px;
-  border: 1px solid #ccc;
-  text-align: center;
-  line-height: 40px;
-  background-color: ${(props) => (props.isSelected ? 'gray' : 'purple')};
-  cursor: pointer;
-
-  &:hover {
-    opacity: 0.7;
-  }
-`;
-//이 스타일 컴포넌트는 그사람의 힘을 빌렸어요
 
 export const WeekDayBox: React.FC<WeekDayBoxProps> = ({
   selectedDays,
@@ -40,14 +22,16 @@ export const WeekDayBox: React.FC<WeekDayBoxProps> = ({
   return (
     <div>
       {['월', '화', '수', '목', '금', '토', '일'].map((day) => (
-        <StyledBox
+        <div
+          className={`inline-block w-10 h-10 text-center items-center  m-5 border-2 border-gray-400  leading-8 ${
+            selectedDays.includes(day) ? 'bg-purple-400' : 'bg-gray-500'
+          } cursor-pointer  hover:opacity-70`}
           key={day}
-          isSelected={selectedDays.includes(day)}
           //여기서 스타일 컴포넌트 플옵수 사용데스
           onClick={() => handleDayClick(day)}
         >
           {day}
-        </StyledBox>
+        </div>
       ))}
     </div>
   );

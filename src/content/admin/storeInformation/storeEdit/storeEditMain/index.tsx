@@ -1,76 +1,52 @@
-import { useState, useEffect } from "react";
-import {
-  AiFillPhone,
-  AiFillEnvironment,
-  AiFillCaretDown,
-  AiFillCaretUp,
-} from "react-icons/ai";
+import { useState, useEffect } from 'react';
+import { AiFillCaretDown, AiFillCaretUp } from 'react-icons/ai';
 
-import { useDispatch, useSelector } from "react-redux";
-import { useDaumPostcodePopup } from "react-daum-postcode";
+import { useDispatch, useSelector } from 'react-redux';
+import { useDaumPostcodePopup } from 'react-daum-postcode';
 
-import { useNavigate, useParams } from "react-router-dom";
-import { DataService } from "src/data/DataService";
-import { GameTemplate } from "src/domain/GameTemplate.model";
-import { Pub } from "src/domain/Pub.model";
-import { refreshGames } from "src/reducer/gameSlice";
-import { refreshWithPubId } from "src/reducer/userSlice";
-import { AppDispatch, RootState } from "src/store/store";
-import { TestComp } from "./TestCompProps";
-import { WeekDayBox } from "./week";
-import { Box } from "./box";
-import EditIcon from "@mui/icons-material/Edit";
-import AddIcon from "@mui/icons-material/Add";
-import {
-  Weeks,
-  addTemplatesData,
-  deleteTemplatesData,
-  setTemplatesData,
-  setWeekPubData,
-  updateOnePubData,
-} from "src/reducer/adminPub";
-import { sub } from "date-fns";
-import { FirebasePub } from "src/data/firebase/FirebasePub";
-import { AdminRequireLayout } from "src/content/admin/AdminRequireLayout";
-import { GameEditDialog } from "./GameEditDialog";
-import { PhotoEditDialog } from "./PhotoEditDialog";
+import { useNavigate, useParams } from 'react-router-dom';
+import { GameTemplate } from 'src/domain/GameTemplate.model';
 
-interface BoxInfo {
-  title: string;
-  subTitle: string;
-  content: string;
-  days: string[];
-}
+import { AppDispatch, RootState } from 'src/store/store';
+import { TestComp } from './TestCompProps';
+import EditIcon from '@mui/icons-material/Edit';
+import AddIcon from '@mui/icons-material/Add';
+
+import { FirebasePub } from 'src/data/firebase/FirebasePub';
+import { AdminRequireLayout } from 'src/content/admin/AdminRequireLayout';
+import { GameEditDialog } from './GameEditDialog';
+import { PhotoEditDialog } from './PhotoEditDialog';
+import { refreshWholePub } from 'src/reducer/pubSlice';
+type Params = {
+  id: string;
+};
 export default function StoreEditForm() {
-  const id = useParams().id;
+  const { id } = useParams<Params>();
   const pickPub = useSelector((state: RootState) => state.admin.pub);
   const tam = useSelector((state: RootState) => state.admin.weeks);
 
-  const [title, setTitle] = useState("");
+  //펍 정보
+  const [title, setTitle] = useState('');
   const [lat, setLat] = useState(0.0);
   const [lon, setLon] = useState(0.0);
-  const [addressBasic, setAddressBasic] = useState("");
-  const [addressDetail, setAddressDetail] = useState("");
-  const [description, setDescription] = useState("");
-  const [phone, setPhone] = useState("");
-  const [kakao, setKakao] = useState("");
-  const [insta, setInsta] = useState("");
+  const [addressBasic, setAddressBasic] = useState('');
+  const [addressDetail, setAddressDetail] = useState('');
+  const [description, setDescription] = useState('');
+  const [phone, setPhone] = useState('');
+  const [kakao, setKakao] = useState('');
+  const [insta, setInsta] = useState('');
   const [photos, setPhotos] = useState<string[]>([
-    "https://t1.daumcdn.net/cfile/tistory/2257194756D7FDBB26",
-    "https://t1.daumcdn.net/cfile/tistory/2257194756D7FDBB26",
-    "https://t1.daumcdn.net/cfile/tistory/2257194756D7FDBB26",
-    "https://t1.daumcdn.net/cfile/tistory/2257194756D7FDBB26",
+    'https://t1.daumcdn.net/cfile/tistory/2257194756D7FDBB26',
+    'https://t1.daumcdn.net/cfile/tistory/2257194756D7FDBB26',
+    'https://t1.daumcdn.net/cfile/tistory/2257194756D7FDBB26',
+    'https://t1.daumcdn.net/cfile/tistory/2257194756D7FDBB26',
   ]);
+
   const [games, setGames] = useState<GameTemplate[]>([]);
   const [selGame, setSelGame] = useState<GameTemplate | null>(null);
-
-  const [content, setContent] = useState("");
-  const [days, setDays] = useState<string[]>([]);
-  const [boxes, setBoxes] = useState<BoxInfo[]>([]);
-  const [selectedBoxIndex, setSelectedBoxIndex] = useState<number | null>(null);
-
   const dispatch = useDispatch<AppDispatch>();
   let navigate = useNavigate();
+
   const [visibility, setVisibility] = useState<boolean[]>(
     new Array(7).fill(false)
   );
@@ -80,28 +56,35 @@ export default function StoreEditForm() {
 
   useEffect(() => {
     setGames(pickPub.templates);
+    setTitle(pickPub.name);
+    setDescription(pickPub.description);
+    setAddressBasic(pickPub.addressBasic);
+    setAddressDetail(pickPub.addressDetail);
+    setLat(pickPub.lat);
+    setLon(pickPub.lon);
+    setPhone(pickPub.phone);
+    setKakao(pickPub.links[0].url);
+    setInsta(pickPub.links[1].url);
   }, []);
-  /*
-   *  주소 찾기 관련 함수들
-   */
+
   const open = useDaumPostcodePopup(
-    "https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"
+    'https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js'
   );
 
   const handleComplete = (data) => {
     console.log(data);
     let fullAddress = data.address;
-    let extraAddress = "";
+    let extraAddress = '';
 
-    if (data.addressType === "R") {
-      if (data.bname !== "") {
+    if (data.addressType === 'R') {
+      if (data.bname !== '') {
         extraAddress += data.bname;
       }
-      if (data.buildingName !== "") {
+      if (data.buildingName !== '') {
         extraAddress +=
-          extraAddress !== "" ? `, ${data.buildingName}` : data.buildingName;
+          extraAddress !== '' ? `, ${data.buildingName}` : data.buildingName;
       }
-      fullAddress += extraAddress !== "" ? ` (${extraAddress})` : "";
+      fullAddress += extraAddress !== '' ? ` (${extraAddress})` : '';
     }
     setAddressBasic(fullAddress);
     // setShopAddress(fullAddress + ' ' + secondAddress);
@@ -117,78 +100,23 @@ export default function StoreEditForm() {
     setVisibility(newVisibility);
   };
   const finalFirebaseUpdate = async () => {
-    await FirebasePub.updatePub(pickPub.id, pickPub.toMap);
-  };
+    let newPickPub = pickPub.clone;
 
-  const handleAddBox = () => {
-    const updataTam: Weeks = {
-      template: new GameTemplate(
-        tam.length.toString(),
-        content,
-        description,
-        title
-      ),
-      weeks: [...days],
-    };
-    dispatch(addTemplatesData(updataTam));
+    newPickPub.name = title;
+    newPickPub.lat = lat;
+    newPickPub.lon = lon;
+    newPickPub.addressBasic = addressBasic;
+    newPickPub.addressDetail = addressDetail;
+    newPickPub.description = description;
+    newPickPub.phone = phone;
+    newPickPub.links[1].url = insta;
+    newPickPub.links[0].url = kakao;
+    newPickPub.photos = photos;
 
-    dispatch(updateOnePubData(tam));
-
-    setTitle("");
-    setDescription("");
-    setContent("");
-    setDays([]);
-  };
-
-  const deleteBox = (index: string) => {
-    dispatch(deleteTemplatesData(index));
-
-    setTitle("");
-    setDescription("");
-    setContent("");
-    setDays([]);
-    setSelectedBoxIndex(null);
-  };
-  const updateBox = () => {
-    const updataTam: Weeks = {
-      template: new GameTemplate(
-        selectedBoxIndex.toString(),
-        content,
-        description,
-        title
-      ),
-      weeks: [...days],
-    };
-    dispatch(setTemplatesData(updataTam));
-    dispatch(updateOnePubData(tam));
-
-    setTitle("");
-    setDescription("");
-    setContent("");
-    setDays([]);
-    setSelectedBoxIndex(null);
-  };
-
-  const handleClickBox = (box: GameTemplate, index: number) => {
-    if (selectedBoxIndex === index) {
-      setTitle("");
-      setDescription("");
-      setContent("");
-      setDays([]);
-      setSelectedBoxIndex(null);
-    } else {
-      setSelectedBoxIndex(index);
-      setTitle(box.title);
-      setDescription(box.subTitle);
-      setContent(box.info);
-
-      tam.map((v, i) => {
-        if (v.template.id === index.toString()) {
-          setDays(v.weeks);
-        }
-      });
-      console.log(days);
-    }
+    await FirebasePub.updatePub(newPickPub.id, newPickPub.toMap);
+    const getPubsData = await FirebasePub.getWholePubData();
+    dispatch(refreshWholePub(getPubsData));
+    navigate(`/admin/storeInfo/detail/${newPickPub.id}`);
   };
 
   const clickEditPhotos = () => {
@@ -215,14 +143,14 @@ export default function StoreEditForm() {
               >
                 ⬅️ 돌아가기
               </button>
-              {/* <button
+              <button
                 className="border-2 mx-2 bg-green-500 text-black font-bold p-3 rounded-lg "
                 onClick={() => {
                   finalFirebaseUpdate();
                 }}
               >
                 ⬅️ 수정완료
-              </button> */}
+              </button>
             </div>
             <div className="flex flex-col">
               <TestComp
@@ -239,23 +167,28 @@ export default function StoreEditForm() {
               />
 
               <div className="p-2 flex flex-col">
-                <span className="py-2">주소</span>
-                <div className="flex mb-2">
+                <div className="flex flex-col mb-2">
+                  <span className="py-2 text-yellow-500 font-bold">주소</span>
                   <button
-                    className="w-32 rounded-md border-2 mr-4 h-[24px] text-sm"
+                    className="w-32 rounded-md border-2 mr-4 my-2 h-[24px] text-sm text-white"
                     onClick={handleClick}
                   >
                     주소 찾기
                   </button>
-                  <div className="self-stretch bg-white w-full h-[24px] text-black">
-                    {addressBasic}
-                  </div>
+                  <input
+                    className="bg-white  border border-gray-300 px-4 py-2 rounded-md text-black focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                    placeholder=""
+                    value={addressBasic}
+                    readOnly
+                  />
                 </div>
                 <div>
-                  <div className="flex">
-                    <div className="w-32 text-center mr-4">세부 주소</div>
+                  <div className="flex flex-col">
+                    <span className="py-2 text-yellow-500 font-bold">
+                      세부 주소
+                    </span>
                     <input
-                      className="text-black w-full"
+                      className="bg-white border border-gray-300 px-4 py-2 rounded-md text-black focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                       placeholder=""
                       value={addressDetail}
                       onChange={(e) => setAddressDetail(e.target.value)}
@@ -273,14 +206,14 @@ export default function StoreEditForm() {
               <TestComp
                 title="카카오 링크"
                 placeholder="카카오 링크를 입력해주세요."
-                content={phone}
-                setContent={setPhone}
+                content={kakao}
+                setContent={setKakao}
               />
               <TestComp
                 title="인스타 링크"
                 placeholder="인스타 링크를 입력해주세요."
-                content={phone}
-                setContent={setPhone}
+                content={insta}
+                setContent={setInsta}
               />
 
               <div className="p-2 flex flex-col">
@@ -293,13 +226,15 @@ export default function StoreEditForm() {
                   ></EditIcon>
                 </div>
                 <div className="flex mb-2">
-                  {photos.map((url) => (
+                  {photos.map((url, i) => (
                     <img
+                      key={`Edit${i}`}
+                      alt={`Edit${i}`}
                       className="rounded-2xl mr-3"
                       style={{
-                        width: "100px",
-                        height: "100px",
-                        objectFit: "fill",
+                        width: '100px',
+                        height: '100px',
+                        objectFit: 'fill',
                       }}
                       src={url}
                     />
@@ -308,16 +243,28 @@ export default function StoreEditForm() {
               </div>
 
               <div className="p-2 flex flex-col">
-                <div className="flex items-center">
-                  <span className="py-2 mr-4">토너 템플릿</span>
-                  <AddIcon
-                    fontSize="small"
-                    className="hover:cursor-pointer"
-                    onClick={clickAddGame}
-                  ></AddIcon>
+                <div className="flex justify-between items-center">
+                  <div className="flex items-center">
+                    <span className="py-2 mr-4">토너 템플릿</span>
+                    <AddIcon
+                      fontSize="small"
+                      className="hover:cursor-pointer"
+                      onClick={() => {
+                        clickAddGame();
+                        setSelGame(null);
+                      }}
+                    ></AddIcon>
+                  </div>
+                  {selGame !== null ? (
+                    <button className=" text-white" onClick={clickEditGame}>
+                      토너 수정
+                    </button>
+                  ) : (
+                    <div></div>
+                  )}
                 </div>
-                <div className="flex mb-2">
-                  <div className="flex flex-col w-1/2 h-[600px] mr-4 border-2">
+                <div className="flex mb-2 h-full ">
+                  <div className="flex flex-col w-1/2 h-[600px] overflow-y-scroll mr-4 border-2">
                     <table className=" table-fixed w-full  rounded-lg overflow-hidden  ">
                       <thead>
                         <tr className="text-lg  ">
@@ -331,8 +278,8 @@ export default function StoreEditForm() {
                             key={oneTemplateGame.id}
                             className={`text-center text-base ${
                               oneTemplateGame.id === selGame?.id
-                                ? "border-2 border-red-300"
-                                : ""
+                                ? 'border-2 border-red-300'
+                                : ''
                             }`}
                             onClick={() => {
                               setSelGame(oneTemplateGame);
@@ -347,103 +294,79 @@ export default function StoreEditForm() {
                       </tbody>
                     </table>
                   </div>
-                  <div className="flex flex-col w-1/2 bg-yellow-50 h-[600px] text-black">
-                    <div className="relative w-full">
+                  <div className="flex flex-col w-1/2 bg-yellow-50 h-[600px]  overflow-y-scroll text-black">
+                    <div className="w-full">
                       {selGame !== null ? (
-                        <>
-                          <button
-                            className="absolute top-1 right-1 text-black"
-                            onClick={clickEditGame}
-                          >
-                            수정
-                          </button>
-                          <div className="flex">
-                            <span className="w-20">제목</span>
-                            {selGame.title}
-                          </div>
-                          <div className="flex">
-                            <span className="w-20">소제목</span>
-                            {selGame.subTitle}
-                          </div>
-                          <div className="flex">
-                            <span className="w-20">설명</span>
-                            <div className="whitespace-pre-wrap">
-                              {selGame.info}
-                            </div>
-                          </div>
-                          <div className="flex">
-                            <span className="w-20">사진</span>
-                            {["", "", ""].map((url) => {
-                              return (
-                                <img
-                                  className="rounded-2xl mr-3"
-                                  style={{
-                                    width: "70px",
-                                    height: "70px",
-                                    objectFit: "fill",
-                                  }}
-                                  src={url}
-                                />
-                              );
-                            })}
-                          </div>
-                          <div className="flex">
-                            <span className="w-20">요일</span>
-                            <div className="">
-                              {tam.map((v, i) => (
-                                <div
-                                  key={i}
-                                  className="flex flex-row justify-center"
-                                >
-                                  {v.template.id === `${selGame?.id ?? "1"}` &&
-                                    v.weeks.map((game, i) => (
-                                      <div className="px-2">{game}</div>
-                                    ))}
-                                </div>
-                              ))}
-                            </div>
-                          </div>
-                        </>
+                        <table className="w-full">
+                          <tbody>
+                            <tr>
+                              <td className="border w-2/12  px-2 py-1">제목</td>
+                              <td className="border px-2 py-1">
+                                {selGame.title}
+                              </td>
+                            </tr>
+                            <tr>
+                              <td className="border px-2 py-1">소제목</td>
+                              <td className="border px-2 py-1">
+                                {selGame.subTitle}
+                              </td>
+                            </tr>
+                            <tr>
+                              <td className="border px-2 py-1">설명</td>
+                              <td className="border px-2 py-1">
+                                {selGame.info}
+                              </td>
+                            </tr>
+                            <tr>
+                              <td className="border px-2 py-1">사진</td>
+                              <td className="flex flex-wrap gap-x-3 border px-2 py-1">
+                                {[
+                                  '',
+                                  '',
+                                  '',
+                                  '',
+                                  '',
+                                  '',
+                                  '',
+                                  '',
+                                  '',
+                                  '',
+                                  '',
+                                ].map((url, i) => (
+                                  <img
+                                    key={`view${i}`}
+                                    alt={`view${i}`}
+                                    className="rounded-full w-[70px] h-[70px] object-cover"
+                                    src={url}
+                                  />
+                                ))}
+                              </td>
+                            </tr>
+                            <tr>
+                              <td className="border px-2 py-1">요일</td>
+                              <td className="border px-2 py-1">
+                                {tam.map((v, i) => (
+                                  <div
+                                    key={i}
+                                    className="flex flex-row justify-center"
+                                  >
+                                    {v.template.id ===
+                                      `${selGame?.id ?? '1'}` &&
+                                      v.weeks.map((game, i) => (
+                                        <div className="px-2">{game}</div>
+                                      ))}
+                                  </div>
+                                ))}
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
                       ) : (
                         <div></div>
                       )}
                     </div>
                   </div>
                 </div>
-              </div>
-
-              <div className="p-2 flex flex-col w-full text-black ">
-                <label className="text-white py-2">컨텐츠 설명 입력</label>
-                <textarea
-                  className="h-30"
-                  value={content}
-                  onChange={(e) => setContent(e.target.value)}
-                />
-              </div>
-              <WeekDayBox selectedDays={days} onDaySelect={setDays} />
-              {selectedBoxIndex === null ? (
-                <button onClick={handleAddBox}>추가</button>
-              ) : (
-                <button onClick={updateBox}>수정</button>
-              )}
-
-              <div>
-                <div className=" text-3xl"> 토너먼트 정보 추가/삭제</div>
-                {tam.map((box, index) => (
-                  <Box
-                    key={`${index}dsadsa`}
-                    title={box.template.title}
-                    subTitle={box.template.subTitle}
-                    content={box.template.info}
-                    oneDay={box.template.id}
-                    onClick={() => {
-                      handleClickBox(box.template, Number(box.template.id));
-                    }}
-                    onClick2={() => {
-                      deleteBox(box.template.id);
-                    }}
-                  />
-                ))}
               </div>
             </div>
           </div>
@@ -457,7 +380,7 @@ export default function StoreEditForm() {
                     <div key={daysIndex} className="py-2">
                       {visibility[daysIndex] ? (
                         <h1 onClick={() => toggleVisibility(daysIndex)}>
-                          <AiFillCaretUp className="inline" />{" "}
+                          <AiFillCaretUp className="inline" />{' '}
                           {`  ${daysValue.day}`}
                         </h1>
                       ) : (
@@ -474,7 +397,7 @@ export default function StoreEditForm() {
                                 (templatesValue, templatesIndex) =>
                                   templatesValue.id === gamesValue ? (
                                     <div
-                                      key={templatesIndex}
+                                      key={`tem${templatesIndex}`}
                                       className="flex flex-col justify-center text-center py-1 pb-4"
                                     >
                                       <div className="bg-slate-800 rounded-tr-md  rounded-tl-md py-4">
@@ -504,13 +427,17 @@ export default function StoreEditForm() {
             <PhotoEditDialog
               onCancel={() => {
                 setPhotoDialog(false);
+                setGames(pickPub.templates);
               }}
             />
           )}
           {gameDialog && (
             <GameEditDialog
+              gameTemplate={selGame}
               onCancel={() => {
                 setGameDialog(false);
+                setGames(pickPub.templates);
+                setSelGame(null);
               }}
             />
           )}
@@ -524,7 +451,7 @@ export default function StoreEditForm() {
         <br />
         <button
           className="bg-white"
-          onClick={() => navigate("/admin/storeInfo")}
+          onClick={() => navigate('/admin/storeInfo')}
         >
           이전페이지로
         </button>
