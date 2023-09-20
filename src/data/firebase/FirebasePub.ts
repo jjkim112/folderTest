@@ -80,6 +80,30 @@ export class FirebasePub {
       return false;
     }
   };
+  static deleteGame = async (
+    pubId: string,
+    gameId: string
+  ): Promise<boolean> => {
+    try {
+      const firestore = firebase.firestore();
+      const newGameDoc = firestore
+        .collection('wwp_pubs')
+        .doc(pubId)
+        .collection('games')
+        .doc(gameId);
+      const newGameDocData = await newGameDoc.get();
+      if (!newGameDocData.exists) {
+        return false;
+      } else {
+        await newGameDoc.delete();
+
+        return true;
+      }
+    } catch (error) {
+      console.log(`[FirebasePub] deleteGame e: ${error}`);
+      return false;
+    }
+  };
 
   static updatePub = async (
     pubId: string,

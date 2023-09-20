@@ -33,6 +33,7 @@ import {
   toggleEditMode,
 } from 'src/reducer/gameSlice';
 import { TournaEditButton } from './tournaEditButton';
+import { FirebasePub } from 'src/data/firebase/FirebasePub';
 export interface typeGames {
   id: string;
   pubId: string;
@@ -63,6 +64,7 @@ export default function EnhancedTable() {
   const pubsData = useSelector((state: RootState) => state.admin.pub);
   const gamesData = useSelector((state: RootState) => state.game.games);
   const isEdit = useSelector((state: RootState) => state.game.isEdit);
+
   const handleRequestSort = (
     event: React.MouseEvent<unknown>,
     property: keyof typeGames
@@ -129,26 +131,31 @@ export default function EnhancedTable() {
       ),
     [order, orderBy, page, rowsPerPage, gamesData]
   );
+  async function tournamentDelete() {
+    let newGameDatas = gamesData;
+    console.log('dsadsa');
 
-  useEffect(() => {
-    const newGamesDtae = [...gamesData];
-
-    for (let newOneGame of newGamesDtae) {
-      if (newOneGame.id === gameId) {
-        newOneGame.players = playerList;
-        break;
-      }
+    for (let index = 0; index < selected.length; index++) {
+      console.log('dsadsa');
+      newGameDatas = newGameDatas.filter(
+        (value) => value.id !== selected[index]
+      );
+      await FirebasePub.deleteGame(pubsData.id, selected[index]);
     }
-
-    dispatch(refreshGames(newGamesDtae));
-  }, [playerList, setPlayerList]);
+    console.log(newGameDatas);
+    dispatch(refreshGames(newGameDatas));
+    setSelected([]);
+  }
 
   return (
     <AdminRequireLayout>
       <div className="flex gap-4">
         <Box sx={{ width: '100%' }}>
           <Paper sx={{ width: '100%', mb: 2 }}>
-            <EnhancedTableToolbar numSelected={selected.length} />
+            <EnhancedTableToolbar
+              onClick={tournamentDelete}
+              numSelected={selected.length}
+            />
             <TableContainer>
               <Table
                 sx={{ minWidth: 750 }}
@@ -178,6 +185,9 @@ export default function EnhancedTable() {
                         tabIndex={-1}
                         key={index}
                         selected={isItemSelected}
+                        style={{
+                          border: isItemSelected ? '3px solid red' : '',
+                        }}
                         sx={{ cursor: 'pointer' }}
                       >
                         <TableCell padding="checkbox">
@@ -216,8 +226,10 @@ export default function EnhancedTable() {
                           align="right"
                         >
                           <PlayerButton
+                            isEdit={isEdit}
                             onClick={() => {
                               if (!isEdit) {
+                                setSelected([row.id]);
                                 setPlayerList(row.players);
                                 setGameId(row.id);
                               }
@@ -250,6 +262,7 @@ export default function EnhancedTable() {
                                 )
                               );
                               setPlayerList([]);
+                              setSelected([row.id]);
                               dispatch(setOneGamePlayer(row.players));
                               dispatch(toggleEditMode(true));
                             }}
@@ -404,10 +417,10 @@ interface HeadCell {
 
 const headCells: readonly HeadCell[] = [
   {
-    id: 'id',
+    id: 'title',
     numeric: true,
     disablePadding: false,
-    label: 'id',
+    label: '토너이름',
   },
   {
     id: 'date',
@@ -435,11 +448,12 @@ const headCells: readonly HeadCell[] = [
   },
 ];
 interface EnhancedTableToolbarProps {
+  onClick: () => void;
   numSelected: number;
 }
 
 function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
-  const { numSelected } = props;
+  const { onClick, numSelected } = props;
 
   return (
     <Toolbar
@@ -476,7 +490,11 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
       )}
       {numSelected > 0 ? (
         <Tooltip title="Delete">
-          <IconButton>
+          <IconButton
+            onClick={() => {
+              onClick();
+            }}
+          >
             <DeleteIcon />
           </IconButton>
         </Tooltip>

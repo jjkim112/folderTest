@@ -1,9 +1,11 @@
+import { TournamentInfo } from 'src/domain/TournamentInfo.model';
 import { Game, GamePlayerThumb } from '../domain/Game.model';
 import { GameTemplate } from '../domain/GameTemplate.model';
 import { Pub } from '../domain/Pub.model';
 import { User } from '../domain/User.model';
 import { FirebasePub } from './firebase/FirebasePub';
 import { FirebaseUser } from './firebase/FirebaseUser';
+import { FirebaseTournament } from './firebase/FirebaseTournament';
 
 export class DataService {
   static addPub = async (
@@ -66,6 +68,23 @@ export class DataService {
     } catch (e) {
       return false;
     }
+  };
+  static fetchWholeTournamentInfo = async (
+    pubId: string | null
+  ): Promise<TournamentInfo[]> => {
+    if (pubId === null) return [];
+    let temp: TournamentInfo[] = await FirebaseTournament.fetchWholeTournaments(
+      pubId
+    );
+    return temp;
+  };
+
+  static fetchTournamentInfo = async (
+    pubId: string,
+    tId: string
+  ): Promise<TournamentInfo | null> => {
+    let temp = await FirebaseTournament.fetchTournamentInfo(pubId, tId);
+    return temp;
   };
 
   static addGame = async (

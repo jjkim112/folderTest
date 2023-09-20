@@ -1,14 +1,18 @@
 import React from 'react';
 
 interface PlayerButtonProps {
+  isEdit: boolean;
   onClick: () => void;
 }
 
-export const PlayerButton: React.FC<PlayerButtonProps> = ({ onClick }) => {
+export const PlayerButton: React.FC<PlayerButtonProps> = ({
+  isEdit,
+  onClick,
+}) => {
   return (
     <button
       style={{
-        backgroundColor: 'green',
+        backgroundColor: isEdit ? 'gray' : 'green',
         border: '1px solid black',
         padding: '3px',
         cursor: 'pointer',

@@ -1,6 +1,6 @@
 import React, { SyntheticEvent, useEffect, useState } from 'react';
 import { Box, Tab, Tabs } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 type IntroductionTab = {
   label: string;
   mainLink?: string;
@@ -34,6 +34,16 @@ const tabs: IntroductionTab[] = [
 export const Header = () => {
   const [activeHeaderTab, setActiveHeaderTab] = useState(0);
   const navigator = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    const pathName = location.pathname.split('/');
+
+    const currentTab = tabs.findIndex(
+      (tab) => tab.mainLink === `/${pathName[1]}`
+    );
+    setActiveHeaderTab(currentTab !== -1 ? currentTab : 0);
+  }, [location]);
   function handleClickTab(
     event: SyntheticEvent<Element, Event>,
     value: any

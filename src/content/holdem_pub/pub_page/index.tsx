@@ -15,10 +15,14 @@ import { HeaderTap } from '../../../utils/header/header_tap';
 import { GameTemplate } from '../../../domain/GameTemplate.model';
 import { refreshWithPubId } from '../../../reducer/userSlice';
 import MapTest from 'src/utils/map/Map';
+import { inputTournament } from 'src/reducer/pubSlice';
 type Section = {
   label: string;
 };
 const tabs: Section[] = [
+  {
+    label: '토너먼트',
+  },
   {
     label: '랭킹',
   },
@@ -29,9 +33,11 @@ const tabs: Section[] = [
 
 export default function HoldemPubOnePage() {
   const id = useParams().id;
+  const nowTime = new Date();
   const [pickPub, setPickPub] = useState<Pub | null>(null);
   const pubsData = useSelector((state: RootState) => state.pub.pubs);
   const gamesData = useSelector((state: RootState) => state.game.games);
+  const tournaments = useSelector((state: RootState) => state.pub.tournaments);
   const customUsersData = useSelector(
     (state: RootState) => state.user.customUsers
   );
@@ -40,11 +46,19 @@ export default function HoldemPubOnePage() {
   const [visibility, setVisibility] = useState<boolean[]>(
     new Array(7).fill(false)
   );
+  const [tournamentInfo, setTournamentInfo] = useState<boolean[]>(
+    new Array(7).fill(false)
+  );
 
   const toggleVisibility = (index: number) => {
     const newVisibility = [...visibility];
     newVisibility[index] = !newVisibility[index];
     setVisibility(newVisibility);
+  };
+  const toggleTournamentInfo = (index: number) => {
+    const newVisibility = [...tournamentInfo];
+    newVisibility[index] = !newVisibility[index];
+    setTournamentInfo(newVisibility);
   };
 
   const goToPubPage = async () => {
@@ -62,9 +76,20 @@ export default function HoldemPubOnePage() {
   const [selectedTournamentId, setSelectedTournamentId] = useState(null);
   const [count, setCount] = useState(0);
   const [filteredGameData, setFilteredGameData] = useState([]);
+
   useEffect(() => {
     goToPubPage();
+    initFunc();
   }, []);
+  const initFunc = async () => {
+    refreshTournaments();
+  };
+  const refreshTournaments = async () => {
+    const tList = await DataService.fetchWholeTournamentInfo(id);
+    for (var t of tList) {
+      dispatch(inputTournament(t));
+    }
+  };
 
   useEffect(() => {
     // filteredGameData를 갱신
@@ -79,6 +104,32 @@ export default function HoldemPubOnePage() {
     }
   }, [selectedTournamentId, gamesData]);
 
+  const oneDayMs = 24 * 60 * 60 * 1000;
+  const oneHourMs = 60 * 60 * 1000;
+  const oneMinuteMs = 60 * 1000;
+
+  const timeHMSChange = (difference) => {
+    let remainingHours = Math.floor((difference % oneDayMs) / oneHourMs)
+      .toString()
+      .padStart(2, '0');
+    let remainingMinutes = Math.floor((difference % oneHourMs) / oneMinuteMs)
+      .toString()
+      .padStart(2, '0');
+    let remainingSeconds = Math.floor((difference % oneMinuteMs) / 1000)
+      .toString()
+      .padStart(2, '0');
+    return `${remainingHours} : ${remainingMinutes}  : ${remainingSeconds}`;
+  };
+  const timeMSChange = (difference) => {
+    let remainingMinutes = Math.floor((difference % 60) / 60)
+      .toString()
+      .padStart(2, '0');
+    let remainingSeconds = Math.floor(difference % 60)
+      .toString()
+      .padStart(2, '0');
+    return ` ${remainingMinutes}  : ${remainingSeconds}`;
+  };
+
   const _getGameTemp = (pubId: string, tempId: string): GameTemplate | null => {
     for (const onePub of pubsData) {
       if (onePub.id === pubId) {
@@ -91,6 +142,21 @@ export default function HoldemPubOnePage() {
       }
     }
     return null;
+  };
+
+  const getLevel = (index: number): number => {
+    const blindList = tournaments[index].blindList ?? [];
+    let temp = tournaments[index].prevSecond ?? 0; // 500, 700, 1300
+    let count = 1;
+    for (var b of blindList) {
+      if (temp >= b.second) {
+        temp -= b.second;
+        count++;
+      } else {
+        break;
+      }
+    }
+    return count;
   };
 
   if (pickPub != null) {
@@ -143,12 +209,129 @@ export default function HoldemPubOnePage() {
               </div>
             </div>
           </div>
-          <MapTest lat={pickPub.lat} lon={pickPub.lon}></MapTest>
         </div>
 
         <HeaderTap content={tabs} activeTab={setActiveHeaderTab} />
-        <div className="p-2 h-full">
-          {activeHeaderTab == 0 ? (
+        <div className=" h-full">
+          {activeHeaderTab === 0 && (
+            <div className="">
+              <div className="flex flex-col w-full h-full ">
+                {tournaments.map((value, i) => (
+                  <div className="flex flex-col border-b-2 border-amber-100">
+                    <div
+                      className="flex flex-row w-full h-[100px]  px-2"
+                      onClick={() => toggleTournamentInfo(i)}
+                    >
+                      {value.startTime >= nowTime && (
+                        <div className="flex flex-col justify-center text-center w-[30%] rounded-3xl bg-green-500 my-2  text-xs">
+                          <div className="  ">{'등록 까지'}</div>
+                          <div className=" ">{' 남은 시간'}</div>
+                          <div className="  ">
+                            <div>
+                              {timeHMSChange(
+                                value.startTime.getTime() - nowTime.getTime()
+                              )}
+                            </div>
+                          </div>
+                        </div>
+                      )}
+
+                      {value.startTime < nowTime ? (
+                        nowTime < value.reentryTime ? (
+                          <div className="flex flex-col justify-center text-center w-[30%] rounded-3xl bg-red-500 my-2  text-xs">
+                            <div className="  ">{'추가 등록 까지'}</div>
+                            <div className=" ">{' 남은 시간'}</div>
+                            <div className="  ">
+                              <div>
+                                {timeHMSChange(
+                                  value.reentryTime.getTime() -
+                                    nowTime.getTime()
+                                )}
+                              </div>
+                            </div>
+                          </div>
+                        ) : (
+                          <div className="flex flex-col justify-center text-center w-[30%] rounded-3xl bg-gray-500 my-2  text-xs">
+                            <div className="  ">{'진행 중 or 끝남'}</div>
+                          </div>
+                        )
+                      ) : (
+                        <></>
+                      )}
+                      <div className="flex flex-col justify-center text-start w-[70%]   my-2 ml-1 ">
+                        <div className="w-full h-full  ">{value.gameName}</div>
+                        <div className="w-full h-full  ">
+                          {value.startTime.toLocaleString()}
+                        </div>
+                        <div>
+                          {'상금 : '}
+                          {value.totalPrize}
+                        </div>
+                        <div className="flex flex-row justify-center text-start  w-full">
+                          <div className="w-[50%]">
+                            {'바이인 : '}
+                            {value.buyInCost.cost}
+                          </div>
+                          <div className="w-[50%]">
+                            {'현재 인원 : '}
+                            {value.remainPlayer}/{value.totalPlayer}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    {tournamentInfo[i] && (
+                      <div
+                        className="w-full h-full flex flex-col p-2"
+                        onClick={() => toggleTournamentInfo(i)}
+                      >
+                        <div className="flex flex-row w-full h-full pb-2">
+                          <div className="flex flex-col w-[20%] justify-center text-center border-2">
+                            <div>플레이어</div>
+                            <div>{value.totalPlayer}</div>
+                            <div>평균 칩</div>
+                            <div>
+                              {value.remainPlayer !== 0
+                                ? Math.floor(
+                                    value.totalChips / value.remainPlayer
+                                  )
+                                : 0}
+                            </div>
+                          </div>
+                          <div className="flex flex-col w-[60%] justify-center text-center border-2 mx-2">
+                            <div>{`LV.${getLevel(i)}`}</div>
+                            <div>{timeMSChange(value.prevSecond)}</div>
+                            <div>{`${
+                              value.blindList[getLevel(i)].smallBlind
+                            }/ ${value.blindList[getLevel(i)].bigBlind}(${
+                              value.blindList[getLevel(i)].ante
+                            })`}</div>
+                            <div>
+                              {value.blindList[getLevel(i) + 1].smallBlind &&
+                                `${
+                                  value.blindList[getLevel(i) + 1].smallBlind
+                                }/ ${
+                                  value.blindList[getLevel(i) + 1].bigBlind
+                                }(${value.blindList[getLevel(i) + 1].ante})`}
+                            </div>
+                          </div>
+                          <div className="flex flex-col w-[20%] justify-center text-center border-2">
+                            <div>총 상금</div>
+                            <div>{value.totalPrize}</div>
+                            <div>1위</div>
+                            <div>{value.prizeStructure[0].prize}</div>
+                          </div>
+                        </div>
+                        {value.note && (
+                          <div className="border-2 p-2">{value.note}</div>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+          {activeHeaderTab === 1 && (
             <div className="p-2">
               <div>
                 <div className="text-3xl">플레이어 순위</div>
@@ -165,7 +348,7 @@ export default function HoldemPubOnePage() {
                     <tbody>
                       {customUsersData.map((ranking) => (
                         <tr
-                          key={ranking.id}
+                          key={`Ranking-${ranking.id}`}
                           className="text-center text-xs  odd:bg-[#2d394bd1] even:bg-[#303950f7]"
                         >
                           <td className="w-1/4 py-2">{`${(
@@ -199,7 +382,7 @@ export default function HoldemPubOnePage() {
                       {gamesData.map((game, i) => {
                         return (
                           <tr
-                            key={game.id}
+                            key={`GameId-${game.id}`}
                             className={`${
                               filteredGameData.length !== 0
                                 ? selectedTournamentId === game.id
@@ -288,8 +471,10 @@ export default function HoldemPubOnePage() {
                 </div>
               </div>
             </div>
-          ) : (
-            <div className="h-full">
+          )}
+          {activeHeaderTab === 2 && (
+            <div className="h-full p-2">
+              <div className="border-2 p-3 mb-2">{pickPub.description}</div>
               <div>요일 별 오픈 토너먼트</div>
               <div className="py-2">
                 {pickPub.days.map((daysValue, daysIndex) => (
@@ -336,6 +521,7 @@ export default function HoldemPubOnePage() {
                   </div>
                 ))}
               </div>
+              <MapTest lat={pickPub.lat} lon={pickPub.lon}></MapTest>
             </div>
           )}
         </div>

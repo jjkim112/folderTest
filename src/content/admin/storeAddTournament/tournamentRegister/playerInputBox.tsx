@@ -13,6 +13,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from 'src/store/store';
 import {
   reSetOneData,
+  refreshGames,
   setOneGameData,
   toggleEditMode,
   udateGameData,
@@ -29,6 +30,7 @@ type BasicType = {
 export const BasicTextFields: React.FC<BasicType> = ({ pubsData }) => {
   const formRef = React.useRef(null);
   const gamesData = useSelector((state: RootState) => state.game.oneGame);
+  const gameDatas = useSelector((state: RootState) => state.game.games);
   const gamesPlayer = useSelector(
     (state: RootState) => state.game.oneGamePlayers
   );
