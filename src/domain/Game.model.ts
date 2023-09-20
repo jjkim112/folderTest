@@ -1,5 +1,5 @@
-import { Timestamp } from 'firebase/firestore';
-import firebase from 'firebase/compat/app';
+import { Timestamp } from "firebase/firestore";
+import firebase from "firebase/compat/app";
 export class Game {
   id: string;
   pubId: string;
@@ -58,26 +58,26 @@ export class Game {
 
   get toMap() {
     return {
-      id: this.id || '',
-      pubId: this.pubId || '',
-      gameTempId: this.gameTempId || '',
-      title: this.title || '',
-      subTitle: this.subTitle || '',
-      description: this.description || '',
-      note: this.note || '',
+      id: this.id || "",
+      pubId: this.pubId || "",
+      gameTempId: this.gameTempId || "",
+      title: this.title || "",
+      subTitle: this.subTitle || "",
+      description: this.description || "",
+      note: this.note || "",
       entry: this.entry || 0,
       date: firebase.firestore.Timestamp.fromDate(this.date),
-      totalReward: this.totalReward || '',
+      totalReward: this.totalReward || "",
       players:
         this.players && Array.isArray(this.players)
           ? // Make sure each player object does not contain undefined values
             // If the player object is not defined, assign an empty array
             this.players.map((v) => ({
-              id: v.id || '',
-              name: v.name || '',
-              prize: v.prize || '',
-              note: v.note || '',
-              rank: v.rank || '',
+              id: v.id || "",
+              name: v.name || "",
+              prize: v.prize || "",
+              note: v.note || "",
+              rank: v.rank || "",
             }))
           : [],
     };
@@ -85,17 +85,17 @@ export class Game {
 
   static fromData(data: any): Game {
     try {
-      const id = data['id'];
-      const pubId = data['pubId'];
-      const gameTempId = data['gameTempId'];
-      const title = data['title'];
-      const subTitle = data['subTitle'];
-      const description = data['description'];
-      const note = data['note'];
-      const entry = data['entry'];
-      const date = (data['date'] as Timestamp).toDate();
-      const totalReward = data['totalReward'];
-      const players = data['players'];
+      const id = data["id"];
+      const pubId = data["pubId"];
+      const gameTempId = data["gameTempId"];
+      const title = data["title"];
+      const subTitle = data["subTitle"];
+      const description = data["description"];
+      const note = data["note"];
+      const entry = data["entry"];
+      const date = (data["date"] as Timestamp).toDate();
+      const totalReward = data["totalReward"];
+      const players = data["players"];
 
       return new Game(
         id,
@@ -112,7 +112,7 @@ export class Game {
       );
     } catch (error) {
       console.log(`[GameTemplate Model] fromData e: ${error}`);
-      return new Game('', '', '', '', '', '', '', 0, new Date(0), '', []);
+      return new Game("", "", "", "", "", "", "", 0, new Date(0), "", []);
     }
   }
 }
