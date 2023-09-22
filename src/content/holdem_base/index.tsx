@@ -9,6 +9,7 @@ import HoldemPubCardRule from './holdem_pub_card_rule/HoldemPubCardRule';
 import HoldemVisionAbility from './holdem_vision_ability/HoldemVisionAbility';
 import HandRankPage from 'src/page/hand_rank/HandRankPage';
 import PreFlopRangePage from 'src/page/pre_flop_range/PreFlopRangePage';
+import QuotePage from './quote/QuotePage';
 type Section = {
   label: string;
 };
@@ -29,6 +30,9 @@ function HoldemBase() {
     },
     {
       label: '비전 핸드 확률',
+    },
+    {
+      label: '홀덤 좋은 글귀',
     },
   ];
   const [activeHeaderTab, setActiveHeaderTab] = useState(0);
@@ -55,6 +59,8 @@ export function HoldemBaseSel({ sel }: selProps): JSX.Element {
       return <HoldemPubBase></HoldemPubBase>;
     case '용어 정리':
       return <HoldemTermsBase></HoldemTermsBase>;
+    case '홀덤 좋은 글귀':
+      return <QuotePage></QuotePage>;
 
     default:
       return <div>페이지 없습니다</div>;
