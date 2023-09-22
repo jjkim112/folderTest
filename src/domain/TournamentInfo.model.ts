@@ -99,7 +99,8 @@ export class TournamentInfo {
       const note = data['note']; // string
       const prevSecond = data['prevSecond']; // string
       const isPrivate = data['isPrivate'] ?? false;
-      const reentryTime = (data['reentryTime'] as Timestamp).toDate();
+      const reentryTime =
+        (data['reentryTime'] as Timestamp).toDate() || new Date();
 
       return new TournamentInfo(
         id,

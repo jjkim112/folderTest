@@ -5,7 +5,7 @@ type CardItemProps = {
   height?: string | number;
 };
 
-const Card = ({ card, width = '100px', height = '150px' }: CardItemProps) => {
+const Card = ({ card, width = '100px', height = '100%' }: CardItemProps) => {
   const getCardImgRoute = (value: string): string => {
     try {
       const shape = value.charAt(0);
@@ -22,9 +22,9 @@ const Card = ({ card, width = '100px', height = '150px' }: CardItemProps) => {
   };
 
   return (
-    <div className="disable-blur">
+    <div className="disable-blur  ">
       <img
-        className="object-cover"
+        className="object-cover "
         src={getCardImgRoute(card)}
         alt="card"
         width={width}

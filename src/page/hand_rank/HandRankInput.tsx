@@ -1,21 +1,31 @@
 import { useEffect, useState } from 'react';
 import basic from '../../utils/basic.json';
-import Card from '../../component/Card';
-import CardSetDialog from '../../component/CardSetDialog';
-import handData from './hand_data.json';
 import handData2 from './hand_data2.json';
 import handData3 from './hand_data3.json';
 import handData4 from './hand_data4.json';
 import handData6 from './hand_data6.json';
 import handData8 from './hand_data8.json';
 import handData10 from './hand_data.json';
-interface HandRankInputProps {}
+import Card from 'src/component/Card';
+import HandRankSlider, { Xway } from './HandRankSlider';
+import CardSetDialog from 'src/component/CardSetDialog';
+interface HandRankInputProps {
+  selectedBtn: string;
+  setSelectedBtn: React.Dispatch<React.SetStateAction<string>>;
+  selectedData: SelectedData;
+  setSelectedData: React.Dispatch<React.SetStateAction<SelectedData>>;
+}
 type SelectedData = {
   index: number;
   card: string;
   sum: number;
 }[];
-const HandRankInput: React.FC<HandRankInputProps> = () => {
+const HandRankInput: React.FC<HandRankInputProps> = ({
+  selectedBtn,
+  setSelectedBtn,
+  selectedData,
+  setSelectedData,
+}) => {
   const [isSuited, setIsSuited] = useState(false);
 
   const [modalOpen, setModalOpen] = useState(false);
@@ -24,11 +34,11 @@ const HandRankInput: React.FC<HandRankInputProps> = () => {
   const [cards, setCards] = useState<string[]>(['', '']);
 
   const [rank, setRank] = useState<string>('0');
-  const [selectedBtn, setSelectedBtn] = useState('2');
-  const [selectedData, setSelectedData] = useState(handData2);
+
   const handleButtonClick = (name: string) => {
     setSelectedBtn(name);
   };
+  useEffect(() => handleButtonData(selectedBtn), [selectedBtn, setSelectedBtn]);
   const handleButtonData = (name: string) => {
     switch (name) {
       case '2':
@@ -82,7 +92,6 @@ const HandRankInput: React.FC<HandRankInputProps> = () => {
         break;
 
       default:
-        setSelectedData(handData2);
         setCards((prev) => {
           updateRank(prev[0], prev[1], handData2);
 
@@ -91,65 +100,7 @@ const HandRankInput: React.FC<HandRankInputProps> = () => {
         break;
     }
   };
-  interface XwayProps {
-    value: string;
-    handleButtonClick: React.Dispatch<React.SetStateAction<string>>;
-    handleButtonData: React.Dispatch<React.SetStateAction<string>>;
-  }
-  const Xway: React.FC<XwayProps> = (props) => {
-    return (
-      <div className="grid grid-cols-3 gap-1   text-2xl m-2  ">
-        <BasicBtn
-          name="2"
-          isSel={props.value === '2'}
-          onClick={() => {
-            props.handleButtonClick('2');
-            props.handleButtonData('2');
-          }}
-        ></BasicBtn>
-        <BasicBtn
-          name="3"
-          isSel={props.value === '3'}
-          onClick={() => {
-            props.handleButtonClick('3');
-            props.handleButtonData('3');
-          }}
-        ></BasicBtn>
-        <BasicBtn
-          name="4~5"
-          isSel={props.value === '4~5'}
-          onClick={() => {
-            props.handleButtonClick('4~5');
-            props.handleButtonData('4~5');
-          }}
-        ></BasicBtn>
-        <BasicBtn
-          name="6~7"
-          isSel={props.value === '6~7'}
-          onClick={() => {
-            props.handleButtonClick('6~7');
-            props.handleButtonData('6~7');
-          }}
-        ></BasicBtn>
-        <BasicBtn
-          name="8~9"
-          isSel={props.value === '8~9'}
-          onClick={() => {
-            props.handleButtonClick('8~9');
-            props.handleButtonData('8~9');
-          }}
-        ></BasicBtn>
-        <BasicBtn
-          name="10"
-          isSel={props.value === '10'}
-          onClick={() => {
-            props.handleButtonClick('10');
-            props.handleButtonData('10');
-          }}
-        ></BasicBtn>
-      </div>
-    );
-  };
+
   const isCard = (card: string): boolean => {
     // c2, dt, ha, s9 : true,  s1, tt, eq : false
     if (
@@ -208,7 +159,8 @@ const HandRankInput: React.FC<HandRankInputProps> = () => {
           return prevCards;
         }
       }
-
+      const highIndex = '23456789tjqka'.indexOf(prevCards[0].charAt(1));
+      const lowIndex = '23456789tjqka'.indexOf(prevCards[1].charAt(1));
       if (selCard === 0) {
         prevCards[selCard] = `s${cardNumber}`;
       } else if (selCard === 1) {
@@ -217,6 +169,12 @@ const HandRankInput: React.FC<HandRankInputProps> = () => {
         } else {
           prevCards[selCard] = `d${cardNumber}`;
         }
+      }
+      if (highIndex < lowIndex) {
+        let lowCard = prevCards[0];
+        prevCards[0] = prevCards[1];
+        prevCards[1] = lowCard;
+      } else {
       }
 
       updateRank(prevCards[0], prevCards[1], selectedData);
@@ -286,12 +244,22 @@ const HandRankInput: React.FC<HandRankInputProps> = () => {
 
   return (
     <div>
-      <div className="flex-col items-center">
-        <div className="flex justify-center gap-2 mt-10">
+      <HandRankSlider
+        selectedBtn={selectedBtn}
+        setSelectedBtn={setSelectedBtn}
+        selectedData={selectedData}
+        setSelectedData={setSelectedData}
+        handleButtonClick={handleButtonClick}
+        handleButtonData={handleButtonData}
+        cards={cards}
+        rank={rank}
+      />
+      <div className="flex flex-row items-center h-full p-2">
+        <div className="flex w-[40%] h-full justify-center items-center gap-2 ">
           {cards.map((v, i) => {
             return (
               <div
-                className="cursor-pointer"
+                className="cursor-pointer  "
                 onClick={() => {
                   clickCard(i);
                 }}
@@ -302,17 +270,11 @@ const HandRankInput: React.FC<HandRankInputProps> = () => {
             );
           })}
         </div>
-        <div className="flex justify-center">
-          {' '}
-          <Xway
-            value={selectedBtn}
-            handleButtonClick={handleButtonClick}
-            handleButtonData={handleButtonData}
-          />
+        <div className="flex  w-[60%] h-full  flex-col justify-center text-center ">
+          <TypeSel isSuited={isSuited} setIsSuited={suitCardChange} />
+          <div className="w-[70%] text-center self-center"></div>
+          <ResultRank rank={rank} />
         </div>
-
-        <TypeSel isSuited={isSuited} setIsSuited={suitCardChange} />
-        <ResultRank rank={rank} />
       </div>
       {modalOpen && (
         <CardSetDialog
@@ -332,7 +294,7 @@ interface TypeSelProps {
 
 const TypeSel: React.FC<TypeSelProps> = (props) => {
   return (
-    <div className="flex justify-center py-2 ">
+    <div className="flex h-full justify-center py-2 ">
       <BasicBtn
         name="suited"
         isSel={props.isSuited ?? false}
@@ -378,7 +340,7 @@ interface ResultRankProps {
 
 const ResultRank: React.FC<ResultRankProps> = (props) => {
   return (
-    <div className="flex justify-center text-2xl font-bold text-white pb-3">
+    <div className="flex  h-[50%] justify-center text-2xl font-bold text-white pb-3">
       상위 {props.rank} % 핸드
     </div>
   );

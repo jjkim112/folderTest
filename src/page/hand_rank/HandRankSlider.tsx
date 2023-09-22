@@ -1,6 +1,10 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
 import Slider from '@mui/material/Slider';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
 import handData2 from './hand_data2.json';
 import handData3 from './hand_data3.json';
 import handData4 from './hand_data4.json';
@@ -9,75 +13,73 @@ import handData8 from './hand_data8.json';
 import handData10 from './hand_data.json';
 
 import './hand_rank.css';
+import HandRankInput from './HandRankInput';
 // Cheerio 모듈 가져오기
-type selectedData = {
+type SelectedData = {
   index: number;
   card: string;
   sum: number;
 }[];
+interface HandRankSliderProps {
+  selectedBtn: string;
+  setSelectedBtn: React.Dispatch<React.SetStateAction<string>>;
+  selectedData: SelectedData;
+  setSelectedData: React.Dispatch<React.SetStateAction<SelectedData>>;
+  handleButtonClick: (name: string) => void;
+  handleButtonData: (name: string) => void;
+  cards: string[];
+  rank: string;
+}
 interface WholeRangeChartProps {
   percentage: number;
-  selectedData: selectedData;
+  selectedData: SelectedData;
+  cards: string[];
 }
 
-const HandRankSlider: React.FC = () => {
+const HandRankSlider: React.FC<HandRankSliderProps> = ({
+  selectedBtn,
+  setSelectedBtn,
+  selectedData,
+  setSelectedData,
+  handleButtonClick,
+  handleButtonData,
+  cards,
+  rank,
+}) => {
   const [percentage, setPercentage] = useState<number>(30);
-  const [selectedBtn, setSelectedBtn] = useState('2');
-  const [selectedData, setSelectedData] = useState(handData2);
-
-  const handleButtonClick = (name: string) => {
-    setSelectedBtn(name);
-  };
-  const handleButtonData = (name: string) => {
-    switch (name) {
-      case '2':
-        setSelectedData(handData2);
-        break;
-      case '3':
-        setSelectedData(handData3);
-        break;
-      case '4~5':
-        setSelectedData(handData4);
-        break;
-      case '6~7':
-        setSelectedData(handData6);
-        break;
-      case '8~9':
-        setSelectedData(handData8);
-        break;
-      case '10':
-        setSelectedData(handData10);
-        break;
-
-      default:
-        setSelectedData(handData2);
-        break;
-    }
-  };
+  useEffect(
+    () => setPercentage(Number(rank) === 0 ? 30 : Number(rank)),
+    [rank]
+  );
   return (
-    <div className="justify-center items-center ">
-      <Xway
-        value={selectedBtn}
-        handleButtonClick={handleButtonClick}
-        handleButtonData={handleButtonData}
-      />
-      <div className="ml-4 text-3xl text-amber-300 ">{selectedBtn}명일때</div>
-      <WholeRangeChart percentage={percentage} selectedData={selectedData} />
-
+    <div className="justify-center items-center pt-4">
       <RangeText value={percentage} />
-      <Box className="mx-auto w-4/5">
-        <Slider
-          onChange={(_, value) => {
-            if (typeof value === 'number') {
-              setPercentage(value);
-            }
-          }}
-          value={percentage}
-          step={0.5}
-          min={0.5}
-          max={100}
+      <div className="flex flex-row w-full  justify-between px-5">
+        <Box className="w-[50%]">
+          <Slider
+            onChange={(_, value) => {
+              if (typeof value === 'number') {
+                setPercentage(value);
+              }
+            }}
+            value={percentage}
+            step={0.5}
+            min={0.5}
+            max={100}
+          />
+        </Box>
+        <Xway
+          value={selectedBtn}
+          handleButtonClick={handleButtonClick}
+          handleButtonData={handleButtonData}
         />
-      </Box>
+      </div>
+
+      <WholeRangeChart
+        cards={cards}
+        percentage={percentage}
+        selectedData={selectedData}
+      />
     </div>
   );
 };
@@ -87,79 +89,102 @@ interface XwayProps {
   handleButtonClick: React.Dispatch<React.SetStateAction<string>>;
   handleButtonData: React.Dispatch<React.SetStateAction<string>>;
 }
-const Xway: React.FC<XwayProps> = (props) => {
+export const Xway: React.FC<XwayProps> = (props) => {
+  const handleChange = (event: SelectChangeEvent) => {
+    props.handleButtonClick(event.target.value as string);
+    props.handleButtonData(event.target.value as string);
+  };
   return (
-    <div className="grid grid-cols-3 gap-1 text-2xl m-2 sm:w-full md:w-1/2 lg:w-1/3 ">
-      <BasicBtn
-        name="2"
-        isSel={props.value === '2'}
-        onClick={() => {
-          props.handleButtonClick('2');
-          props.handleButtonData('2');
-        }}
-      ></BasicBtn>
-      <BasicBtn
-        name="3"
-        isSel={props.value === '3'}
-        onClick={() => {
-          props.handleButtonClick('3');
-          props.handleButtonData('3');
-        }}
-      ></BasicBtn>
-      <BasicBtn
-        name="4~5"
-        isSel={props.value === '4~5'}
-        onClick={() => {
-          props.handleButtonClick('4~5');
-          props.handleButtonData('4~5');
-        }}
-      ></BasicBtn>
-      <BasicBtn
-        name="6~7"
-        isSel={props.value === '6~7'}
-        onClick={() => {
-          props.handleButtonClick('6~7');
-          props.handleButtonData('6~7');
-        }}
-      ></BasicBtn>
-      <BasicBtn
-        name="8~9"
-        isSel={props.value === '8~9'}
-        onClick={() => {
-          props.handleButtonClick('8~9');
-          props.handleButtonData('8~9');
-        }}
-      ></BasicBtn>
-      <BasicBtn
-        name="10"
-        isSel={props.value === '10'}
-        onClick={() => {
-          props.handleButtonClick('10');
-          props.handleButtonData('10');
-        }}
-      ></BasicBtn>
-    </div>
+    <Box sx={{ width: '30%' }}>
+      <FormControl fullWidth>
+        <InputLabel
+          id="players-select-label"
+          sx={{
+            color: 'red',
+            fontSize: 20,
+          }}
+        >
+          players
+        </InputLabel>
+        <Select
+          labelId="players-select-label"
+          id="players-select"
+          value={props.value}
+          label="players"
+          onChange={handleChange}
+          sx={{
+            backgroundColor: 'white',
+            borderColor: 'red', // 원하는 색상으로 변경 (예: red, blue, #ff0000 등)
+            '& .MuiOutlinedInput-root': {
+              '& fieldset': {
+                borderColor: 'red', // 원하는 색상으로 변경 (예: red, blue, #ff0000 등)
+              },
+              '&:hover fieldset': {
+                borderColor: 'green', // 마우스 호버 시의 색상 설정 (원하는 색상으로 변경)
+              },
+            },
+          }}
+        >
+          <MenuItem
+            value={'2'}
+            onClick={() => {
+              props.handleButtonClick('2');
+              props.handleButtonData('2');
+            }}
+          >
+            2명
+          </MenuItem>
+          <MenuItem
+            value={'3'}
+            onClick={() => {
+              props.handleButtonClick('3');
+              props.handleButtonData('3');
+            }}
+          >
+            3명
+          </MenuItem>{' '}
+          <MenuItem
+            value={'4~5'}
+            onClick={() => {
+              props.handleButtonClick('4~5');
+              props.handleButtonData('4~5');
+            }}
+          >
+            4~5명
+          </MenuItem>{' '}
+          <MenuItem
+            value={'6~7'}
+            onClick={() => {
+              props.handleButtonClick('6~7');
+              props.handleButtonData('6~7');
+            }}
+          >
+            6~7명
+          </MenuItem>{' '}
+          <MenuItem
+            value={'8~9'}
+            onClick={() => {
+              props.handleButtonClick('8~9');
+              props.handleButtonData('8~9');
+            }}
+          >
+            8~9명
+          </MenuItem>{' '}
+          <MenuItem
+            value={'10'}
+            onClick={() => {
+              props.handleButtonClick('10');
+              props.handleButtonData('10');
+            }}
+          >
+            10명
+          </MenuItem>
+        </Select>
+      </FormControl>
+    </Box>
   );
 };
-interface BasicBtnProps {
-  name?: string;
-  isSel?: boolean;
-  onClick?: React.MouseEventHandler<HTMLButtonElement>;
-}
-const BasicBtn: React.FC<BasicBtnProps> = ({ name, isSel, onClick }) => {
-  return (
-    <button
-      className={
-        isSel
-          ? 'w-20 block mx-2 bg-red-200 shadow-xl rounded-full border-2 border-gray-400 cursor-pointer px-2 py-1'
-          : 'w-20 block mx-2 hover:bg-red-200 shadow-xl rounded-full bg-white       border-2 border-gray-400 cursor-pointer px-2 py-1'
-      }
-      onClick={onClick}
-    >
-      {name ?? ''}
-    </button>
-  );
-};
+
 interface RangeTextProps {
   value: number;
 }
@@ -222,6 +247,10 @@ const WholeRangeChart: React.FC<WholeRangeChartProps> = (props) => {
     return null;
   };
 
+  const getCardData1 = (value1: string, value2: string) => {
+    return null;
+  };
+
   return (
     <div className="rangeGrid">
       {get169Hands().map((v, i) => {
@@ -229,11 +258,24 @@ const WholeRangeChart: React.FC<WholeRangeChartProps> = (props) => {
         if (card?.sum && card.sum <= props.percentage) {
           return (
             <div
-              className={
+              className={`  ${
                 v.charAt(0) === v.charAt(1)
                   ? 'containItemPocket'
                   : 'containItem'
-              }
+              } ${
+                props.cards[0].charAt(0) === 's' &&
+                props.cards[1].charAt(0) === 's'
+                  ? props.cards[0].charAt(1) === v.charAt(0) &&
+                    props.cards[1].charAt(1) === v.charAt(1) &&
+                    v.charAt(2) === 's'
+                    ? 'border-2 border-green-400'
+                    : ''
+                  : props.cards[0].charAt(1) === v.charAt(0) &&
+                    props.cards[1].charAt(1) === v.charAt(1) &&
+                    v.charAt(2) !== 's'
+                  ? 'border-2 border-green-400'
+                  : ''
+              }`}
               key={i}
             >
               {`${v.substring(0, 2).toUpperCase()}${v.charAt(2)}`}
@@ -241,7 +283,25 @@ const WholeRangeChart: React.FC<WholeRangeChartProps> = (props) => {
           );
         } else {
           return (
-            <div className="notContainItem" key={i}>
+            <div
+              className={` 
+              notContainItem
+              ${
+                props.cards[0].charAt(0) === 's' &&
+                props.cards[1].charAt(0) === 's'
+                  ? props.cards[0].charAt(1) === v.charAt(0) &&
+                    props.cards[1].charAt(1) === v.charAt(1) &&
+                    v.charAt(2) === 's'
+                    ? 'border-2 border-green-400'
+                    : ''
+                  : props.cards[0].charAt(1) === v.charAt(0) &&
+                    props.cards[1].charAt(1) === v.charAt(1) &&
+                    v.charAt(2) !== 's'
+                  ? 'border-2 border-green-400'
+                  : ''
+              }`}
+              key={i}
+            >
               {`${v.substring(0, 2).toUpperCase()}${v.charAt(2)}`}
             </div>
           );
