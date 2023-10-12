@@ -32,6 +32,16 @@ export class DataService {
         photos: photos,
         days: days,
         templates: templates,
+        customBlinds: [
+          {
+            isBreak: true,
+            level: 0,
+            bigBlind: 0,
+            smallBlind: 0,
+            ante: 0,
+            second: 0,
+          },
+        ],
       });
       return isSuccess;
     } catch (e) {

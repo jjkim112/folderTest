@@ -121,7 +121,7 @@ export default function HoldemPubOnePage() {
     return `${remainingHours} : ${remainingMinutes}  : ${remainingSeconds}`;
   };
   const timeMSChange = (difference) => {
-    let remainingMinutes = Math.floor((difference % 60) / 60)
+    let remainingMinutes = Math.floor(difference / 60)
       .toString()
       .padStart(2, '0');
     let remainingSeconds = Math.floor(difference % 60)
@@ -147,7 +147,7 @@ export default function HoldemPubOnePage() {
   const getLevel = (index: number): number => {
     const blindList = tournaments[index].blindList ?? [];
     let temp = tournaments[index].prevSecond ?? 0; // 500, 700, 1300
-    let count = 1;
+    let count = 0;
     for (var b of blindList) {
       if (temp >= b.second) {
         temp -= b.second;
@@ -298,7 +298,9 @@ export default function HoldemPubOnePage() {
                             </div>
                           </div>
                           <div className="flex flex-col w-[60%] justify-center text-center border-2 mx-2">
-                            <div>{`LV.${getLevel(i)}`}</div>
+                            <div>{`LV.${
+                              value.blindList[getLevel(i)].level
+                            }`}</div>
                             <div>{timeMSChange(value.prevSecond)}</div>
                             <div>{`${
                               value.blindList[getLevel(i)].smallBlind
