@@ -287,7 +287,9 @@ export default function HoldemPubOnePage() {
                         <div className="flex flex-row w-full h-full pb-2">
                           <div className="flex flex-col w-[20%] justify-center text-center border-2">
                             <div>플레이어</div>
-                            <div>{value.totalPlayer}</div>
+                            <div>
+                              {value.remainPlayer}/{value.totalPlayer}
+                            </div>
                             <div>평균 칩</div>
                             <div>
                               {value.remainPlayer !== 0
