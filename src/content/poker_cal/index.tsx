@@ -16,15 +16,33 @@ import {
   updateCommunitCards,
   updatePlayerCards,
 } from "../../reducer/pokerCalSlice";
+import { BiDownArrow, BiUpArrow } from "react-icons/bi";
 
+const rankMap = {
+  ROYAL_FLUSH: "로티플",
+  STRAIGHT_FLUSH: "스티플",
+  QUADS: "포카드",
+  FULL_HOUSE: "풀하우스",
+  FLUSH: "플러시",
+  STRAIGHT: "스트레이트",
+  TREE_OF_A_KIND: "트리플",
+  TWO_PAIRS: "투페어",
+  ONE_PAIR: "원페어",
+  HIGH_CARDS: "하이",
+};
 class detailInfo {
   hand: any;
   wins: any;
   ties: any;
-  constructor(hand: any, wins: any, ties: any) {
+  ranks: any;
+  total: number;
+
+  constructor(hand: any, wins: any, ties: any, ranks: any, total: number) {
     this.hand = hand;
     this.wins = wins;
     this.ties = ties;
+    this.ranks = ranks;
+    this.total = total;
   }
 }
 
@@ -86,14 +104,20 @@ const PokerCalPage = () => {
   };
 
   const getHandDetail = (hand: any) => {
-    var v = new detailInfo(hand, 0, 0);
+    var v = new detailInfo(hand, 0, 0, {}, 0);
     const handDetailsListFlat = handDetails.map(
       (value: any, _: any) => value.hand
     );
     const playerHandStr = hand[0] + hand[1];
     if (handDetailsListFlat.includes(playerHandStr)) {
       const temp: any = handDetails[handDetailsListFlat.indexOf(playerHandStr)];
-      v = new detailInfo(temp.hands, temp.wins, temp.ties);
+      v = new detailInfo(
+        temp.hands,
+        temp.wins,
+        temp.ties,
+        temp.ranks,
+        temp.total
+      );
     }
     return v;
   };
@@ -101,7 +125,7 @@ const PokerCalPage = () => {
   const handDetailInit = () => {
     setHandDetails(
       players.map((v: OnePlayer, i: any) => {
-        return new detailInfo(v.hand, 0, 0);
+        return new detailInfo(v.hand, 0, 0, {}, 0);
       })
     );
   };
@@ -137,7 +161,7 @@ const PokerCalPage = () => {
       const list = getResult(realHands, communityCards);
       setHandDetails(
         list.map((v: any, i: any) => {
-          return new detailInfo(v.hands, v.wins, v.ties);
+          return new detailInfo(v.hands, v.wins, v.ties, v.ranks, v.total);
         })
       );
     }
@@ -373,8 +397,18 @@ const ActionPart = ({ players }: ActionPartProps) => {
 };
 
 const OnePlayerPart = ({ player, detail, clickFunc, delFunc }: any) => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const iconClick = () => {
+    setIsOpen((prev) => !prev);
+  };
+
   return (
-    <div className="flex justify-center items-center w-full">
+    <div
+      className={`flex justify-center ${
+        isOpen && detail.total != 0 ? "items-start" : "items-center"
+      } w-full`}
+    >
       <div className="w-36 mx-2 my-2 flex justify-center items-center rounded-xl">
         <OneCardDiv
           card={player.hand[0]}
@@ -390,16 +424,58 @@ const OnePlayerPart = ({ player, detail, clickFunc, delFunc }: any) => {
           }}
         />
       </div>
-      <div className="w-36 h-12 bg-red-300 items-center flex flex-col">
-        <div>win: {detail.wins}</div>
-        <div>tie: {detail.ties}</div>
+
+      <div className="flex py-2">
+        <div className="w-32 bg-red-300 items-center flex flex-col">
+          <div>win: {detail.wins}</div>
+          <div>tie: {detail.ties}</div>
+          {isOpen && (
+            <>
+              <div className="bg-black h-[1px] w-full border-black"></div>
+              {Object.entries(detail.ranks).map(([k, v]) => {
+                return oneNumberPart(k, Number(v), detail.total);
+              })}
+            </>
+          )}
+        </div>
+        <div onClick={iconClick}>
+          {isOpen ? <BiUpArrow /> : <BiDownArrow />}
+        </div>
       </div>
       <div
-        className="mx-1 p-1 border-2 text-center border-black hover:cursor-pointer"
+        className="mx-1 p-1 border-2 text-center self-center border-black hover:cursor-pointer"
         onClick={delFunc}
       >
         삭제
       </div>
+    </div>
+  );
+};
+const oneNumberPart = (key: any, value: number, total: number) => {
+  return (
+    <div key={key}>
+      <span className="text-[11px]">{rankMap[key]} : </span>
+      {total === 0 || value === 0 ? (
+        <span className="text-[12px]">0</span>
+      ) : (
+        <span
+          className={
+            value / total > 0.15 &&
+            [
+              "ROYAL_FLUSH",
+              "STRAIGHT_FLUSH",
+              "QUADS",
+              "FULL_HOUSE",
+              "FLUSH",
+              "STRAIGHT",
+            ].includes(key)
+              ? "text-[15px] font-semibold text-yellow-300"
+              : "text-[12px]"
+          }
+        >
+          {((100 * value) / total).toFixed(1)}
+        </span>
+      )}
     </div>
   );
 };

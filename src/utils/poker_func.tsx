@@ -1,5 +1,5 @@
-import basic from './basic.json';
-import { TexasHoldem } from 'poker-odds-calc';
+import basic from "./basic.json";
+import { TexasHoldem } from "poker-odds-calc";
 
 const isCard = (value: any) => {
   // c2, dt, ha, s9 : true,  s1, tt, eq : false
@@ -14,8 +14,8 @@ const isCard = (value: any) => {
 };
 
 const transToFormValue = (listCards: any) => {
-  const numTemp = '23456789tjqka';
-  const numForm = '23456789TJQKA';
+  const numTemp = "23456789tjqka";
+  const numForm = "23456789TJQKA";
   var result = [];
   for (let index = 0; index < listCards.length; index++) {
     const value = listCards[index];
@@ -30,9 +30,9 @@ const transToFormValue = (listCards: any) => {
   return result;
 };
 const transToOriginStr = (handStr: any) => {
-  const numOrigin = '23456789tjqka';
-  const numForm = '23456789TJQKA';
-  var result = '';
+  const numOrigin = "23456789tjqka";
+  const numForm = "23456789TJQKA";
+  var result = "";
   for (let index = 0; index < handStr.length; index += 2) {
     const num = handStr[index];
     const shape = handStr[index + 1];
@@ -66,6 +66,8 @@ const getResult = (hands: any, communityCards: any) => {
       hands: transToOriginStr(player.getHand()),
       wins: player.getWinsPercentage(),
       ties: player.getTiesPercentage(),
+      ranks: player.data.ranks,
+      total: Number(player.table.result.iterations),
     });
   });
 
