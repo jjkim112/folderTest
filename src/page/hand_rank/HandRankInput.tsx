@@ -159,8 +159,7 @@ const HandRankInput: React.FC<HandRankInputProps> = ({
           return prevCards;
         }
       }
-      const highIndex = '23456789tjqka'.indexOf(prevCards[0].charAt(1));
-      const lowIndex = '23456789tjqka'.indexOf(prevCards[1].charAt(1));
+
       if (selCard === 0) {
         prevCards[selCard] = `s${cardNumber}`;
       } else if (selCard === 1) {
@@ -169,12 +168,6 @@ const HandRankInput: React.FC<HandRankInputProps> = ({
         } else {
           prevCards[selCard] = `d${cardNumber}`;
         }
-      }
-      if (highIndex < lowIndex) {
-        let lowCard = prevCards[0];
-        prevCards[0] = prevCards[1];
-        prevCards[1] = lowCard;
-      } else {
       }
 
       updateRank(prevCards[0], prevCards[1], selectedData);

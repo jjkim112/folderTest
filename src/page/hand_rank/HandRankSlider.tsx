@@ -262,20 +262,7 @@ const WholeRangeChart: React.FC<WholeRangeChartProps> = (props) => {
                 v.charAt(0) === v.charAt(1)
                   ? 'containItemPocket'
                   : 'containItem'
-              } ${
-                props.cards[0].charAt(0) === 's' &&
-                props.cards[1].charAt(0) === 's'
-                  ? props.cards[0].charAt(1) === v.charAt(0) &&
-                    props.cards[1].charAt(1) === v.charAt(1) &&
-                    v.charAt(2) === 's'
-                    ? 'border-2 border-green-400'
-                    : ''
-                  : props.cards[0].charAt(1) === v.charAt(0) &&
-                    props.cards[1].charAt(1) === v.charAt(1) &&
-                    v.charAt(2) !== 's'
-                  ? 'border-2 border-green-400'
-                  : ''
-              }`}
+              } `}
               key={i}
             >
               {`${v.substring(0, 2).toUpperCase()}${v.charAt(2)}`}
@@ -286,20 +273,7 @@ const WholeRangeChart: React.FC<WholeRangeChartProps> = (props) => {
             <div
               className={` 
               notContainItem
-              ${
-                props.cards[0].charAt(0) === 's' &&
-                props.cards[1].charAt(0) === 's'
-                  ? props.cards[0].charAt(1) === v.charAt(0) &&
-                    props.cards[1].charAt(1) === v.charAt(1) &&
-                    v.charAt(2) === 's'
-                    ? 'border-2 border-green-400'
-                    : ''
-                  : props.cards[0].charAt(1) === v.charAt(0) &&
-                    props.cards[1].charAt(1) === v.charAt(1) &&
-                    v.charAt(2) !== 's'
-                  ? 'border-2 border-green-400'
-                  : ''
-              }`}
+           `}
               key={i}
             >
               {`${v.substring(0, 2).toUpperCase()}${v.charAt(2)}`}
