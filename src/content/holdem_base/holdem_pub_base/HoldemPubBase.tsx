@@ -1,5 +1,9 @@
 import './holdemPubBase.css';
 
+import { Accordion, AccordionDetails, AccordionSummary } from '../util/util';
+import { GridExpandMoreIcon } from '@mui/x-data-grid';
+import Typography from '@mui/material/Typography';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 const abilitys = [
   '1. 참가비를 낼수 있는 만큼의 자금',
   '2. 딜러의 말을 잘 듣고 플레이 하자',
@@ -34,39 +38,63 @@ const often = [
   '14. 탑 페어 : 제일 높은 패어를 맞은 상태',
   '15. 아우츠 : 특정 플레이어가 상대 플레이어를 역전하기 위해 필요한 카드, 그 카드들의 총 개수',
 ];
+
 export default function HoldemPubBase() {
   return (
     <div className="p-3 text-white whitespace-pre-wrap">
-      <div className="container">
-        <div className="text-2xl">
-          홀덤 펍 갈때 고민일때 이 것만은 알고 가자
-        </div>
-        {abilitys.map((ability) => (
-          <div key={ability} className="sentence">
-            {ability}
-          </div>
-        ))}
-      </div>
-      <br />
-      <div className="container">
-        <h2 className="text-2xl">추가로 알면 좋은 것들</h2>
-        <h2 className="text-xs">
-          (카톡 올라온 참여 공지 또는 현장 참가하기 전 기본 용어 )
-        </h2>
-        {references.map((reference) => (
-          <div key={reference} className="sentence">
-            {reference}
-          </div>
-        ))}
-      </div>
-      <div className="container">
-        <h2 className="text-2xl">자주 쓰는(들리는) 홀덤 용어</h2>
-        {often.map((reference) => (
-          <div key={reference} className="sentence">
-            {reference}
-          </div>
-        ))}
-      </div>
+      <Accordion disableGutters={true} elevation={0}>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel1d-content"
+          id="panel1d-header"
+        >
+          <Typography>홀덤 펍 갈때 고민일때 이 것만은 알고 가자</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          {abilitys.map((ability) => (
+            <div key={ability} className="sentence">
+              {ability}
+            </div>
+          ))}
+        </AccordionDetails>
+      </Accordion>
+
+      <Accordion>
+        <AccordionSummary
+          expandIcon={<GridExpandMoreIcon />}
+          aria-controls="panel2d-content"
+          id="panel2d-header"
+        >
+          <Typography>
+            추가로 알면 좋은 것들 (카톡 올라온 참여 공지 또는 현장 참가하기 전
+            기본 용어 )
+          </Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          {references.map((reference) => (
+            <div key={reference} className="sentence">
+              {reference}
+            </div>
+          ))}
+        </AccordionDetails>
+      </Accordion>
+
+      <Accordion>
+        <AccordionSummary
+          expandIcon={<GridExpandMoreIcon />}
+          aria-controls="panel3d-content"
+          id="panel3d-header"
+        >
+          <Typography>자주 쓰는(들리는) 홀덤 용어</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          {often.map((reference) => (
+            <div key={reference} className="sentence">
+              {reference}
+            </div>
+          ))}
+        </AccordionDetails>
+      </Accordion>
     </div>
   );
 }

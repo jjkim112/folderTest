@@ -1,4 +1,8 @@
 import './HoldemPubBetRule.css';
+import { Accordion, AccordionDetails, AccordionSummary } from '../util/util';
+import { GridExpandMoreIcon } from '@mui/x-data-grid';
+import Typography from '@mui/material/Typography';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 export default function HoldemPubBetRule() {
   const position = [
@@ -152,9 +156,15 @@ export default function HoldemPubBetRule() {
 
   return (
     <div className="p-2 whitespace-pre-wrap">
-      <section className="pb-3">
-        <div className="article-container">
-          <h1 className="article-title">{'1. 홀덤 자리별 이름 (9 way)'}</h1>
+      <Accordion disableGutters={true} elevation={0}>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel1d-BetRule"
+          id="panel1d-BetRuleHeder"
+        >
+          <Typography>{'1. 홀덤 자리별 이름 (9 way)'}</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
           <img src="/assets/images/table_del/table1.png" alt="table1" />
           {position.map((value, index) => (
             <div key={index} className="content">
@@ -166,14 +176,18 @@ export default function HoldemPubBetRule() {
               </ul>
             </div>
           ))}
-        </div>
-      </section>
+        </AccordionDetails>
+      </Accordion>
 
-      <section className="pb-3">
-        <div className="article-container">
-          <h1 className="article-title">
-            {'2. 빅 ,스몰 블라인드 경우 행동요령'}
-          </h1>
+      <Accordion disableGutters={true} elevation={0}>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel2d-BetRule"
+          id="panel2d-BetRuleHeder"
+        >
+          <Typography>{'2. 빅 ,스몰 블라인드 경우 행동요령'}</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
           <img src="/assets/images/table_del/table2.png" alt="table1" />
           {second.map((value, index) => (
             <div key={index} className="content">
@@ -185,12 +199,18 @@ export default function HoldemPubBetRule() {
               </ul>
             </div>
           ))}
-        </div>
-      </section>
+        </AccordionDetails>
+      </Accordion>
 
-      <section className="pb-3">
-        <div className="article-container">
-          <h1 className="article-title">{'3. 테이블 팟'}</h1>
+      <Accordion disableGutters={true} elevation={0}>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel3d-BetRule"
+          id="panel3d-BetRuleHeder"
+        >
+          <Typography>{'3. 테이블 팟'}</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
           <img src="/assets/images/table_del/table3.png" alt="table1" />
           {pot.map((value, index) => (
             <div key={index} className="content">
@@ -202,12 +222,18 @@ export default function HoldemPubBetRule() {
               </ul>
             </div>
           ))}
-        </div>
-      </section>
+        </AccordionDetails>
+      </Accordion>
 
-      <section className="pb-3">
-        <div className="article-container">
-          <h1 className="article-title">{'4. 행동요령(콜:Call)'}</h1>
+      <Accordion disableGutters={true} elevation={0}>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel4d-BetRule"
+          id="panel4d-BetRuleHeder"
+        >
+          <Typography>{'4. 행동요령(콜:Call)'}</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
           <img src="/assets/images/table_del/table4.png" alt="table1" />
           {call.map((value, index) => (
             <div key={index} className="content">
@@ -219,11 +245,18 @@ export default function HoldemPubBetRule() {
               </ul>
             </div>
           ))}
-        </div>
-      </section>
-      <section className="pb-3">
-        <div className="article-container">
-          <h1 className="article-title">{'5. 행동요령(레이즈:Raise)'}</h1>
+        </AccordionDetails>
+      </Accordion>
+
+      <Accordion disableGutters={true} elevation={0}>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel5d-BetRule"
+          id="panel5d-BetRuleHeder"
+        >
+          <Typography>{'5. 행동요령(레이즈:Raise)'}</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
           <img src="/assets/images/table_del/table5.png" alt="table1" />
           {raise.map((value, index) => (
             <div key={index} className="content">
@@ -238,11 +271,18 @@ export default function HoldemPubBetRule() {
           <p className="warning">
             주의.빅 블라인드가 6만이라면 첫 레이즈는 최소 12만부터 가능하다.
           </p>
-        </div>
-      </section>
-      <section className="pb-3">
-        <div className="article-container">
-          <h1 className="article-title">{'6. 행동요령(포기:Fold)'}</h1>
+        </AccordionDetails>
+      </Accordion>
+
+      <Accordion disableGutters={true} elevation={0}>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel6d-BetRule"
+          id="panel6d-BetRuleHeder"
+        >
+          <Typography>{'6. 행동요령(포기:Fold)'}</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
           <img src="/assets/images/table_del/table6.png" alt="table1" />
           {fold.map((value, index) => (
             <div key={index} className="content">
@@ -257,11 +297,18 @@ export default function HoldemPubBetRule() {
           <p className="warning">
             주의. 펍 마다 폴드 할 수 있는 순서 룰이 다 를수 있습니다.
           </p>
-        </div>
-      </section>
-      <section className="pb-3">
-        <div className="article-container">
-          <h1 className="article-title">{'7. 스몰자리 행동요령'}</h1>
+        </AccordionDetails>
+      </Accordion>
+
+      <Accordion disableGutters={true} elevation={0}>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel7d-BetRule"
+          id="panel7d-BetRuleHeder"
+        >
+          <Typography>{'7. 스몰자리 행동요령'}</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
           <img src="/assets/images/table_del/table7.png" alt="table1" />
           {small.map((value, index) => (
             <div key={index} className="content">
@@ -277,13 +324,17 @@ export default function HoldemPubBetRule() {
             참고. 스몰 블라인드 금액 100 + 300 하여 레이즈금액을 맞추어 콜을
             할수 있습니다. 물론 레이즈도 가능 합니다.
           </p>
-        </div>
-      </section>
-      <section className="pb-3">
-        <div className="article-container">
-          <h1 className="article-title">
-            {'8. 행동요령\n(리-레이즈:Re-Raise)'}
-          </h1>
+        </AccordionDetails>
+      </Accordion>
+      <Accordion disableGutters={true} elevation={0}>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel8d-BetRule"
+          id="panel8d-BetRuleHeder"
+        >
+          <Typography> {'8. 행동요령(리-레이즈:Re-Raise)'}</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
           <img src="/assets/images/table_del/table8.png" alt="table1" />
           {reRaise.map((value, index) => (
             <div key={index} className="content">
@@ -302,13 +353,20 @@ export default function HoldemPubBetRule() {
             3번의 리레이즈만 가능하며, 4번째 리레이즈는 캡이라고 하며, 이후엔
             콜이나 폴드만 가능합니다.
           </p>
-        </div>
-      </section>
-      <section className="pb-3">
-        <div className="article-container">
-          <h1 className="article-title">
-            {'9. 행동요령\n(리레이즈 이후 플레이어 전부 콜 또는 폴드)'}
-          </h1>
+        </AccordionDetails>
+      </Accordion>
+
+      <Accordion disableGutters={true} elevation={0}>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel9d-BetRule"
+          id="panel9d-BetRuleHeder"
+        >
+          <Typography>
+            {'9. 행동요령(리레이즈 이후 플레이어 전부 콜 또는 폴드)'}
+          </Typography>
+        </AccordionSummary>
+        <AccordionDetails>
           <img src="/assets/images/table_del/table9.png" alt="table1" />
           {delEnd.map((value, index) => (
             <div key={index} className="content">
@@ -320,11 +378,18 @@ export default function HoldemPubBetRule() {
               </ul>
             </div>
           ))}
-        </div>
-      </section>
-      <section className="pb-3">
-        <div className="article-container">
-          <h1 className="article-title">{'10. 팟에 쌓이는 돈'}</h1>
+        </AccordionDetails>
+      </Accordion>
+
+      <Accordion disableGutters={true} elevation={0}>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel10d-BetRule"
+          id="panel710d-BetRuleHeder"
+        >
+          <Typography> {'10. 팟에 쌓이는 돈'}</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
           <img src="/assets/images/table_del/table10.png" alt="table1" />
           {end.map((value, index) => (
             <div key={index} className="content">
@@ -336,8 +401,8 @@ export default function HoldemPubBetRule() {
               </ul>
             </div>
           ))}
-        </div>
-      </section>
+        </AccordionDetails>
+      </Accordion>
     </div>
   );
 }

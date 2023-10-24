@@ -1,5 +1,8 @@
 import './HoldemVisionAbility.css';
-
+import { Accordion, AccordionDetails, AccordionSummary } from '../util/util';
+import { GridExpandMoreIcon } from '@mui/x-data-grid';
+import Typography from '@mui/material/Typography';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 function HoldemVisionAbility() {
   const flushDraw = [
     {
@@ -60,30 +63,41 @@ function HoldemVisionAbility() {
 
   return (
     <div className="p-2">
-      <div className="info-container p-2">
-        <div className="info-title font-bold text-2xl mb-3">
-          아우츠 계산 방식
-        </div>
-        <div className="info-content font-bold text-white text-base mb-3">
-          아우츠 내가 기대하는 숫자의 갯수를 의미. 다른 사람의 패는 알 수
-          없으므로 신경 쓰지 않음.
-        </div>
-        <div className="info-ex content text-white text-base mb-3">
-          * 여집합으로 고려, '1-(0.81)(0.81) = 0.35 (근사값)'
-        </div>
-        <div className="info-content text-white text-base mb-3">
-          내가 기대하지 않는 것들이 뜰 확률에서 1을 빼주면 내가 기대하는 숫자의
-          퍼센트가 나온다.
-        </div>
-        <div className="info-formula content text-white text-base mb-3">
-          1 - ((47-아우츠 갯수)/47) * ((46-아우츠 갯수)/46)
-        </div>
-      </div>
+      <Accordion disableGutters={true} elevation={0}>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel1d-CardRule"
+          id="panel1d-CardRuleHeader"
+        >
+          <Typography>아우츠 계산 방식</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <div className="info-content font-bold text-black text-base mb-3">
+            아우츠 내가 기대하는 숫자의 갯수를 의미. 다른 사람의 패는 알 수
+            없으므로 신경 쓰지 않음.
+          </div>
+          <div className="info-ex content text-black text-base mb-3">
+            * 여집합으로 고려, '1-(0.81)(0.81) = 0.35 (근사값)'
+          </div>
+          <div className="info-content text-black text-base mb-3">
+            내가 기대하지 않는 것들이 뜰 확률에서 1을 빼주면 내가 기대하는
+            숫자의 퍼센트가 나온다.
+          </div>
+          <div className="info-formula content text-black text-base mb-3">
+            1 - ((47-아우츠 갯수)/47) * ((46-아우츠 갯수)/46)
+          </div>
+        </AccordionDetails>
+      </Accordion>
 
-      <section className="pb-3">
-        <div className="ability-container">
-          <h1 className="ability-title">1. 플러시 드로우(뽀쁠) 확률</h1>
-
+      <Accordion disableGutters={true} elevation={0}>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel1d-CardRule"
+          id="panel1d-CardRuleHeader"
+        >
+          <Typography>1. 플러시 드로우(뽀쁠) 확률</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
           {flushDraw.map((v, i) => (
             <div key={i}>
               <img src={v.image} alt="table1" />
@@ -98,15 +112,18 @@ function HoldemVisionAbility() {
               </div>
             </div>
           ))}
-        </div>
-      </section>
+        </AccordionDetails>
+      </Accordion>
 
-      <section className="pb-3">
-        <div className="ability-container">
-          <h1 className="ability-title">
-            2.오픈 엔드 스트레이트 드로우(양차) 확률
-          </h1>
-
+      <Accordion disableGutters={true} elevation={0}>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel1d-CardRule"
+          id="panel1d-CardRuleHeader"
+        >
+          <Typography> 2.오픈 엔드 스트레이트 드로우(양차) 확률</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
           {straight.map((v, i) => (
             <div key={i}>
               <img src={v.image} alt="table1" />
@@ -121,13 +138,18 @@ function HoldemVisionAbility() {
               </div>
             </div>
           ))}
-        </div>
-      </section>
+        </AccordionDetails>
+      </Accordion>
 
-      <section className="pb-3">
-        <div className="ability-container">
-          <h1 className="ability-title">3. 뽀쁠에 양차</h1>
-
+      <Accordion disableGutters={true} elevation={0}>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel1d-CardRule"
+          id="panel1d-CardRuleHeader"
+        >
+          <Typography> 3. 뽀쁠에 양차</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
           {flushStraightDarw.map((v, i) => (
             <div key={i}>
               <img src={v.image} alt="table1" />
@@ -142,15 +164,18 @@ function HoldemVisionAbility() {
               </div>
             </div>
           ))}
-        </div>
-      </section>
+        </AccordionDetails>
+      </Accordion>
 
-      <section className="pb-3">
-        <div className="ability-container">
-          <h1 className="ability-title">
-            4. 것샷 스트레이트 드로우(빵꾸) 확률
-          </h1>
-
+      <Accordion disableGutters={true} elevation={0}>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel1d-CardRule"
+          id="panel1d-CardRuleHeader"
+        >
+          <Typography> 4. 것샷 스트레이트 드로우(빵꾸) 확률</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
           {thingShot.map((v, i) => (
             <div key={i}>
               <img src={v.image} alt="table1" />
@@ -165,8 +190,8 @@ function HoldemVisionAbility() {
               </div>
             </div>
           ))}
-        </div>
-      </section>
+        </AccordionDetails>
+      </Accordion>
     </div>
   );
 }

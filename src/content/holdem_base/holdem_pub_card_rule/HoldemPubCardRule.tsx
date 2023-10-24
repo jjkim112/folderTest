@@ -1,9 +1,20 @@
+import { Accordion, AccordionDetails, AccordionSummary } from '../util/util';
+import { GridExpandMoreIcon } from '@mui/x-data-grid';
+import Typography from '@mui/material/Typography';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+
 export default function HoldemPubCardRule() {
   return (
     <div className="p-2">
-      <section className="pb-3">
-        <div className="article-container">
-          <h1 className="article-title">{'1. 프리플랍(Pre-Flop)'}</h1>
+      <Accordion disableGutters={true} elevation={0}>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel1d-CardRule"
+          id="panel1d-CardRuleHeader"
+        >
+          <Typography>{'1. 프리플랍(Pre-Flop)'}</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
           <img src="/assets/images/table_card/card1.png" alt="table1" />
           <div className="content">
             <ul>
@@ -16,11 +27,18 @@ export default function HoldemPubCardRule() {
               </li>
             </ul>
           </div>
-        </div>
-      </section>
-      <section className="pb-3">
-        <div className="article-container">
-          <h1 className="article-title">{'2. 플랍(Flop)'}</h1>
+        </AccordionDetails>
+      </Accordion>
+
+      <Accordion disableGutters={true} elevation={0}>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel2d-CardRule"
+          id="panel2d-CardRuleHeader"
+        >
+          <Typography>{'2. 플랍(Flop)'}</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
           <img src="/assets/images/table_card/card2.png" alt="table1" />
           <div className="content">
             <ul>
@@ -33,11 +51,18 @@ export default function HoldemPubCardRule() {
               </li>
             </ul>
           </div>
-        </div>
-      </section>
-      <section className="pb-3">
-        <div className="article-container">
-          <h1 className="article-title">{'3. 턴(Turn)'}</h1>
+        </AccordionDetails>
+      </Accordion>
+
+      <Accordion disableGutters={true} elevation={0}>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel3d-CardRule"
+          id="panel3d-CardRuleHeader"
+        >
+          <Typography>{'3. 턴(Turn)'}</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
           <img src="/assets/images/table_card/card3.png" alt="table1" />
           <div className="content">
             <ul>
@@ -50,11 +75,18 @@ export default function HoldemPubCardRule() {
               </li>
             </ul>
           </div>
-        </div>
-      </section>
-      <section className="pb-3">
-        <div className="article-container">
-          <h1 className="article-title">{'4. 리버 (River)'}</h1>
+        </AccordionDetails>
+      </Accordion>
+
+      <Accordion disableGutters={true} elevation={0}>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel4d-CardRule"
+          id="panel4d-CardRuleHeader"
+        >
+          <Typography>{'4. 리버 (River)'}</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
           <img src="/assets/images/table_card/card4.png" alt="table1" />
           <div className="content">
             <ul>
@@ -67,11 +99,18 @@ export default function HoldemPubCardRule() {
               </li>
             </ul>
           </div>
-        </div>
-      </section>
-      <section className="pb-3">
-        <div className="article-container">
-          <h1 className="article-title">{'5. 승리 방식'}</h1>
+        </AccordionDetails>
+      </Accordion>
+
+      <Accordion disableGutters={true} elevation={0}>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel5d-CardRule"
+          id="panel5d-CardRuleHeader"
+        >
+          <Typography>{'5. 승리 방식'}</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
           <img src="/assets/images/table_card/card5.png" alt="table1" />
           <div className="content">
             <ul>
@@ -93,11 +132,18 @@ export default function HoldemPubCardRule() {
               </li>
             </ul>
           </div>
-        </div>
-      </section>
-      <section className="pb-3">
-        <div className="article-container">
-          <h1 className="article-title">{'6. 비교방식(2등인 경우)'}</h1>
+        </AccordionDetails>
+      </Accordion>
+
+      <Accordion disableGutters={true} elevation={0}>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel6d-CardRule"
+          id="panel6d-CardRuleHeader"
+        >
+          <Typography>{'6. 비교방식(2등인 경우)'}</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
           <img src="/assets/images/table_card/card6.png" alt="table1" />
           <div className="content">
             <ul>
@@ -110,11 +156,18 @@ export default function HoldemPubCardRule() {
               </li>
             </ul>
           </div>
-        </div>
-      </section>
-      <section className="pb-3">
-        <div className="article-container">
-          <h1 className="article-title">{'7. 찹(비기는)경우'}</h1>
+        </AccordionDetails>
+      </Accordion>
+
+      <Accordion disableGutters={true} elevation={0}>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel7d-CardRule"
+          id="panel7d-CardRuleHeader"
+        >
+          <Typography>{'7. 찹(비기는)경우'}</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
           <img src="/assets/images/table_card/card7.png" alt="table1" />
           <div className="content">
             <ul>
@@ -155,8 +208,8 @@ export default function HoldemPubCardRule() {
               </li>
             </ul>
           </div>
-        </div>
-      </section>
+        </AccordionDetails>
+      </Accordion>
     </div>
   );
 }
