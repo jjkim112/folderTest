@@ -1,9 +1,10 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { wait } from '@testing-library/user-event/dist/utils/misc/wait';
-import { Pub } from '../domain/Pub.model';
-import { DataService } from '../data/DataService';
-import type { PayloadAction } from '@reduxjs/toolkit';
-import { Game, GamePlayerThumb } from '../domain/Game.model';
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { wait } from "@testing-library/user-event/dist/utils/misc/wait";
+import { Pub } from "../domain/Pub.model";
+import { DataService } from "../data/DataService";
+import type { PayloadAction } from "@reduxjs/toolkit";
+import { GamePlayerThumb } from "src/content/admin/storeAddTournament/tournamentRegister/detailTournaUser";
+import { Game } from "src/content/admin/storeAddTournament/tournamentRegister";
 
 export interface GameState {
   games: Game[];
@@ -15,14 +16,14 @@ export interface GameState {
 
 const initialState: GameState = {
   games: [],
-  oneGame: new Game('', '', '', '', '', '', '', 0, new Date(), '', []),
+  oneGame: new Game("", "", "", "", "", "", "", 0, new Date(), "", []),
   oneGamePlayers: [],
   loading: false,
   isEdit: false,
 };
 
 export const gameSlice = createSlice({
-  name: 'game',
+  name: "game",
   initialState,
   reducers: {
     gameLoadingStart: (state) => {
@@ -50,16 +51,16 @@ export const gameSlice = createSlice({
     reSetOneData: (state) => {
       // TODO 합쳐지는 방식으로 고쳐야함.
       state.oneGame = new Game(
-        '',
-        '',
-        '',
-        '',
-        '',
-        '',
-        '',
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
         0,
         new Date(),
-        '',
+        "",
         []
       );
       state.oneGamePlayers = [];

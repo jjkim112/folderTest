@@ -1,11 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 import {
   useNavermaps,
   NaverMap,
   Marker,
   Container as MapDiv,
-} from 'react-naver-maps';
-import { Pub } from 'src/domain/Pub.model';
+} from "react-naver-maps";
+import { Pub } from "src/domain/Pub.model";
 
 type MapProps = {
   pubsData: Pub[];
@@ -19,7 +19,9 @@ const MapMakers = ({ pubsData }: MapProps) => {
         {pubsData.map((v, i) => (
           <Marker
             key={i}
-            defaultPosition={new navermaps.LatLng(v.lat, v.lon)}
+            defaultPosition={
+              new navermaps.LatLng(v.basicInfo.lat, v.basicInfo.lon)
+            }
           />
         ))}
       </NaverMap>

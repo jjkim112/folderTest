@@ -1,16 +1,15 @@
-import * as React from 'react';
-import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
-import MenuItem from '@mui/material/MenuItem';
-import dayjs, { Dayjs } from 'dayjs';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
-import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
-import { FullFeaturedCrudGrid } from './playerInputBoard';
-import { Game, GamePlayerThumb } from 'src/domain/Game.model';
-import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch, RootState } from 'src/store/store';
+import * as React from "react";
+import Box from "@mui/material/Box";
+import TextField from "@mui/material/TextField";
+import MenuItem from "@mui/material/MenuItem";
+import dayjs, { Dayjs } from "dayjs";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
+import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
+import { FullFeaturedCrudGrid } from "./playerInputBoard";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "src/store/store";
 import {
   reSetOneData,
   refreshGames,
@@ -18,11 +17,12 @@ import {
   toggleEditMode,
   udateGameData,
   updateOneGameData,
-} from 'src/reducer/gameSlice';
-import { AdminRequireLayout } from '../../AdminRequireLayout';
-import { FirebasePub } from 'src/data/firebase/FirebasePub';
-import { DataService } from 'src/data/DataService';
-import { Pub } from 'src/domain/Pub.model';
+} from "src/reducer/gameSlice";
+import { AdminRequireLayout } from "../../AdminRequireLayout";
+import { FirebasePub } from "src/data/firebase/FirebasePub";
+import { DataService } from "src/data/DataService";
+import { Pub } from "src/domain/Pub.model";
+import { Game } from ".";
 type BasicType = {
   pubsData: Pub;
 };
@@ -102,10 +102,10 @@ export const BasicTextFields: React.FC<BasicType> = ({ pubsData }) => {
     console.log(name);
     console.log(value);
 
-    if (name === 'gameTemplateId') {
-      for (let oneTemplate of pubsData.templates) {
+    if (name === "gameTemplateId") {
+      for (let oneTemplate of pubsData.basicInfo.gameTemplates) {
         if (oneTemplate.id === value) {
-          console.log('이름적용');
+          console.log("이름적용");
           setInputs(
             (prevInputs) =>
               ({
@@ -129,9 +129,9 @@ export const BasicTextFields: React.FC<BasicType> = ({ pubsData }) => {
     }
   };
   const mergeClickInputBox = (id: string) => {
-    for (let oneTemplate of pubsData.templates) {
+    for (let oneTemplate of pubsData.basicInfo.gameTemplates) {
       if (oneTemplate.id === id) {
-        console.log('이름적용');
+        console.log("이름적용");
         setInputs(
           (prevInputs) =>
             ({
@@ -154,7 +154,7 @@ export const BasicTextFields: React.FC<BasicType> = ({ pubsData }) => {
           component="form"
           ref={formRef}
           sx={{
-            '& > :not(style)': { m: 2, width: '138ch' },
+            "& > :not(style)": { m: 2, width: "138ch" },
           }}
           noValidate
           autoComplete="off"
@@ -164,7 +164,7 @@ export const BasicTextFields: React.FC<BasicType> = ({ pubsData }) => {
           <div className="flex gap-3">
             <div className="-my-2">
               <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <DemoContainer components={['DateTimePicker']}>
+                <DemoContainer components={["DateTimePicker"]}>
                   <DateTimePicker
                     value={dayjs(inputs.date)}
                     onChange={(newValue: any) => {
@@ -218,8 +218,8 @@ export const BasicTextFields: React.FC<BasicType> = ({ pubsData }) => {
                 name="gameTemplateId"
               >
                 {pubsData &&
-                  pubsData.templates &&
-                  pubsData.templates.map((option) => (
+                  pubsData.basicInfo.gameTemplates &&
+                  pubsData.basicInfo.gameTemplates.map((option) => (
                     <MenuItem
                       key={option.id}
                       value={option.id}

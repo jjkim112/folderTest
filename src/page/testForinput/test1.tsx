@@ -1,9 +1,9 @@
-import { useState, useRef, useContext, useEffect } from 'react';
-import TitleWithInput from './test2';
-import OneMetadataItem from './test3';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../store/store';
-import { Pub } from '../../domain/Pub.model';
+import { useState, useRef, useContext, useEffect } from "react";
+import TitleWithInput from "./test2";
+import OneMetadataItem from "./test3";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/store";
+import { Pub } from "../../domain/Pub.model";
 
 type JsonObject = {
   title: string;
@@ -12,15 +12,15 @@ type JsonObject = {
 };
 
 const ProjectCreatePage = () => {
-  const [title, setTitle] = useState('');
+  const [title, setTitle] = useState("");
   const nameRef = useRef<HTMLInputElement>(null);
 
-  const [subTitle, setSubTitle] = useState('');
+  const [subTitle, setSubTitle] = useState("");
   const simbolRef = useRef<HTMLInputElement>(null);
-  const [info, setInfo] = useState('');
+  const [info, setInfo] = useState("");
   const cNameRef = useRef<HTMLInputElement>(null);
 
-  const [warning, setWarning] = useState<string>('');
+  const [warning, setWarning] = useState<string>("");
 
   const [notUseJsonArray, setNotUseJsonArray] = useState<Pub[]>([]);
   const [useJsonArray, setUseJsonArray] = useState<Pub[]>([]);
@@ -35,13 +35,13 @@ const ProjectCreatePage = () => {
     if (!title || !subTitle || !info) {
       setTimeout(() => {
         if (!title) {
-          setWarning('티켓 이름을 적어 주세요');
+          setWarning("티켓 이름을 적어 주세요");
           cNameRef.current?.focus();
         } else if (!subTitle) {
-          setWarning('심볼 적어 주세요');
+          setWarning("심볼 적어 주세요");
           simbolRef.current?.focus();
         } else if (!info) {
-          setWarning('프로젝트 명/제목을 적어 주세요');
+          setWarning("프로젝트 명/제목을 적어 주세요");
           nameRef.current?.focus();
         }
       }, 0);
@@ -103,9 +103,9 @@ const ProjectCreatePage = () => {
           >
             개별정보 추가 +
           </button>
-          {warning && <p style={{ color: 'red' }}>{warning}</p>}
+          {warning && <p style={{ color: "red" }}>{warning}</p>}
           <div className="text-[12px] mt-8 mb-4">
-            개수 : {pubsData[0].templates.length}개
+            개수 : {pubsData[0].basicInfo.gameTemplates.length}개
           </div>
           <div className="flex flex-wrap">
             {notUseJsonArray
@@ -117,7 +117,7 @@ const ProjectCreatePage = () => {
                   removeFunc={() => {
                     matadataRemove(i);
                   }}
-                  value={v.templates}
+                  value={v.basicInfo.gameTemplates}
                 />
               ))}
           </div>

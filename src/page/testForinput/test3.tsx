@@ -1,6 +1,6 @@
-import { FC } from 'react';
-import { AiOutlineMinusCircle } from 'react-icons/ai';
-import { GameTemplate } from '../../domain/GameTemplate.model';
+import { FC } from "react";
+import { AiOutlineMinusCircle } from "react-icons/ai";
+import { GameTemplate } from "src/domain/pub/GameTemplate.model";
 interface MetadataProps {
   removeFunc: () => void;
   value: GameTemplate[];

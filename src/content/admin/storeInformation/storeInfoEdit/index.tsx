@@ -1,58 +1,58 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from "react-redux";
 
-import { useNavigate } from 'react-router-dom';
-import { DataService } from 'src/data/DataService';
-import { Pub } from 'src/domain/Pub.model';
-import { refreshGames } from 'src/reducer/gameSlice';
-import { refreshWithPubId } from 'src/reducer/userSlice';
-import { AppDispatch, RootState } from 'src/store/store';
-import { useDaumPostcodePopup } from 'react-daum-postcode';
-import { AdminRequireLayout } from '../../AdminRequireLayout';
-import { FirebasePub } from 'src/data/firebase/FirebasePub';
+import { useNavigate } from "react-router-dom";
+import { DataService } from "src/data/DataService";
+import { Pub } from "src/domain/Pub.model";
+import { refreshGames } from "src/reducer/gameSlice";
+import { refreshWithPubId } from "src/reducer/userSlice";
+import { AppDispatch, RootState } from "src/store/store";
+import { useDaumPostcodePopup } from "react-daum-postcode";
+import { AdminRequireLayout } from "../../AdminRequireLayout";
+import { FirebasePub } from "src/data/firebase/FirebasePub";
 
 export default function StoreInfoEdit() {
-  const id = 'a129cvi34dhi398';
+  const id = "a129cvi34dhi398";
 
   const [pickPub, setPickPub] = useState<Pub | null>(null);
-  const [tell, setTell] = useState('');
-  const [shopName, setShopName] = useState('');
-  const [shopAddress, setShopAddress] = useState('');
-  const [fristAddress, setFristAddress] = useState('');
-  const [secondAddress, setSecondAddress] = useState('');
+  const [tell, setTell] = useState("");
+  const [shopName, setShopName] = useState("");
+  const [shopAddress, setShopAddress] = useState("");
+  const [fristAddress, setFristAddress] = useState("");
+  const [secondAddress, setSecondAddress] = useState("");
   const pubsData = useSelector((state: RootState) => state.pub.pubs);
   const dispatch = useDispatch<AppDispatch>();
   let navigate = useNavigate();
 
   const open = useDaumPostcodePopup(
-    'https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js'
+    "https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"
   );
   const finalFirebaseUpdate = async () => {
     let newPickPub = pickPub;
 
-    newPickPub.name = shopName;
-    newPickPub.phone = tell;
-    newPickPub.addressBasic = fristAddress + ' ' + secondAddress;
+    newPickPub.basicInfo.name = shopName;
+    newPickPub.basicInfo.phone = tell;
+    newPickPub.basicInfo.addressBasic = fristAddress + " " + secondAddress;
 
     await FirebasePub.updatePub(newPickPub.id, newPickPub.toMap);
   };
   const handleComplete = (data) => {
     let fullAddress = data.address;
-    let extraAddress = '';
+    let extraAddress = "";
 
-    if (data.addressType === 'R') {
-      if (data.bname !== '') {
+    if (data.addressType === "R") {
+      if (data.bname !== "") {
         extraAddress += data.bname;
       }
-      if (data.buildingName !== '') {
+      if (data.buildingName !== "") {
         extraAddress +=
-          extraAddress !== '' ? `, ${data.buildingName}` : data.buildingName;
+          extraAddress !== "" ? `, ${data.buildingName}` : data.buildingName;
       }
-      fullAddress += extraAddress !== '' ? ` (${extraAddress})` : '';
+      fullAddress += extraAddress !== "" ? ` (${extraAddress})` : "";
     }
     setFristAddress(fullAddress);
-    setShopAddress(fullAddress + ' ' + secondAddress);
+    setShopAddress(fullAddress + " " + secondAddress);
 
     console.log(fullAddress); // e.g. '서울 성동구 왕십리로2길 20 (성수동1가)'
   };
@@ -65,9 +65,9 @@ export default function StoreInfoEdit() {
     pubsData.map((v, i) => {
       if (v.id === id) {
         setPickPub(v);
-        setTell(v.phone);
-        setShopName(v.name);
-        setShopAddress(v.addressBasic);
+        setTell(v.basicInfo.phone);
+        setShopName(v.basicInfo.name);
+        setShopAddress(v.basicInfo.addressBasic);
       }
     });
 
@@ -187,7 +187,7 @@ export default function StoreInfoEdit() {
                         value={secondAddress}
                         onChange={(e) => {
                           setSecondAddress(e.target.value);
-                          setShopAddress(fristAddress + ' ' + e.target.value);
+                          setShopAddress(fristAddress + " " + e.target.value);
                         }}
                       />
                     </div>
@@ -218,7 +218,7 @@ export default function StoreInfoEdit() {
         <br />
         <button
           className="bg-white"
-          onClick={() => navigate('/admin/storeInfo')}
+          onClick={() => navigate("/admin/storeInfo")}
         >
           이전페이지로
         </button>

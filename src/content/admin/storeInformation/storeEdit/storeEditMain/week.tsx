@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 interface WeekDayBoxProps {
   selectedDays: string[];
@@ -21,10 +21,10 @@ export const WeekDayBox: React.FC<WeekDayBoxProps> = ({
 
   return (
     <div>
-      {['월', '화', '수', '목', '금', '토', '일'].map((day) => (
+      {["월", "화", "수", "목", "금", "토", "일"].map((day) => (
         <div
           className={`inline-block w-10 h-10 text-center items-center  m-5 border-2 border-gray-400  leading-8 ${
-            selectedDays.includes(day) ? 'bg-purple-400' : 'bg-gray-500'
+            selectedDays.includes(day) ? "bg-purple-400" : "bg-gray-500"
           } cursor-pointer  hover:opacity-70`}
           key={day}
           //여기서 스타일 컴포넌트 플옵수 사용데스

@@ -1,7 +1,6 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
-import { OpenDay } from 'src/domain/Days.model';
-import { RootState } from 'src/store/store';
+import React from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "src/store/store";
 
 interface BoxProps {
   title: string;

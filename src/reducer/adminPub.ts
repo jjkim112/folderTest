@@ -1,8 +1,8 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { Pub } from '../domain/Pub.model';
-import type { PayloadAction } from '@reduxjs/toolkit';
-import { GameTemplate } from 'src/domain/GameTemplate.model';
-import produce from 'immer';
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { Pub } from "../domain/Pub.model";
+import type { PayloadAction } from "@reduxjs/toolkit";
+import produce from "immer";
+import { GameTemplate } from "src/domain/pub/GameTemplate.model";
 export interface PubState {
   pub?: Pub;
   weeks: Weeks[];
@@ -18,7 +18,7 @@ const initialState: PubState = {
 };
 
 export const adminPubSlice = createSlice({
-  name: 'adminPub',
+  name: "adminPub",
   initialState,
   reducers: {
     setOnePubData: (state, action: PayloadAction<Pub>) => {
@@ -38,20 +38,20 @@ export const adminPubSlice = createSlice({
     setWeekPubData: (state, action: PayloadAction<Pub>) => {
       let pickPub = action.payload;
       let newWeeks: Weeks[] = [];
-      pickPub.templates.map((template, ti) => {
+      pickPub.basicInfo.gameTemplates.map((template, ti) => {
         return newWeeks.push({ template, weeks: [] });
       });
 
-      pickPub.days.map((day, i) => {
-        day.games.map((game, i) => {
-          pickPub.templates.map((template, ti) => {
-            newWeeks[ti].template = template;
-            if (template.id === game) {
-              newWeeks[ti].weeks.push(day.day);
-            }
-          });
-        });
-      });
+      // pickPub.days.map((day, i) => {
+      //   day.games.map((game, i) => {
+      //     pickPub.templates.map((template, ti) => {
+      //       newWeeks[ti].template = template;
+      //       if (template.id === game) {
+      //         newWeeks[ti].weeks.push(day.day);
+      //       }
+      //     });
+      //   });
+      // });
       state.weeks = newWeeks;
     },
     setTemplatesData: (state, action: PayloadAction<Weeks>) => {
@@ -62,18 +62,18 @@ export const adminPubSlice = createSlice({
         }
         return v; // 변경된 Week 객체를 리턴
       });
-      state.pub.days.map((v, i) => {
-        v.games.length = 0;
-      });
-      state.weeks.map((week, _) => {
-        week.weeks.map((month) => {
-          state.pub.days.map((value, _) => {
-            if (month === value.day) {
-              value.games.push(week.template.id);
-            }
-          });
-        });
-      });
+      // state.pub.days.map((v, i) => {
+      //   v.games.length = 0;
+      // });
+      // state.weeks.map((week, _) => {
+      //   week.weeks.map((month) => {
+      //     state.pub.days.map((value, _) => {
+      //       if (month === value.day) {
+      //         value.games.push(week.template.id);
+      //       }
+      //     });
+      //   });
+      // });
 
       let templateList: GameTemplate[] = [];
 
@@ -83,7 +83,7 @@ export const adminPubSlice = createSlice({
 
       console.log(templateList);
 
-      state.pub.templates = templateList;
+      state.pub.basicInfo.gameTemplates = templateList;
     },
     addTemplatesData: (state, action: PayloadAction<Weeks>) => {
       state.weeks.push(action.payload);
@@ -93,21 +93,21 @@ export const adminPubSlice = createSlice({
         templateList.push(updateData.template);
       }
 
-      state.weeks.map((week, _) => {
-        week.weeks.map((month) => {
-          state.pub.days.map((value, _) => {
-            if (month === value.day) {
-              if (!value.games.includes(week.template.id)) {
-                value.games.push(week.template.id);
-              }
-            }
-          });
-        });
-      });
+      // state.weeks.map((week, _) => {
+      //   week.weeks.map((month) => {
+      //     state.pub.days.map((value, _) => {
+      //       if (month === value.day) {
+      //         if (!value.games.includes(week.template.id)) {
+      //           value.games.push(week.template.id);
+      //         }
+      //       }
+      //     });
+      //   });
+      // });
 
       console.log(templateList);
 
-      state.pub.templates = templateList;
+      state.pub.basicInfo.gameTemplates = templateList;
     },
     deleteTemplatesData: (state, action: PayloadAction<string>) => {
       state.weeks = state.weeks.filter(
@@ -119,20 +119,20 @@ export const adminPubSlice = createSlice({
         templateList.push(updateData.template);
       }
 
-      state.pub.templates = templateList;
+      state.pub.basicInfo.gameTemplates = templateList;
 
-      state.pub.days.map((v, i) => {
-        v.games.length = 0;
-      });
-      state.weeks.map((week, _) => {
-        week.weeks.map((month) => {
-          state.pub.days.map((value, _) => {
-            if (month === value.day) {
-              value.games.push(week.template.id);
-            }
-          });
-        });
-      });
+      // state.pub.days.map((v, i) => {
+      //   v.games.length = 0;
+      // });
+      // state.weeks.map((week, _) => {
+      //   week.weeks.map((month) => {
+      //     state.pub.days.map((value, _) => {
+      //       if (month === value.day) {
+      //         value.games.push(week.template.id);
+      //       }
+      //     });
+      //   });
+      // });
     },
   },
 });

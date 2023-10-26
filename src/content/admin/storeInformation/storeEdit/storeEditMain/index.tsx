@@ -1,22 +1,22 @@
-import { useState, useEffect } from 'react';
-import { AiFillCaretDown, AiFillCaretUp } from 'react-icons/ai';
+import { useState, useEffect } from "react";
+import { AiFillCaretDown, AiFillCaretUp } from "react-icons/ai";
 
-import { useDispatch, useSelector } from 'react-redux';
-import { useDaumPostcodePopup } from 'react-daum-postcode';
+import { useDispatch, useSelector } from "react-redux";
+import { useDaumPostcodePopup } from "react-daum-postcode";
 
-import { useNavigate, useParams } from 'react-router-dom';
-import { GameTemplate } from 'src/domain/GameTemplate.model';
+import { useNavigate, useParams } from "react-router-dom";
 
-import { AppDispatch, RootState } from 'src/store/store';
-import { TestComp } from './TestCompProps';
-import EditIcon from '@mui/icons-material/Edit';
-import AddIcon from '@mui/icons-material/Add';
+import { AppDispatch, RootState } from "src/store/store";
+import { TestComp } from "./TestCompProps";
+import EditIcon from "@mui/icons-material/Edit";
+import AddIcon from "@mui/icons-material/Add";
 
-import { FirebasePub } from 'src/data/firebase/FirebasePub';
-import { AdminRequireLayout } from 'src/content/admin/AdminRequireLayout';
-import { GameEditDialog } from './GameEditDialog';
-import { PhotoEditDialog } from './PhotoEditDialog';
-import { refreshWholePub } from 'src/reducer/pubSlice';
+import { FirebasePub } from "src/data/firebase/FirebasePub";
+import { AdminRequireLayout } from "src/content/admin/AdminRequireLayout";
+import { GameEditDialog } from "./GameEditDialog";
+import { PhotoEditDialog } from "./PhotoEditDialog";
+import { refreshWholePub } from "src/reducer/pubSlice";
+import { GameTemplate } from "src/domain/pub/GameTemplate.model";
 type Params = {
   id: string;
 };
@@ -26,20 +26,20 @@ export default function StoreEditForm() {
   const tam = useSelector((state: RootState) => state.admin.weeks);
 
   //펍 정보
-  const [title, setTitle] = useState('');
+  const [title, setTitle] = useState("");
   const [lat, setLat] = useState(0.0);
   const [lon, setLon] = useState(0.0);
-  const [addressBasic, setAddressBasic] = useState('');
-  const [addressDetail, setAddressDetail] = useState('');
-  const [description, setDescription] = useState('');
-  const [phone, setPhone] = useState('');
-  const [kakao, setKakao] = useState('');
-  const [insta, setInsta] = useState('');
+  const [addressBasic, setAddressBasic] = useState("");
+  const [addressDetail, setAddressDetail] = useState("");
+  const [description, setDescription] = useState("");
+  const [phone, setPhone] = useState("");
+  const [kakao, setKakao] = useState("");
+  const [insta, setInsta] = useState("");
   const [photos, setPhotos] = useState<string[]>([
-    'https://t1.daumcdn.net/cfile/tistory/2257194756D7FDBB26',
-    'https://t1.daumcdn.net/cfile/tistory/2257194756D7FDBB26',
-    'https://t1.daumcdn.net/cfile/tistory/2257194756D7FDBB26',
-    'https://t1.daumcdn.net/cfile/tistory/2257194756D7FDBB26',
+    "https://t1.daumcdn.net/cfile/tistory/2257194756D7FDBB26",
+    "https://t1.daumcdn.net/cfile/tistory/2257194756D7FDBB26",
+    "https://t1.daumcdn.net/cfile/tistory/2257194756D7FDBB26",
+    "https://t1.daumcdn.net/cfile/tistory/2257194756D7FDBB26",
   ]);
 
   const [games, setGames] = useState<GameTemplate[]>([]);
@@ -55,36 +55,36 @@ export default function StoreEditForm() {
   const [gameDialog, setGameDialog] = useState(false);
 
   useEffect(() => {
-    setGames(pickPub.templates);
-    setTitle(pickPub.name);
-    setDescription(pickPub.description);
-    setAddressBasic(pickPub.addressBasic);
-    setAddressDetail(pickPub.addressDetail);
-    setLat(pickPub.lat);
-    setLon(pickPub.lon);
-    setPhone(pickPub.phone);
-    setKakao(pickPub.links[0].url);
-    setInsta(pickPub.links[1].url);
+    setGames(pickPub.basicInfo.gameTemplates);
+    setTitle(pickPub.basicInfo.name);
+    setDescription(pickPub.basicInfo.description);
+    setAddressBasic(pickPub.basicInfo.addressBasic);
+    setAddressDetail(pickPub.basicInfo.addressDetail);
+    setLat(pickPub.basicInfo.lat);
+    setLon(pickPub.basicInfo.lon);
+    setPhone(pickPub.basicInfo.phone);
+    setKakao(pickPub.basicInfo.links[0].url);
+    setInsta(pickPub.basicInfo.links[1].url);
   }, []);
 
   const open = useDaumPostcodePopup(
-    'https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js'
+    "https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"
   );
 
   const handleComplete = (data) => {
     console.log(data);
     let fullAddress = data.address;
-    let extraAddress = '';
+    let extraAddress = "";
 
-    if (data.addressType === 'R') {
-      if (data.bname !== '') {
+    if (data.addressType === "R") {
+      if (data.bname !== "") {
         extraAddress += data.bname;
       }
-      if (data.buildingName !== '') {
+      if (data.buildingName !== "") {
         extraAddress +=
-          extraAddress !== '' ? `, ${data.buildingName}` : data.buildingName;
+          extraAddress !== "" ? `, ${data.buildingName}` : data.buildingName;
       }
-      fullAddress += extraAddress !== '' ? ` (${extraAddress})` : '';
+      fullAddress += extraAddress !== "" ? ` (${extraAddress})` : "";
     }
     setAddressBasic(fullAddress);
     // setShopAddress(fullAddress + ' ' + secondAddress);
@@ -102,16 +102,16 @@ export default function StoreEditForm() {
   const finalFirebaseUpdate = async () => {
     let newPickPub = pickPub.clone;
 
-    newPickPub.name = title;
-    newPickPub.lat = lat;
-    newPickPub.lon = lon;
-    newPickPub.addressBasic = addressBasic;
-    newPickPub.addressDetail = addressDetail;
-    newPickPub.description = description;
-    newPickPub.phone = phone;
-    newPickPub.links[1].url = insta;
-    newPickPub.links[0].url = kakao;
-    newPickPub.photos = photos;
+    newPickPub.basicInfo.name = title;
+    newPickPub.basicInfo.lat = lat;
+    newPickPub.basicInfo.lon = lon;
+    newPickPub.basicInfo.addressBasic = addressBasic;
+    newPickPub.basicInfo.addressDetail = addressDetail;
+    newPickPub.basicInfo.description = description;
+    newPickPub.basicInfo.phone = phone;
+    newPickPub.basicInfo.links[1].url = insta;
+    newPickPub.basicInfo.links[0].url = kakao;
+    newPickPub.basicInfo.photos = photos;
 
     await FirebasePub.updatePub(newPickPub.id, newPickPub.toMap);
     const getPubsData = await FirebasePub.getWholePubData();
@@ -232,9 +232,9 @@ export default function StoreEditForm() {
                       alt={`Edit${i}`}
                       className="rounded-2xl mr-3"
                       style={{
-                        width: '100px',
-                        height: '100px',
-                        objectFit: 'fill',
+                        width: "100px",
+                        height: "100px",
+                        objectFit: "fill",
                       }}
                       src={url}
                     />
@@ -278,8 +278,8 @@ export default function StoreEditForm() {
                             key={oneTemplateGame.id}
                             className={`text-center text-base ${
                               oneTemplateGame.id === selGame?.id
-                                ? 'border-2 border-red-300'
-                                : ''
+                                ? "border-2 border-red-300"
+                                : ""
                             }`}
                             onClick={() => {
                               setSelGame(oneTemplateGame);
@@ -321,17 +321,17 @@ export default function StoreEditForm() {
                               <td className="border px-2 py-1">사진</td>
                               <td className="flex flex-wrap gap-x-3 border px-2 py-1">
                                 {[
-                                  '',
-                                  '',
-                                  '',
-                                  '',
-                                  '',
-                                  '',
-                                  '',
-                                  '',
-                                  '',
-                                  '',
-                                  '',
+                                  "",
+                                  "",
+                                  "",
+                                  "",
+                                  "",
+                                  "",
+                                  "",
+                                  "",
+                                  "",
+                                  "",
+                                  "",
                                 ].map((url, i) => (
                                   <img
                                     key={`view${i}`}
@@ -351,7 +351,7 @@ export default function StoreEditForm() {
                                     className="flex flex-row justify-center"
                                   >
                                     {v.template.id ===
-                                      `${selGame?.id ?? '1'}` &&
+                                      `${selGame?.id ?? "1"}` &&
                                       v.weeks.map((game, i) => (
                                         <div className="px-2">{game}</div>
                                       ))}
@@ -375,12 +375,12 @@ export default function StoreEditForm() {
             <>
               <div className="p-2 text-3xl">요일 별 오픈 토너먼트</div>
               <div className="py-2">
-                {pickPub &&
+                {/* {pickPub &&
                   pickPub.days.map((daysValue, daysIndex) => (
                     <div key={daysIndex} className="py-2">
                       {visibility[daysIndex] ? (
                         <h1 onClick={() => toggleVisibility(daysIndex)}>
-                          <AiFillCaretUp className="inline" />{' '}
+                          <AiFillCaretUp className="inline" />{" "}
                           {`  ${daysValue.day}`}
                         </h1>
                       ) : (
@@ -393,7 +393,7 @@ export default function StoreEditForm() {
                         daysValue.games.map((gamesValue, gamesIndex) => (
                           <div key={`${gamesIndex}_${gamesValue.length}`}>
                             <div>
-                              {pickPub.templates.map(
+                              {pickPub.basicInfo.templates.map(
                                 (templatesValue, templatesIndex) =>
                                   templatesValue.id === gamesValue ? (
                                     <div
@@ -418,7 +418,7 @@ export default function StoreEditForm() {
                           </div>
                         ))}
                     </div>
-                  ))}
+                  ))} */}
               </div>
             </>
           </div>
@@ -427,7 +427,7 @@ export default function StoreEditForm() {
             <PhotoEditDialog
               onCancel={() => {
                 setPhotoDialog(false);
-                setGames(pickPub.templates);
+                setGames(pickPub.basicInfo.gameTemplates);
               }}
             />
           )}
@@ -436,7 +436,7 @@ export default function StoreEditForm() {
               gameTemplate={selGame}
               onCancel={() => {
                 setGameDialog(false);
-                setGames(pickPub.templates);
+                setGames(pickPub.basicInfo.gameTemplates);
                 setSelGame(null);
               }}
             />
@@ -451,7 +451,7 @@ export default function StoreEditForm() {
         <br />
         <button
           className="bg-white"
-          onClick={() => navigate('/admin/storeInfo')}
+          onClick={() => navigate("/admin/storeInfo")}
         >
           이전페이지로
         </button>

@@ -1,19 +1,26 @@
-import * as React from 'react';
-import { alpha } from '@mui/material/styles';
-import Box from '@mui/material/Box';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TablePagination from '@mui/material/TablePagination';
-import TableRow from '@mui/material/TableRow';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import Paper from '@mui/material/Paper';
-import TableSortLabel from '@mui/material/TableSortLabel';
-import { GamePlayerThumb } from 'src/domain/Game.model';
-import { visuallyHidden } from '@mui/utils';
+import * as React from "react";
+import { alpha } from "@mui/material/styles";
+import Box from "@mui/material/Box";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TablePagination from "@mui/material/TablePagination";
+import TableRow from "@mui/material/TableRow";
+import Toolbar from "@mui/material/Toolbar";
+import Typography from "@mui/material/Typography";
+import Paper from "@mui/material/Paper";
+import TableSortLabel from "@mui/material/TableSortLabel";
+import { visuallyHidden } from "@mui/utils";
+
+export interface GamePlayerThumb {
+  id: string;
+  name: string;
+  prize: number;
+  note: string;
+  rank: number;
+}
 
 interface PlayerListTypeData {
   playerList: GamePlayerThumb[];
@@ -31,7 +38,7 @@ export const DetailTournaUser: React.FC<PlayerListTypeData> = ({
     return 0;
   }
 
-  type Order = 'asc' | 'desc';
+  type Order = "asc" | "desc";
 
   function getComparator<Key extends keyof any>(
     order: Order,
@@ -40,7 +47,7 @@ export const DetailTournaUser: React.FC<PlayerListTypeData> = ({
     a: { [key in Key]: number | string },
     b: { [key in Key]: number | string }
   ) => number {
-    return order === 'desc'
+    return order === "desc"
       ? (a, b) => descendingComparator(a, b, orderBy)
       : (a, b) => -descendingComparator(a, b, orderBy);
   }
@@ -69,28 +76,28 @@ export const DetailTournaUser: React.FC<PlayerListTypeData> = ({
 
   const headCells: readonly HeadCell[] = [
     {
-      id: 'id',
+      id: "id",
       numeric: true,
       disablePadding: false,
-      label: '아이디',
+      label: "아이디",
     },
     {
-      id: 'prize',
+      id: "prize",
       numeric: true,
       disablePadding: false,
-      label: '상금',
+      label: "상금",
     },
     {
-      id: 'rank',
+      id: "rank",
       numeric: true,
       disablePadding: false,
-      label: '순위',
+      label: "순위",
     },
     {
-      id: 'note',
+      id: "note",
       numeric: true,
       disablePadding: false,
-      label: '비고',
+      label: "비고",
     },
   ];
 
@@ -127,21 +134,21 @@ export const DetailTournaUser: React.FC<PlayerListTypeData> = ({
           {headCells.map((headCell) => (
             <TableCell
               key={headCell.id}
-              align={headCell.numeric ? 'center' : 'center'}
-              padding={headCell.disablePadding ? 'none' : 'normal'}
+              align={headCell.numeric ? "center" : "center"}
+              padding={headCell.disablePadding ? "none" : "normal"}
               sortDirection={orderBy === headCell.id ? order : false}
             >
               <TableSortLabel
                 active={orderBy === headCell.id}
-                direction={orderBy === headCell.id ? order : 'asc'}
+                direction={orderBy === headCell.id ? order : "asc"}
                 onClick={createSortHandler(headCell.id)}
               >
                 {headCell.label}
                 {orderBy === headCell.id ? (
                   <Box component="span" sx={visuallyHidden}>
-                    {order === 'desc'
-                      ? 'sorted descending'
-                      : 'sorted ascending'}
+                    {order === "desc"
+                      ? "sorted descending"
+                      : "sorted ascending"}
                   </Box>
                 ) : null}
               </TableSortLabel>
@@ -174,7 +181,7 @@ export const DetailTournaUser: React.FC<PlayerListTypeData> = ({
         }}
       >
         <Typography
-          sx={{ flex: '1 1 100%' }}
+          sx={{ flex: "1 1 100%" }}
           variant="h6"
           id="tableTitle"
           component="div"
@@ -186,8 +193,8 @@ export const DetailTournaUser: React.FC<PlayerListTypeData> = ({
   }
 
   function EnhancedTable() {
-    const [order, setOrder] = React.useState<Order>('asc');
-    const [orderBy, setOrderBy] = React.useState<keyof GamePlayerThumb>('rank');
+    const [order, setOrder] = React.useState<Order>("asc");
+    const [orderBy, setOrderBy] = React.useState<keyof GamePlayerThumb>("rank");
     const [selected, setSelected] = React.useState<readonly string[]>([]);
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
@@ -196,8 +203,8 @@ export const DetailTournaUser: React.FC<PlayerListTypeData> = ({
       event: React.MouseEvent<unknown>,
       property: keyof GamePlayerThumb
     ) => {
-      const isAsc = orderBy === property && order === 'asc';
-      setOrder(isAsc ? 'desc' : 'asc');
+      const isAsc = orderBy === property && order === "asc";
+      setOrder(isAsc ? "desc" : "asc");
       setOrderBy(property);
     };
 
@@ -237,14 +244,14 @@ export const DetailTournaUser: React.FC<PlayerListTypeData> = ({
 
     return (
       <>
-        <Box sx={{ width: '100%' }}>
-          <Paper sx={{ width: '100%', mb: 2 }}>
+        <Box sx={{ width: "100%" }}>
+          <Paper sx={{ width: "100%", mb: 2 }}>
             <EnhancedTableToolbar numSelected={selected.length} />
             <TableContainer>
               <Table
                 sx={{ minWidth: 750 }}
                 aria-labelledby="tableTitle"
-                size={'medium'}
+                size={"medium"}
               >
                 <EnhancedTableHead
                   numSelected={selected.length}
@@ -266,7 +273,7 @@ export const DetailTournaUser: React.FC<PlayerListTypeData> = ({
                         role="checkbox"
                         tabIndex={-1}
                         key={row.id}
-                        sx={{ cursor: 'pointer' }}
+                        sx={{ cursor: "pointer" }}
                       >
                         <TableCell
                           className="h-20"

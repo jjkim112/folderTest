@@ -15,3 +15,32 @@
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
 }
+
+.basic-box {
+  border-radius: 5px;
+  border-color: black;
+  border: 1px;
+  border-style: solid;
+  padding: 5px 10px;
+  margin: 0px 10px;
+  align-items: center;
+  justify-content: center;
+  background-color: gray;
+  color: black;
+  white-space: nowrap;
+
+  &:hover {
+    background-color: blue;
+    color: white;
+    cursor: pointer;
+  }
+}
+
+.categories {
+  display: flex;
+  overflow-x: scroll;
+}
+
+.categories::-webkit-scrollbar {
+  display: none;
+}

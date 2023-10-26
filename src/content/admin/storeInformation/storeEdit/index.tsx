@@ -1,20 +1,20 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback } from "react";
 import {
   AiFillPhone,
   AiFillEnvironment,
   AiFillCaretDown,
   AiFillCaretUp,
-} from 'react-icons/ai';
+} from "react-icons/ai";
 
-import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate, useParams } from 'react-router-dom';
-import { DataService } from 'src/data/DataService';
-import { Pub } from 'src/domain/Pub.model';
-import { setOnePubData, setWeekPubData } from 'src/reducer/adminPub';
-import { refreshGames } from 'src/reducer/gameSlice';
-import { refreshWithPubId } from 'src/reducer/userSlice';
-import { AppDispatch, RootState } from 'src/store/store';
-import { AdminRequireLayout } from '../../AdminRequireLayout';
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
+import { DataService } from "src/data/DataService";
+import { Pub } from "src/domain/Pub.model";
+import { setOnePubData, setWeekPubData } from "src/reducer/adminPub";
+import { refreshGames } from "src/reducer/gameSlice";
+import { refreshWithPubId } from "src/reducer/userSlice";
+import { AppDispatch, RootState } from "src/store/store";
+import { AdminRequireLayout } from "../../AdminRequireLayout";
 type Params = {
   id: string;
 };
@@ -35,7 +35,7 @@ export default function HoldemPubOnePage() {
     setVisibility(newVisibility);
   };
   const goToPubPage = async () => {
-    console.log('dsadsa');
+    console.log("dsadsa");
     pubsData.map((v, i) => {
       if (v.id === id) {
         setPickPub(v);
@@ -60,7 +60,7 @@ export default function HoldemPubOnePage() {
               <button
                 className="border-2 bg-blue-700 text-black font-bold p-3 rounded-lg "
                 onClick={() => {
-                  navigate('/admin/storeInfo');
+                  navigate("/admin/storeInfo");
                 }}
               >
                 ⬅️ 돌아가기
@@ -91,30 +91,31 @@ export default function HoldemPubOnePage() {
             <div className="flex flex-col my-10 ">
               <img
                 className=" w-[150px] h-[150px]"
-                src={pickPub.photos[0]}
+                src={pickPub.basicInfo.photos[0]}
                 alt="디테일 그림"
               />
               <div className="mt-1">
-                <div>{pickPub.name}</div>
-                <div>{pickPub.description.trim()}</div>
+                <div>{pickPub.basicInfo.name}</div>
+                <div>{pickPub.basicInfo.description.trim()}</div>
                 <h3>
-                  <AiFillPhone className="inline" /> {pickPub.phone.trim()}
+                  <AiFillPhone className="inline" />{" "}
+                  {pickPub.basicInfo.phone.trim()}
                 </h3>
                 <h3>
                   <AiFillEnvironment className="inline" />
-                  {pickPub.addressBasic.trim()}{' '}
-                  {' ' + pickPub.addressDetail.trim()}
+                  {pickPub.basicInfo.addressBasic.trim()}{" "}
+                  {" " + pickPub.basicInfo.addressDetail.trim()}
                 </h3>
 
                 <div className="flex flex-row  m-2">
-                  <a href={`${pickPub.links[1].url}`}>
+                  <a href={`${pickPub.basicInfo.links[1].url}`}>
                     <img
                       className="w-[50px] mr-4"
                       src="\assets\images\icon-instagram.png"
                       alt="instagram"
                     />
                   </a>
-                  <a href={`${pickPub.links[0].url}`}>
+                  <a href={`${pickPub.basicInfo.links[0].url}`}>
                     <img
                       className="w-[50px]"
                       src="\assets\images\icon-kakao.png"
@@ -127,7 +128,7 @@ export default function HoldemPubOnePage() {
           </div>
           <div className="p-2">
             <div className=" text-3xl">현재 있는 토너머트 정보</div>
-            {pickPub.templates.map((gamesValue, gamesIndex) => (
+            {pickPub.basicInfo.gameTemplates.map((gamesValue, gamesIndex) => (
               <div key={`${gamesIndex}_${gamesValue.id}`}>
                 <div>
                   <div className="flex flex-col justify-center text-center py-1 pb-4">
@@ -150,7 +151,7 @@ export default function HoldemPubOnePage() {
             <>
               <div className="p-2 text-3xl">요일 별 오픈 토너먼트</div>
               <div className="py-2">
-                {pickPub.days.map((daysValue, daysIndex) => (
+                {/* {pickPub.days.map((daysValue, daysIndex) => (
                   <div key={`${daysIndex}_x`} className="py-2">
                     {visibility[daysIndex] ? (
                       <h1 onClick={() => toggleVisibility(daysIndex)}>
@@ -192,7 +193,7 @@ export default function HoldemPubOnePage() {
                         </div>
                       ))}
                   </div>
-                ))}
+                ))} */}
               </div>
             </>
           </div>
@@ -206,7 +207,7 @@ export default function HoldemPubOnePage() {
         <br />
         <button
           className="bg-white"
-          onClick={() => navigate('/admin/storeInfo')}
+          onClick={() => navigate("/admin/storeInfo")}
         >
           이전페이지로
         </button>

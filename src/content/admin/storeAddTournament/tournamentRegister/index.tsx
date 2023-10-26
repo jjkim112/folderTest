@@ -1,39 +1,39 @@
-import { alpha } from '@mui/material/styles';
-import Box from '@mui/material/Box';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TablePagination from '@mui/material/TablePagination';
-import TableRow from '@mui/material/TableRow';
-import TableSortLabel from '@mui/material/TableSortLabel';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import Paper from '@mui/material/Paper';
-import Checkbox from '@mui/material/Checkbox';
-import IconButton from '@mui/material/IconButton';
-import Tooltip from '@mui/material/Tooltip';
-import DeleteIcon from '@mui/icons-material/Delete';
-import FilterListIcon from '@mui/icons-material/FilterList';
-import { visuallyHidden } from '@mui/utils';
-import { PlayerButton } from './playerButton';
-import { DetailTournaUser } from './detailTournaUser';
-import { BasicTextFields } from './playerInputBox';
-import { useMemo, useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch, RootState } from 'src/store/store';
-import { Game, GamePlayerThumb } from 'src/domain/Game.model';
-import { AdminRequireLayout } from '../../AdminRequireLayout';
+import { alpha } from "@mui/material/styles";
+import Box from "@mui/material/Box";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TablePagination from "@mui/material/TablePagination";
+import TableRow from "@mui/material/TableRow";
+import TableSortLabel from "@mui/material/TableSortLabel";
+import Toolbar from "@mui/material/Toolbar";
+import Typography from "@mui/material/Typography";
+import Paper from "@mui/material/Paper";
+import Checkbox from "@mui/material/Checkbox";
+import IconButton from "@mui/material/IconButton";
+import Tooltip from "@mui/material/Tooltip";
+import DeleteIcon from "@mui/icons-material/Delete";
+import FilterListIcon from "@mui/icons-material/FilterList";
+import { visuallyHidden } from "@mui/utils";
+import { PlayerButton } from "./playerButton";
+import { DetailTournaUser, GamePlayerThumb } from "./detailTournaUser";
+import { BasicTextFields } from "./playerInputBox";
+import { useMemo, useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "src/store/store";
+import { AdminRequireLayout } from "../../AdminRequireLayout";
 import {
   refreshGames,
   setOneGameData,
   setOneGamePlayer,
   toggleEditMode,
-} from 'src/reducer/gameSlice';
-import { TournaEditButton } from './tournaEditButton';
-import { FirebasePub } from 'src/data/firebase/FirebasePub';
+} from "src/reducer/gameSlice";
+import { TournaEditButton } from "./tournaEditButton";
+import { FirebasePub } from "src/data/firebase/FirebasePub";
+
 export interface typeGames {
   id: string;
   pubId: string;
@@ -49,15 +49,15 @@ export interface typeGames {
 }
 
 export default function EnhancedTable() {
-  const [order, setOrder] = useState<Order>('asc');
-  const [orderBy, setOrderBy] = useState<keyof typeGames>('id');
+  const [order, setOrder] = useState<Order>("asc");
+  const [orderBy, setOrderBy] = useState<keyof typeGames>("id");
   const [selected, setSelected] = useState<readonly string[]>([]);
   const [page, setPage] = useState(0);
   const [dense, setDense] = useState(false);
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
   const [playerList, setPlayerList] = useState<GamePlayerThumb[]>([]);
-  const [gameId, setGameId] = useState<string>('');
+  const [gameId, setGameId] = useState<string>("");
 
   const id = useParams().id;
   const dispatch = useDispatch<AppDispatch>();
@@ -69,8 +69,8 @@ export default function EnhancedTable() {
     event: React.MouseEvent<unknown>,
     property: keyof typeGames
   ) => {
-    const isAsc = orderBy === property && order === 'asc';
-    setOrder(isAsc ? 'desc' : 'asc');
+    const isAsc = orderBy === property && order === "asc";
+    setOrder(isAsc ? "desc" : "asc");
     setOrderBy(property);
   };
 
@@ -133,10 +133,10 @@ export default function EnhancedTable() {
   );
   async function tournamentDelete() {
     let newGameDatas = gamesData;
-    console.log('dsadsa');
+    console.log("dsadsa");
 
     for (let index = 0; index < selected.length; index++) {
-      console.log('dsadsa');
+      console.log("dsadsa");
       newGameDatas = newGameDatas.filter(
         (value) => value.id !== selected[index]
       );
@@ -150,8 +150,8 @@ export default function EnhancedTable() {
   return (
     <AdminRequireLayout>
       <div className="flex gap-4">
-        <Box sx={{ width: '100%' }}>
-          <Paper sx={{ width: '100%', mb: 2 }}>
+        <Box sx={{ width: "100%" }}>
+          <Paper sx={{ width: "100%", mb: 2 }}>
             <EnhancedTableToolbar
               onClick={tournamentDelete}
               numSelected={selected.length}
@@ -160,7 +160,7 @@ export default function EnhancedTable() {
               <Table
                 sx={{ minWidth: 750 }}
                 aria-labelledby="tableTitle"
-                size={dense ? 'small' : 'medium'}
+                size={dense ? "small" : "medium"}
               >
                 <EnhancedTableHead
                   numSelected={selected.length}
@@ -186,9 +186,9 @@ export default function EnhancedTable() {
                         key={index}
                         selected={isItemSelected}
                         style={{
-                          border: isItemSelected ? '3px solid red' : '',
+                          border: isItemSelected ? "3px solid red" : "",
                         }}
-                        sx={{ cursor: 'pointer' }}
+                        sx={{ cursor: "pointer" }}
                       >
                         <TableCell padding="checkbox">
                           <Checkbox
@@ -197,7 +197,7 @@ export default function EnhancedTable() {
                             aria-checked={isItemSelected}
                             checked={isItemSelected}
                             inputProps={{
-                              'aria-labelledby': labelId,
+                              "aria-labelledby": labelId,
                             }}
                           />
                         </TableCell>
@@ -214,14 +214,16 @@ export default function EnhancedTable() {
                           {row.date.toLocaleString()}
                         </TableCell>
                         <TableCell align="right">{row.entry}</TableCell>
-                        <TableCell align="right">{pubsData.name}</TableCell>
+                        <TableCell align="right">
+                          {pubsData.basicInfo.name}
+                        </TableCell>
                         <TableCell align="right">
                           {row.players.length}
                         </TableCell>
 
                         <TableCell
                           onClick={() => {
-                            console.log('test');
+                            console.log("test");
                           }}
                           align="right"
                         >
@@ -238,29 +240,31 @@ export default function EnhancedTable() {
                         </TableCell>
                         <TableCell
                           onClick={() => {
-                            console.log('test');
+                            console.log("test");
                           }}
                           align="right"
                         >
                           <TournaEditButton
                             onClick={() => {
-                              dispatch(
-                                setOneGameData(
-                                  new Game(
-                                    row.id,
-                                    row.pubId,
-                                    row.gameTempId,
-                                    row.title,
-                                    row.subTitle,
-                                    row.description,
-                                    row.note,
-                                    row.entry,
-                                    row.date,
-                                    row.totalReward,
-                                    row.players
-                                  )
-                                )
-                              );
+                              // TODO
+                              // Game domain 없앰에 따라 지금은 관리 x
+                              // dispatch(
+                              //   setOneGameData(
+                              //     new Game(
+                              //       row.id,
+                              //       row.pubId,
+                              //       row.gameTempId,
+                              //       row.title,
+                              //       row.subTitle,
+                              //       row.description,
+                              //       row.note,
+                              //       row.entry,
+                              //       row.date,
+                              //       row.totalReward,
+                              //       row.players
+                              //     )
+                              //   )
+                              // );
                               setPlayerList([]);
                               setSelected([row.id]);
                               dispatch(setOneGamePlayer(row.players));
@@ -340,26 +344,26 @@ function EnhancedTableHead(props: EnhancedTableProps) {
             checked={rowCount > 0 && numSelected === rowCount}
             onChange={onSelectAllClick}
             inputProps={{
-              'aria-label': 'select all desserts',
+              "aria-label": "select all desserts",
             }}
           />
         </TableCell>
         {headCells.map((headCell) => (
           <TableCell
             key={headCell.id}
-            align={headCell.numeric ? 'right' : 'left'}
-            padding={headCell.disablePadding ? 'none' : 'normal'}
+            align={headCell.numeric ? "right" : "left"}
+            padding={headCell.disablePadding ? "none" : "normal"}
             sortDirection={orderBy === headCell.id ? order : false}
           >
             <TableSortLabel
               active={orderBy === headCell.id}
-              direction={orderBy === headCell.id ? order : 'asc'}
+              direction={orderBy === headCell.id ? order : "asc"}
               onClick={createSortHandler(headCell.id)}
             >
               {headCell.label}
               {orderBy === headCell.id ? (
                 <Box component="span" sx={visuallyHidden}>
-                  {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
+                  {order === "desc" ? "sorted descending" : "sorted ascending"}
                 </Box>
               ) : null}
             </TableSortLabel>
@@ -379,7 +383,7 @@ function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
   return 0;
 }
 
-type Order = 'asc' | 'desc';
+type Order = "asc" | "desc";
 
 function getComparator<Key extends keyof any>(
   order: Order,
@@ -388,7 +392,7 @@ function getComparator<Key extends keyof any>(
   a: { [key in Key]: string | number | Date | GamePlayerThumb[] },
   b: { [key in Key]: string | number | Date | GamePlayerThumb[] }
 ) => number {
-  return order === 'desc'
+  return order === "desc"
     ? (a, b) => descendingComparator(a, b, orderBy)
     : (a, b) => -descendingComparator(a, b, orderBy);
 }
@@ -417,34 +421,34 @@ interface HeadCell {
 
 const headCells: readonly HeadCell[] = [
   {
-    id: 'title',
+    id: "title",
     numeric: true,
     disablePadding: false,
-    label: '토너이름',
+    label: "토너이름",
   },
   {
-    id: 'date',
+    id: "date",
     numeric: true,
     disablePadding: false,
-    label: '날짜',
+    label: "날짜",
   },
   {
-    id: 'entry',
+    id: "entry",
     numeric: true,
     disablePadding: false,
-    label: '엔트리',
+    label: "엔트리",
   },
   {
-    id: 'pubId',
+    id: "pubId",
     numeric: true,
     disablePadding: false,
-    label: '지점아이디',
+    label: "지점아이디",
   },
   {
-    id: 'players',
+    id: "players",
     numeric: true,
     disablePadding: false,
-    label: '플레이어',
+    label: "플레이어",
   },
 ];
 interface EnhancedTableToolbarProps {
@@ -471,7 +475,7 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
     >
       {numSelected > 0 ? (
         <Typography
-          sx={{ flex: '1 1 100%' }}
+          sx={{ flex: "1 1 100%" }}
           color="inherit"
           variant="subtitle1"
           component="div"
@@ -480,7 +484,7 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
         </Typography>
       ) : (
         <Typography
-          sx={{ flex: '1 1 100%' }}
+          sx={{ flex: "1 1 100%" }}
           variant="h6"
           id="tableTitle"
           component="div"
@@ -507,4 +511,124 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
       )}
     </Toolbar>
   );
+}
+
+// TODO 일단 지금은 여기서
+import { Timestamp } from "firebase/firestore";
+import firebase from "firebase/compat/app";
+export class Game {
+  id: string;
+  pubId: string;
+  gameTempId: string;
+  title: string;
+  subTitle: string;
+  description: string;
+  note: string;
+  entry: number;
+  date: Date;
+  totalReward: string;
+
+  players: GamePlayerThumb[];
+
+  constructor(
+    id: string,
+    pubId: string,
+    gameTempId: string,
+    title: string,
+    subTitle: string,
+    description: string,
+    note: string,
+    entry: number,
+    date: Date,
+    totalReward: string,
+    players: GamePlayerThumb[]
+  ) {
+    this.id = id;
+    this.pubId = pubId;
+    this.gameTempId = gameTempId;
+    this.title = title;
+    this.subTitle = subTitle;
+    this.description = description;
+    this.note = note;
+    this.entry = entry;
+    this.date = date;
+    this.totalReward = totalReward;
+    this.players = players;
+  }
+
+  get clone() {
+    return new Game(
+      this.id,
+      this.pubId,
+      this.gameTempId,
+      this.title,
+      this.subTitle,
+      this.description,
+      this.note,
+      this.entry,
+      this.date,
+      this.totalReward,
+      this.players
+    );
+  }
+
+  get toMap() {
+    return {
+      id: this.id || "",
+      pubId: this.pubId || "",
+      gameTempId: this.gameTempId || "",
+      title: this.title || "",
+      subTitle: this.subTitle || "",
+      description: this.description || "",
+      note: this.note || "",
+      entry: this.entry || 0,
+      date: firebase.firestore.Timestamp.fromDate(this.date),
+      totalReward: this.totalReward || "",
+      players:
+        this.players && Array.isArray(this.players)
+          ? // Make sure each player object does not contain undefined values
+            // If the player object is not defined, assign an empty array
+            this.players.map((v) => ({
+              id: v.id || "",
+              name: v.name || "",
+              prize: v.prize || "",
+              note: v.note || "",
+              rank: v.rank || "",
+            }))
+          : [],
+    };
+  }
+
+  static fromData(data: any): Game {
+    try {
+      const id = data["id"];
+      const pubId = data["pubId"];
+      const gameTempId = data["gameTempId"];
+      const title = data["title"];
+      const subTitle = data["subTitle"];
+      const description = data["description"];
+      const note = data["note"];
+      const entry = data["entry"];
+      const date = (data["date"] as Timestamp).toDate();
+      const totalReward = data["totalReward"];
+      const players = data["players"];
+
+      return new Game(
+        id,
+        pubId,
+        gameTempId,
+        title,
+        subTitle,
+        description,
+        note,
+        entry,
+        date,
+        totalReward,
+        players
+      );
+    } catch (error) {
+      console.log(`[GameTemplate Model] fromData e: ${error}`);
+      return new Game("", "", "", "", "", "", "", 0, new Date(0), "", []);
+    }
+  }
 }

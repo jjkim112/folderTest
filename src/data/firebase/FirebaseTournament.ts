@@ -1,6 +1,6 @@
-import { TournamentInfo } from '../../domain/TournamentInfo.model';
-import firebase from 'firebase/compat/app';
-import 'firebase/compat/firestore';
+import { TournamentInfo } from "../../domain/TournamentInfo.model";
+import firebase from "firebase/compat/app";
+import "firebase/compat/firestore";
 
 export class FirebaseTournament {
   static fetchTournamentInfo = async (
@@ -8,8 +8,8 @@ export class FirebaseTournament {
     tId: string
   ): Promise<TournamentInfo | null> => {
     const firestore = firebase.firestore();
-    const pubDoc = firestore.collection('wwp_pubs').doc(pubId);
-    const tournaDoc = pubDoc.collection('tournaments').doc(tId);
+    const pubDoc = firestore.collection("wwp_pubs").doc(pubId);
+    const tournaDoc = pubDoc.collection("tournaments").doc(tId);
     try {
       const tData = await tournaDoc.get();
       if (tData.exists) {
@@ -27,9 +27,9 @@ export class FirebaseTournament {
   ): Promise<TournamentInfo[]> => {
     const firestore = firebase.firestore();
     const tournasCol = firestore
-      .collection('wwp_pubs')
+      .collection("wwp_pubs")
       .doc(pubId)
-      .collection('tournaments');
+      .collection("tournaments");
     let tempList: TournamentInfo[] = [];
     try {
       const tournasData = await tournasCol.get();

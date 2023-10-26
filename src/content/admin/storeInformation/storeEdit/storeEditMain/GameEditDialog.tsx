@@ -1,17 +1,17 @@
-import { useEffect, useState } from 'react';
-import { TestComp } from './TestCompProps';
-import EditIcon from '@mui/icons-material/Edit';
-import { GameTemplate } from 'src/domain/GameTemplate.model';
-import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch, RootState } from 'src/store/store';
+import { useEffect, useState } from "react";
+import { TestComp } from "./TestCompProps";
+import EditIcon from "@mui/icons-material/Edit";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "src/store/store";
 import {
   Weeks,
   addTemplatesData,
   deleteTemplatesData,
   setTemplatesData,
   updateOnePubData,
-} from 'src/reducer/adminPub';
-import { WeekDayBox } from './week';
+} from "src/reducer/adminPub";
+import { WeekDayBox } from "./week";
+import { GameTemplate } from "src/domain/pub/GameTemplate.model";
 
 interface GameEditDialogProps {
   gameTemplate?: GameTemplate | null;
@@ -27,10 +27,10 @@ export const GameEditDialog = ({
   gameTemplate,
   onCancel,
 }: GameEditDialogProps) => {
-  const [title, setTitle] = useState('');
-  const [subtitle, setSubtitle] = useState('');
-  const [info, setInfo] = useState('');
-  const [photos, setPhotos] = useState<string[]>(['', '', '']);
+  const [title, setTitle] = useState("");
+  const [subtitle, setSubtitle] = useState("");
+  const [info, setInfo] = useState("");
+  const [photos, setPhotos] = useState<string[]>(["", "", ""]);
   const tam = useSelector((state: RootState) => state.admin.weeks);
   const [days, setDays] = useState<string[]>([]);
   const [boxes, setBoxes] = useState<BoxInfo[]>([]);
@@ -38,7 +38,7 @@ export const GameEditDialog = ({
 
   const dispatch = useDispatch<AppDispatch>();
 
-  const dayList = ['월', '화', '수', '목', '금', '토', '일'];
+  const dayList = ["월", "화", "수", "목", "금", "토", "일"];
 
   const clickEditPhotos = () => {};
 
@@ -46,10 +46,10 @@ export const GameEditDialog = ({
     event.preventDefault();
 
     if (event.target === event.currentTarget) {
-      console.log('parent clicked');
-      setTitle('');
-      setSubtitle('');
-      setInfo('');
+      console.log("parent clicked");
+      setTitle("");
+      setSubtitle("");
+      setInfo("");
       setPhotos([]);
       onCancel();
     }
@@ -75,9 +75,9 @@ export const GameEditDialog = ({
   const deleteBox = (index: string) => {
     dispatch(deleteTemplatesData(index));
 
-    setTitle('');
-    setInfo('');
-    setSubtitle('');
+    setTitle("");
+    setInfo("");
+    setSubtitle("");
     setDays([]);
     setSelectedBoxIndex(null);
     onCancel();
@@ -96,9 +96,9 @@ export const GameEditDialog = ({
     dispatch(setTemplatesData(updataTam));
     dispatch(updateOnePubData(tam));
 
-    setTitle('');
-    setInfo('');
-    setSubtitle('');
+    setTitle("");
+    setInfo("");
+    setSubtitle("");
     setDays([]);
     setSelectedBoxIndex(null);
     onCancel();
@@ -165,9 +165,9 @@ export const GameEditDialog = ({
                 alt={`di${i}`}
                 className="rounded-2xl mr-3"
                 style={{
-                  width: '100px',
-                  height: '100px',
-                  objectFit: 'fill',
+                  width: "100px",
+                  height: "100px",
+                  objectFit: "fill",
                 }}
                 src={url}
               />

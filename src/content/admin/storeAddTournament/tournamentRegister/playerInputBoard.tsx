@@ -1,11 +1,11 @@
-import * as React from 'react';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import AddIcon from '@mui/icons-material/Add';
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/DeleteOutlined';
-import SaveIcon from '@mui/icons-material/Save';
-import CancelIcon from '@mui/icons-material/Close';
+import * as React from "react";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import AddIcon from "@mui/icons-material/Add";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/DeleteOutlined";
+import SaveIcon from "@mui/icons-material/Save";
+import CancelIcon from "@mui/icons-material/Close";
 import {
   GridRowsProp,
   GridRowModesModel,
@@ -18,21 +18,21 @@ import {
   GridRowId,
   GridRowModel,
   GridRowEditStopReasons,
-} from '@mui/x-data-grid';
+} from "@mui/x-data-grid";
 import {
   randomCreatedDate,
   randomTraderName,
   randomId,
   randomArrayItem,
-} from '@mui/x-data-grid-generator';
-import { GamePlayerThumb } from 'src/domain/Game.model';
-import { useDispatch } from 'react-redux';
-import { AppDispatch } from 'src/store/store';
+} from "@mui/x-data-grid-generator";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "src/store/store";
 import {
   setOneGameData,
   setOneGamePlayer,
   updateOneGamePlayer,
-} from 'src/reducer/gameSlice';
+} from "src/reducer/gameSlice";
+import { GamePlayerThumb } from "./detailTournaUser";
 
 interface EditToolbarProps {
   rows: GamePlayerThumb[];
@@ -52,16 +52,16 @@ function EditToolbar(props: EditToolbarProps) {
         ...rows,
         {
           id,
-          name: '',
+          name: "",
           rank: rows.length + 1,
           prize: 0,
-          note: '',
+          note: "",
         },
       ])
     );
     setRowModesModel((oldModel) => ({
       ...oldModel,
-      [id]: { mode: GridRowModes.Edit, fieldToFocus: 'id' },
+      [id]: { mode: GridRowModes.Edit, fieldToFocus: "id" },
     }));
   };
 
@@ -85,7 +85,7 @@ export const FullFeaturedCrudGrid: React.FC<PlayerListInputProps> = ({
     {}
   );
   const dispatch = useDispatch<AppDispatch>();
-  const handleRowEditStop: GridEventListener<'rowEditStop'> = (
+  const handleRowEditStop: GridEventListener<"rowEditStop"> = (
     params,
     event
   ) => {
@@ -135,50 +135,50 @@ export const FullFeaturedCrudGrid: React.FC<PlayerListInputProps> = ({
 
   const columns: GridColDef[] = [
     {
-      field: 'rank',
-      headerName: 'Rank',
-      type: 'number',
+      field: "rank",
+      headerName: "Rank",
+      type: "number",
       width: 150,
       editable: true,
-      align: 'center',
-      headerAlign: 'center',
+      align: "center",
+      headerAlign: "center",
     },
     {
-      field: 'name',
-      headerName: 'NickName',
-      type: 'string',
+      field: "name",
+      headerName: "NickName",
+      type: "string",
       width: 180,
-      align: 'center',
-      headerAlign: 'center',
+      align: "center",
+      headerAlign: "center",
       editable: true,
     },
     {
-      field: 'prize',
-      headerName: 'Prize',
-      type: 'number',
+      field: "prize",
+      headerName: "Prize",
+      type: "number",
       width: 200,
-      align: 'center',
-      headerAlign: 'center',
+      align: "center",
+      headerAlign: "center",
       editable: true,
     },
     {
-      field: 'note',
-      headerName: 'Note',
-      type: 'string',
+      field: "note",
+      headerName: "Note",
+      type: "string",
       width: 200,
-      align: 'center',
-      headerAlign: 'center',
+      align: "center",
+      headerAlign: "center",
       editable: true,
     },
 
     {
-      field: 'actions',
-      type: 'actions',
-      headerName: 'Actions',
+      field: "actions",
+      type: "actions",
+      headerName: "Actions",
       width: 300,
-      cellClassName: 'actions',
-      align: 'right',
-      headerAlign: 'right',
+      cellClassName: "actions",
+      align: "right",
+      headerAlign: "right",
       getActions: ({ id }) => {
         const isInEditMode = rowModesModel[id]?.mode === GridRowModes.Edit;
 
@@ -188,7 +188,7 @@ export const FullFeaturedCrudGrid: React.FC<PlayerListInputProps> = ({
               icon={<SaveIcon />}
               label="Save"
               sx={{
-                color: 'primary.main',
+                color: "primary.main",
               }}
               onClick={handleSaveClick(id)}
             />,
@@ -225,12 +225,12 @@ export const FullFeaturedCrudGrid: React.FC<PlayerListInputProps> = ({
     <Box
       sx={{
         height: 500,
-        width: '100%',
-        '& .actions': {
-          color: 'text.secondary',
+        width: "100%",
+        "& .actions": {
+          color: "text.secondary",
         },
-        '& .textPrimary': {
-          color: 'text.primary',
+        "& .textPrimary": {
+          color: "text.primary",
         },
       }}
     >

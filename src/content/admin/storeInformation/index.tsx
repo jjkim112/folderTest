@@ -1,11 +1,11 @@
-import { useDispatch, useSelector } from 'react-redux';
-import { DataService } from 'src/data/DataService';
-import { refreshWholePub } from 'src/reducer/pubSlice';
-import { setUsers } from 'src/reducer/userSlice';
-import { AppDispatch, RootState } from 'src/store/store';
-import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { AdminRequireLayout } from '../AdminRequireLayout';
+import { useDispatch, useSelector } from "react-redux";
+import { DataService } from "src/data/DataService";
+import { refreshWholePub } from "src/reducer/pubSlice";
+import { setUsers } from "src/reducer/userSlice";
+import { AppDispatch, RootState } from "src/store/store";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { AdminRequireLayout } from "../AdminRequireLayout";
 export default function StoreInformation() {
   const pubsData = useSelector((state: RootState) => state.pub.pubs);
 
@@ -39,8 +39,11 @@ export default function StoreInformation() {
                 <div className="w-1/5 h-full">
                   <div className="h-full overflow-hidden rounded-tl-md rounded-bl-md">
                     <img
-                      src={pubData.photos[0] ?? '/assets/images/background.png'}
-                      alt={pubData.name}
+                      src={
+                        pubData.basicInfo.photos[0] ??
+                        "/assets/images/background.png"
+                      }
+                      alt={pubData.basicInfo.name}
                       className="w-full h-full object-[100%_100%]"
                     />
                   </div>
@@ -49,7 +52,7 @@ export default function StoreInformation() {
                   <div className="bg-slate-500 h-full p-2">
                     <div className=" flex flex-col justify-around">
                       <p className="text-lg font-bold text-black text-ellipsis overflow-hidden whitespace-nowrap py-2">
-                        {pubData.name}
+                        {pubData.basicInfo.name}
                       </p>
                       <div className=" ">
                         <div className=" text-sm font-bold text-white  rounded-xl text-center overflow-hidden text-ellipsis box-content line-clamp-2 ">
@@ -68,7 +71,7 @@ export default function StoreInformation() {
                       {true ? (
                         <div className=" ">
                           <div className="w-full text-sm font-bold text-white bg-blue-400 rounded-xl text-center p-2">
-                            {pubData.addressBasic.substring(0, 2)}
+                            {pubData.basicInfo.addressBasic.substring(0, 2)}
                           </div>
                         </div>
                       ) : (
@@ -81,8 +84,11 @@ export default function StoreInformation() {
                 <div className="w-1/5 h-full">
                   <div className="bg-slate-500 h-full rounded-tr-md rounded-br-md p-5">
                     <img
-                      src={pubData.photos[1] ?? '/assets/images/background.png'}
-                      alt={pubData.name}
+                      src={
+                        pubData.basicInfo.photos[1] ??
+                        "/assets/images/background.png"
+                      }
+                      alt={pubData.basicInfo.name}
                       className="w-full h-full object-fill"
                     />
                   </div>

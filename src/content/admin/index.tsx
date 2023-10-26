@@ -1,15 +1,15 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 
-import { inputPw, useAdmin } from 'src/reducer/authSlice';
-import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch } from 'src/store/store';
-import { useNavigate } from 'react-router-dom';
-import { DataService } from 'src/data/DataService';
-import { refreshWholePub } from 'src/reducer/pubSlice';
-import { setUsers } from 'src/reducer/userSlice';
+import { inputPw, useAdmin } from "src/reducer/authSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch } from "src/store/store";
+import { useNavigate } from "react-router-dom";
+import { DataService } from "src/data/DataService";
+import { refreshWholePub } from "src/reducer/pubSlice";
+import { setUsers } from "src/reducer/userSlice";
 
 export default function AdminPage() {
-  const [text, setText] = useState('');
+  const [text, setText] = useState("");
   let navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
   const _initFunc = async () => {
@@ -39,7 +39,7 @@ export default function AdminPage() {
         onClick={() => {
           dispatch(inputPw(text));
 
-          navigate('/admin/storeInfo');
+          navigate("/admin/storeInfo");
         }}
       >
         비번 입력

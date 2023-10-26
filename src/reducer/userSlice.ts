@@ -1,8 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { wait } from "@testing-library/user-event/dist/utils/misc/wait";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import { Game } from "../domain/Game.model";
-import { User } from "../domain/User.model";
+import { Account } from "src/domain/Account.model";
 
 export interface PubCustomRankUser {
   id: string;
@@ -12,7 +11,7 @@ export interface PubCustomRankUser {
 }
 
 export interface UserState {
-  users: User[];
+  users: Account[];
   customUsers: PubCustomRankUser[];
   loading: boolean;
 }
@@ -33,35 +32,35 @@ export const userSlice = createSlice({
     userLoadingEnd: (state) => {
       state.loading = false;
     },
-    setUsers: (state, action: PayloadAction<User[]>) => {
+    setUsers: (state, action: PayloadAction<Account[]>) => {
       state.users = action.payload;
     },
     refreshWithPubId: (state, action: PayloadAction<string>) => {
       const pubId = action.payload;
       if (pubId !== "") {
         let tempList: PubCustomRankUser[] = [];
-        for (const user of state.users) {
-          let totalPrize = 0;
-          let howManyMoneyIn = 0;
-          let howManyFirstRank = 0;
-          for (const game of user.games) {
-            if (game.pubId === pubId) {
-              totalPrize += game.datas.prize;
-              if (game.datas.prize > 0) {
-                howManyMoneyIn++;
-              }
-              if (game.datas.rank === 1) {
-                howManyFirstRank++;
-              }
-            }
-          }
-          tempList.push({
-            id: user.id,
-            totalPrize: totalPrize,
-            howManyMoneyIn: howManyMoneyIn,
-            howManyFirstRank: howManyFirstRank,
-          });
-        }
+        // for (const user of state.users) {
+        //   let totalPrize = 0;
+        //   let howManyMoneyIn = 0;
+        //   let howManyFirstRank = 0;
+        //   for (const game of user.games) {
+        //     if (game.pubId === pubId) {
+        //       totalPrize += game.datas.prize;
+        //       if (game.datas.prize > 0) {
+        //         howManyMoneyIn++;
+        //       }
+        //       if (game.datas.rank === 1) {
+        //         howManyFirstRank++;
+        //       }
+        //     }
+        //   }
+        //   tempList.push({
+        //     id: user.id,
+        //     totalPrize: totalPrize,
+        //     howManyMoneyIn: howManyMoneyIn,
+        //     howManyFirstRank: howManyFirstRank,
+        //   });
+        // }
         tempList.sort((a, b) => b.totalPrize - a.totalPrize);
         state.customUsers = tempList;
       }

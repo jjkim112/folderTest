@@ -1,19 +1,19 @@
-import { useNavigate } from 'react-router-dom';
-import { Game } from '../../domain/Game.model';
-import firebase from 'firebase/compat/app';
-import 'firebase/compat/firestore';
-import { User } from '../../domain/User.model';
-import { UserGame } from '../../domain/UserGame.model';
-import { UserGameData } from '../../domain/UserGameData.model';
-import React, { useEffect } from 'react';
-import Paper from '@mui/material/Paper';
-import InputBase from '@mui/material/InputBase';
-import Divider from '@mui/material/Divider';
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
-import SearchIcon from '@mui/icons-material/Search';
-import DirectionsIcon from '@mui/icons-material/Directions';
-import './home.css';
+import { useNavigate } from "react-router-dom";
+import firebase from "firebase/compat/app";
+import "firebase/compat/firestore";
+// import { User } from '../../domain/User.model';
+// import { UserGame } from '../../domain/UserGame.model';
+// import { UserGameData } from '../../domain/UserGameData.model';
+import React, { useEffect } from "react";
+import Paper from "@mui/material/Paper";
+import InputBase from "@mui/material/InputBase";
+import Divider from "@mui/material/Divider";
+import IconButton from "@mui/material/IconButton";
+import MenuIcon from "@mui/icons-material/Menu";
+import SearchIcon from "@mui/icons-material/Search";
+import DirectionsIcon from "@mui/icons-material/Directions";
+import "./home.css";
+import { Game } from "../admin/storeAddTournament/tournamentRegister";
 
 function HomePage() {
   return (
@@ -27,21 +27,21 @@ function HomePage() {
         <Paper
           component="form"
           sx={{
-            p: '2px 4px',
-            display: 'flex',
-            alignItems: 'center',
+            p: "2px 4px",
+            display: "flex",
+            alignItems: "center",
             borderRadius: 20,
 
-            width: '70%',
+            width: "70%",
           }}
         >
-          <IconButton sx={{ p: '10px' }} aria-label="menu">
+          <IconButton sx={{ p: "10px" }} aria-label="menu">
             <SearchIcon />
           </IconButton>
           <InputBase
             sx={{ ml: 1, flex: 1 }}
             placeholder="검색을해보세용"
-            inputProps={{ 'aria-label': '검색을해보세용' }}
+            inputProps={{ "aria-label": "검색을해보세용" }}
           />
         </Paper>
       </div>
@@ -51,13 +51,13 @@ function HomePage() {
 const TestBtn = () => {
   const _testFunc = async () => {
     const firestore = firebase.firestore();
-    const pubsCol = firestore.collection('wwp_pubs');
+    const pubsCol = firestore.collection("wwp_pubs");
     const pubsDocs = await pubsCol.get();
 
-    const userCol = firestore.collection('wwp_users');
+    const userCol = firestore.collection("wwp_users");
 
     for (const pubDoc of pubsDocs.docs) {
-      const pubGameCol = pubsCol.doc(pubDoc.id).collection('games');
+      const pubGameCol = pubsCol.doc(pubDoc.id).collection("games");
       const pubGameDocs = await pubGameCol.get();
       for (const onePubGameDoc of pubGameDocs.docs) {
         const oneGame: Game = Game.fromData(onePubGameDoc.data());
@@ -65,22 +65,22 @@ const TestBtn = () => {
           const playerDoc = userCol.doc(player.id);
           const playerDocSnapshot = await playerDoc.get();
           if (playerDocSnapshot.exists) {
-            const userData = User.fromData(playerDocSnapshot.data());
-            userData.games.push(
-              new UserGame(
-                new UserGameData(
-                  oneGame.date,
-                  oneGame.entry,
-                  oneGame.gameTempId,
-                  player.prize,
-                  player.rank,
-                  ''
-                ),
-                oneGame.id,
-                pubDoc.id
-              )
-            );
-            await playerDoc.update(userData.toMap);
+            // // const userData = User.fromData(playerDocSnapshot.data());
+            // // userData.games.push(
+            // //   new UserGame(
+            // //     new UserGameData(
+            // //       oneGame.date,
+            // //       oneGame.entry,
+            // //       oneGame.gameTempId,
+            // //       player.prize,
+            // //       player.rank,
+            // //       ''
+            // //     ),
+            // //     oneGame.id,
+            // //     pubDoc.id
+            // //   )
+            // // );
+            // await playerDoc.update(userData.toMap);
           } else {
             await playerDoc.set({
               id: player.id,
@@ -139,7 +139,7 @@ const BasicBtn = ({ name, route }: BasicBtnProps) => {
         movePage(route);
       }}
     >
-      {name ?? ''}
+      {name ?? ""}
     </button>
   );
 };

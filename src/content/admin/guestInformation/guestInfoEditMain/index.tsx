@@ -8,8 +8,8 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { DataService } from "src/data/DataService";
-import { GameTemplate } from "src/domain/GameTemplate.model";
 import { Pub } from "src/domain/Pub.model";
+import { GameTemplate } from "src/domain/pub/GameTemplate.model";
 import { refreshGames } from "src/reducer/gameSlice";
 import { refreshWithPubId } from "src/reducer/userSlice";
 import { AppDispatch, RootState } from "src/store/store";
@@ -69,7 +69,7 @@ export default function GuestInfoEditMain() {
   const _getGameTemp = (pubId: string, tempId: string): GameTemplate | null => {
     for (const onePub of pubsData) {
       if (onePub.id === pubId) {
-        for (const gt of onePub.templates) {
+        for (const gt of onePub.basicInfo.gameTemplates) {
           if (gt.id === tempId) {
             return gt;
           }

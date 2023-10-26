@@ -1,11 +1,15 @@
-import { TournamentInfo } from 'src/domain/TournamentInfo.model';
-import { Game, GamePlayerThumb } from '../domain/Game.model';
-import { GameTemplate } from '../domain/GameTemplate.model';
-import { Pub } from '../domain/Pub.model';
-import { User } from '../domain/User.model';
-import { FirebasePub } from './firebase/FirebasePub';
-import { FirebaseUser } from './firebase/FirebaseUser';
-import { FirebaseTournament } from './firebase/FirebaseTournament';
+import { TournamentInfo } from "src/domain/TournamentInfo.model";
+// import { Game, GamePlayerThumb } from '../domain/Game.model';
+// import { GameTemplate } from '../domain/GameTemplate.model';
+import { Pub } from "../domain/Pub.model";
+// import { User } from '../domain/User.model';
+import { FirebasePub } from "./firebase/FirebasePub";
+import { FirebaseUser } from "./firebase/FirebaseUser";
+import { FirebaseTournament } from "./firebase/FirebaseTournament";
+import { GameTemplate } from "src/domain/pub/GameTemplate.model";
+import { Game } from "src/content/admin/storeAddTournament/tournamentRegister";
+import { GamePlayerThumb } from "src/content/admin/storeAddTournament/tournamentRegister/detailTournaUser";
+import { Account } from "src/domain/Account.model";
 
 export class DataService {
   static addPub = async (
@@ -72,7 +76,7 @@ export class DataService {
   static updatePubInfo = async (pubId: string): Promise<boolean> => {
     try {
       const isSuccess = await FirebasePub.updatePub(pubId, {
-        name: 'wwp 제주 지점!',
+        name: "wwp 제주 지점!",
       });
       return isSuccess;
     } catch (e) {
@@ -139,7 +143,7 @@ export class DataService {
     }
   };
 
-  static fetchWholeUser = async (): Promise<User[]> => {
+  static fetchWholeUser = async (): Promise<Account[]> => {
     try {
       const users = await FirebaseUser.getWholeUserData();
       return users;
