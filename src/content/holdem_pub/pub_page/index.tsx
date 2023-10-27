@@ -193,6 +193,7 @@ export default function HoldemPubOnePage() {
               <div className="flex flex-col w-full h-full ">
                 {pickPub.games.map((value, i) => (
                   <OneTouramentInfo
+                    key={value.id}
                     tournament={value}
                     isClick={toggleTournament === value.id}
                     toggleTournamentInfo={() => {

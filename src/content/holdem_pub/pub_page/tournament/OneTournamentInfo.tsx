@@ -97,20 +97,18 @@ export default function OneTouramentInfo({
           <></>
         )}
         <div className="flex flex-col justify-center text-start w-[70%]   my-2 ml-1 ">
-          <div className="w-full h-full  ">
-            {tournament.generalData.gameName}
-          </div>
-          <div className="w-full h-full  ">
+          <div className="w-full">{tournament.generalData.gameName}</div>
+          <div className="w-full">
             {tournament.generalData.startTime.toLocaleString()}
           </div>
           <div>
             {"프라이즈 : "}
-            {tournament.prizeData.totalPrize} p
+            {tournament.prizeData.totalPrize}
           </div>
           <div className="flex flex-row justify-center text-start  w-full">
             <div className="w-[50%]">
               {"바이인 : "}
-              {tournament.generalData.buyInCost.cost} p
+              {FormatText.toFormatNum(tournament.generalData.buyInCost.cost)} p
             </div>
             <div className="w-[50%]">
               {"현재 인원 : "}
@@ -196,6 +194,19 @@ function AdditionPart({
     return 0;
   };
 
+  const getLevelRemainTime = () => {
+    if (blindIndex !== -1 && blindIndex < tournament.blindList.length) {
+      const lastCheckedTime = tournament.lastCheckedTime;
+      let totalSecond = 0;
+      for (let index = 0; index <= blindIndex; index++) {
+        totalSecond += tournament.blindList[index].second;
+      }
+      // return totalSecond - tournament.prevSecond;
+      return totalSecond - tournament.prevSecond;
+    }
+    return 0;
+  };
+
   return (
     <div className="flex flex-row w-full h-full pb-2">
       <div className="flex flex-col w-[20%] justify-center text-center border-2">
@@ -218,19 +229,22 @@ function AdditionPart({
                 ? "Break"
                 : `LV.${tournament.blindList[blindIndex].level}`
             }`}</div>
-            <div>{timeMSChange(tournament.prevSecond)}</div>
-            <div>{`${tournament.blindList[blindIndex].smallBlind}/ ${tournament.blindList[blindIndex].bigBlind}(${tournament.blindList[blindIndex].ante})`}</div>
+            {/* <div>{timeMSChange(tournament.prevSecond)}</div> */}
+            <div>{timeMSChange(getLevelRemainTime())}</div>
+            <div>{`${tournament.blindList[blindIndex].smallBlind} / ${tournament.blindList[blindIndex].bigBlind} (${tournament.blindList[blindIndex].ante})`}</div>
+            <div>next</div>
             {blindIndex >= tournament.blindList.length ? (
               <>
-                <div>다음 블라인드가 없습니다.</div>
+                <div>-</div>
               </>
+            ) : tournament.blindList[blindIndex + 1].isBreak ? (
+              <div>Break</div>
             ) : (
               <>
                 <div>
-                  {tournament.blindList[blindIndex + 1].smallBlind &&
-                    `${tournament.blindList[blindIndex + 1].smallBlind}/ ${
-                      tournament.blindList[blindIndex + 1].bigBlind
-                    }(${tournament.blindList[blindIndex + 1].ante})`}
+                  {`${tournament.blindList[blindIndex + 1].smallBlind} / ${
+                    tournament.blindList[blindIndex + 1].bigBlind
+                  } (${tournament.blindList[blindIndex + 1].ante})`}
                 </div>
               </>
             )}

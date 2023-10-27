@@ -4,9 +4,9 @@ export class FormatText {
   }
   static toFormatThumbNum(n: number): string {
     if (n >= 1000000) {
-      return (n / 1000000).toFixed(1) + "m";
+      return (n / 1000000).toFixed(1) + "M";
     } else if (n >= 1000) {
-      return (n / 1000).toFixed(1) + "k";
+      return (n / 1000).toFixed(1) + "K";
     } else {
       return n.toString();
     }
