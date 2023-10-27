@@ -231,7 +231,16 @@ function AdditionPart({
             }`}</div>
             {/* <div>{timeMSChange(tournament.prevSecond)}</div> */}
             <div>{timeMSChange(getLevelRemainTime())}</div>
-            <div>{`${tournament.blindList[blindIndex].smallBlind} / ${tournament.blindList[blindIndex].bigBlind} (${tournament.blindList[blindIndex].ante})`}</div>
+            <div>{`${FormatText.toFormatThumbNum(
+              tournament.blindList[blindIndex].smallBlind,
+              0
+            )} / ${FormatText.toFormatThumbNum(
+              tournament.blindList[blindIndex].bigBlind,
+              0
+            )} (${FormatText.toFormatThumbNum(
+              tournament.blindList[blindIndex].ante,
+              0
+            )})`}</div>
             <div>next</div>
             {blindIndex >= tournament.blindList.length ? (
               <>
@@ -242,9 +251,16 @@ function AdditionPart({
             ) : (
               <>
                 <div>
-                  {`${tournament.blindList[blindIndex + 1].smallBlind} / ${
-                    tournament.blindList[blindIndex + 1].bigBlind
-                  } (${tournament.blindList[blindIndex + 1].ante})`}
+                  {`${FormatText.toFormatThumbNum(
+                    tournament.blindList[blindIndex + 1].smallBlind,
+                    0
+                  )} / ${FormatText.toFormatThumbNum(
+                    tournament.blindList[blindIndex + 1].bigBlind,
+                    0
+                  )} (${FormatText.toFormatThumbNum(
+                    tournament.blindList[blindIndex + 1].ante,
+                    0
+                  )})`}
                 </div>
               </>
             )}
