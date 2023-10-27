@@ -34,6 +34,9 @@ import {
 import { TournaEditButton } from "./tournaEditButton";
 import { FirebasePub } from "src/data/firebase/FirebasePub";
 
+import { Timestamp } from "firebase/firestore";
+import firebase from "firebase/compat/app";
+
 export interface typeGames {
   id: string;
   pubId: string;
@@ -514,8 +517,8 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
 }
 
 // TODO 일단 지금은 여기서
-import { Timestamp } from "firebase/firestore";
-import firebase from "firebase/compat/app";
+// import { Timestamp } from "firebase/firestore";
+// import firebase from "firebase/compat/app";
 export class Game {
   id: string;
   pubId: string;

@@ -11,6 +11,7 @@ import { setUsers } from "../../reducer/userSlice";
 import MapMakers from "src/utils/map/MapMaker";
 import SearchBar from "./SearchBar";
 import { ScrollMenu } from "react-horizontal-scrolling-menu";
+import CustomScrollMenu from "./scroll_menu/CustomScrollMenu";
 
 const MenuItem = ({ text }) => {
   return <div className="menu-item">{text}</div>;
@@ -23,9 +24,23 @@ export const Menu = (list: any) =>
     return <MenuItem text={name} key={name} />;
   });
 
+let filterList = [
+  "진행중",
+  "시작 예정",
+  "입장 금액",
+  "총 상금액",
+  "Prize Pool",
+];
 export default function HoldemPubPage() {
   const pubsData = useSelector((state: RootState) => state.pub.pubs);
   const dispatch = useDispatch<AppDispatch>();
+
+  const [filters, setFilters] = useState(
+    filterList.map((filter) => ({
+      title: filter,
+      isSelect: false,
+    }))
+  );
 
   const _initFunc = async () => {
     const wholeData = await DataService.fetchWholePub();
@@ -49,13 +64,12 @@ export default function HoldemPubPage() {
       <section className="">
         <div className="p-1 flex flex-col justify-center">
           <div className="flex">
-            <div className="basic-box">지역</div>
+            <div className="whitespace-nowrap h-min px-4 py-1 hover:cursor-pointer rounded-full bg-gray-200 flex justify-center items-center">
+              지역
+            </div>
             <SearchBar />
           </div>
-
-          <div className="text-2xl font-bold text-white pb-2 self-start ">
-            최근 인기 지점
-          </div>
+          <CustomScrollMenu data={filters} setData={setFilters} />
 
           <Slick slidesToShow={pubsData.length}>
             {pubsData.map((pubData, index) => (
