@@ -14,9 +14,11 @@ import { useNavigate, useParams } from "react-router-dom";
 import { HeaderTap } from "../../../utils/header/header_tap";
 import { refreshWithPubId } from "../../../reducer/userSlice";
 import MapTest from "src/utils/map/Map";
-import { inputTournament } from "src/reducer/pubSlice";
+import { inputPubData, resetPubTournaments } from "src/reducer/pubSlice";
 import { EntryData } from "src/domain/tournament/EntryData.model";
 import { GameTemplate } from "src/domain/pub/GameTemplate.model";
+import LoadingPage from "src/page/utils/LoadingPage";
+import OneTouramentInfo from "./tournament/OneTournamentInfo";
 type Section = {
   label: string;
 };
@@ -34,16 +36,17 @@ const tabs: Section[] = [
 
 export default function HoldemPubOnePage() {
   const id = useParams().id;
-  const nowTime = new Date();
   const [pickPub, setPickPub] = useState<Pub | null>(null);
+  const [toggleTournament, setToggleTournament] = useState<string | null>(null);
   const pubsData = useSelector((state: RootState) => state.pub.pubs);
-  const gamesData = useSelector((state: RootState) => state.game.games);
-  const tournaments = useSelector((state: RootState) => state.pub.tournaments);
-  const customUsersData = useSelector(
-    (state: RootState) => state.user.customUsers
-  );
+  // const gamesData = useSelector((state: RootState) => state.game.games);
+  // const tournaments = useSelector((state: RootState) => state.pub.tournaments);
+  // const customUsersData = useSelector(
+  //   (state: RootState) => state.user.customUsers
+  // );
   const dispatch = useDispatch<AppDispatch>();
   let navigate = useNavigate();
+
   const [visibility, setVisibility] = useState<boolean[]>(
     new Array(7).fill(false)
   );
@@ -56,80 +59,66 @@ export default function HoldemPubOnePage() {
     newVisibility[index] = !newVisibility[index];
     setVisibility(newVisibility);
   };
-  const toggleTournamentInfo = (index: number) => {
-    const newVisibility = [...tournamentInfo];
-    newVisibility[index] = !newVisibility[index];
-    setTournamentInfo(newVisibility);
+  const toggleTournamentInfo = (tId: string | null) => {
+    setToggleTournament(tId);
   };
 
-  const goToPubPage = async () => {
-    pubsData.map((v, i) => {
-      if (v.id === id) {
-        setPickPub(v);
-      }
-    });
+  // const goToPubPage = async () => {
+  //   pubsData.map((v, i) => {
+  //     if (v.id === id) {
+  //       setPickPub(v);
+  //     }
+  //   });
 
-    const getGameData = await DataService.fetchGamesInfo(id!);
-    dispatch(refreshGames(getGameData));
-    dispatch(refreshWithPubId(id!));
-  };
+  //   const getGameData = await DataService.fetchGamesInfo(id!);
+  //   dispatch(refreshGames(getGameData));
+  //   dispatch(refreshWithPubId(id!));
+  // };
   const [activeHeaderTab, setActiveHeaderTab] = useState(0);
   const [selectedTournamentId, setSelectedTournamentId] = useState(null);
   const [count, setCount] = useState(0);
   const [filteredGameData, setFilteredGameData] = useState([]);
 
   useEffect(() => {
-    goToPubPage();
+    // goToPubPage();
     initFunc();
   }, []);
   const initFunc = async () => {
-    refreshTournaments();
+    refreshPub();
   };
-  const refreshTournaments = async () => {
+  const refreshPub = async () => {
+    let isExist = false;
+
+    for (const pub of pubsData) {
+      if (pub.id === id) {
+        isExist = true;
+        setPickPub(pub);
+        break;
+      }
+    }
+
+    if (!isExist) {
+      const pubData = await DataService.fetchPubData(id);
+      setPickPub(pubData);
+      dispatch(inputPubData(pubData));
+    }
+
     const tList = await DataService.fetchWholeTournamentInfo(id);
-    for (var t of tList) {
-      dispatch(inputTournament(t));
-    }
+    dispatch(resetPubTournaments(tList));
   };
 
-  useEffect(() => {
-    // filteredGameData를 갱신
-    if (selectedTournamentId !== null) {
-      const filteredData = gamesData.filter(
-        (game) => game.id === selectedTournamentId
-      );
+  // useEffect(() => {
+  //   // filteredGameData를 갱신
+  //   if (selectedTournamentId !== null) {
+  //     const filteredData = gamesData.filter(
+  //       (game) => game.id === selectedTournamentId
+  //     );
 
-      setFilteredGameData(filteredData);
-    } else {
-      setFilteredGameData([]);
-    }
-  }, [selectedTournamentId, gamesData]);
-
-  const oneDayMs = 24 * 60 * 60 * 1000;
-  const oneHourMs = 60 * 60 * 1000;
-  const oneMinuteMs = 60 * 1000;
-
-  const timeHMSChange = (difference) => {
-    let remainingHours = Math.floor((difference % oneDayMs) / oneHourMs)
-      .toString()
-      .padStart(2, "0");
-    let remainingMinutes = Math.floor((difference % oneHourMs) / oneMinuteMs)
-      .toString()
-      .padStart(2, "0");
-    let remainingSeconds = Math.floor((difference % oneMinuteMs) / 1000)
-      .toString()
-      .padStart(2, "0");
-    return `${remainingHours} : ${remainingMinutes}  : ${remainingSeconds}`;
-  };
-  const timeMSChange = (difference) => {
-    let remainingMinutes = Math.floor(difference / 60)
-      .toString()
-      .padStart(2, "0");
-    let remainingSeconds = Math.floor(difference % 60)
-      .toString()
-      .padStart(2, "0");
-    return ` ${remainingMinutes}  : ${remainingSeconds}`;
-  };
+  //     setFilteredGameData(filteredData);
+  //   } else {
+  //     setFilteredGameData([]);
+  //   }
+  // }, [selectedTournamentId, gamesData]);
 
   const _getGameTemp = (pubId: string, tempId: string): GameTemplate | null => {
     for (const onePub of pubsData) {
@@ -143,21 +132,6 @@ export default function HoldemPubOnePage() {
       }
     }
     return null;
-  };
-
-  const getLevel = (index: number): number => {
-    const blindList = tournaments[index].blindList ?? [];
-    let temp = tournaments[index].prevSecond ?? 0; // 500, 700, 1300
-    let count = 0;
-    for (var b of blindList) {
-      if (temp >= b.second) {
-        temp -= b.second;
-        count++;
-      } else {
-        break;
-      }
-    }
-    return count;
   };
 
   if (pickPub != null) {
@@ -217,134 +191,14 @@ export default function HoldemPubOnePage() {
           {activeHeaderTab === 0 && (
             <div className="">
               <div className="flex flex-col w-full h-full ">
-                {tournaments.map((value, i) => (
-                  <div className="flex flex-col border-b-2 border-amber-100">
-                    <div
-                      className="flex flex-row w-full h-[100px]  px-2"
-                      onClick={() => toggleTournamentInfo(i)}
-                    >
-                      {value.generalData.startTime >= nowTime && (
-                        <div className="flex flex-col justify-center text-center w-[30%] rounded-3xl bg-green-500 my-2  text-xs">
-                          <div className="  ">{"등록 까지"}</div>
-                          <div className=" ">{" 남은 시간"}</div>
-                          <div className="  ">
-                            <div>
-                              {timeHMSChange(
-                                value.generalData.startTime.getTime() -
-                                  nowTime.getTime()
-                              )}
-                            </div>
-                          </div>
-                        </div>
-                      )}
-
-                      {value.generalData.startTime < nowTime ? (
-                        nowTime < value.entryData.reBuyableTime ? (
-                          <div className="flex flex-col justify-center text-center w-[30%] rounded-3xl bg-red-500 my-2  text-xs">
-                            <div className="  ">{"추가 등록 까지"}</div>
-                            <div className=" ">{" 남은 시간"}</div>
-                            <div className="  ">
-                              <div>
-                                {timeHMSChange(
-                                  value.entryData.reBuyableTime.getTime() -
-                                    nowTime.getTime()
-                                )}
-                              </div>
-                            </div>
-                          </div>
-                        ) : (
-                          <div className="flex flex-col justify-center text-center w-[30%] rounded-3xl bg-gray-500 my-2  text-xs">
-                            <div className="  ">{"진행 중 or 끝남"}</div>
-                          </div>
-                        )
-                      ) : (
-                        <></>
-                      )}
-                      <div className="flex flex-col justify-center text-start w-[70%]   my-2 ml-1 ">
-                        <div className="w-full h-full  ">
-                          {value.generalData.gameName}
-                        </div>
-                        <div className="w-full h-full  ">
-                          {value.generalData.startTime.toLocaleString()}
-                        </div>
-                        <div>
-                          {"상금 : "}
-                          {value.prizeData.totalPrize}
-                        </div>
-                        <div className="flex flex-row justify-center text-start  w-full">
-                          <div className="w-[50%]">
-                            {"바이인 : "}
-                            {value.generalData.buyInCost.cost}
-                          </div>
-                          <div className="w-[50%]">
-                            {"현재 인원 : "}
-                            {value.entryData.remainPlayer}/
-                            {EntryData.getTotalPlayer(
-                              value.entryData.entryList
-                            )}
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    {tournamentInfo[i] && (
-                      <div
-                        className="w-full h-full flex flex-col p-2"
-                        onClick={() => toggleTournamentInfo(i)}
-                      >
-                        <div className="flex flex-row w-full h-full pb-2">
-                          <div className="flex flex-col w-[20%] justify-center text-center border-2">
-                            <div>플레이어</div>
-                            <div>
-                              {value.entryData.remainPlayer}/
-                              {EntryData.getTotalPlayer(
-                                value.entryData.entryList
-                              )}
-                            </div>
-                            <div>평균 칩</div>
-                            <div>
-                              {value.entryData.remainPlayer !== 0
-                                ? Math.floor(
-                                    EntryData.getTotalCostAndChip(
-                                      value.entryData.entryList
-                                    ).cost / value.entryData.remainPlayer
-                                  )
-                                : 0}
-                            </div>
-                          </div>
-                          <div className="flex flex-col w-[60%] justify-center text-center border-2 mx-2">
-                            <div>{`LV.${
-                              value.blindList[getLevel(i)].level
-                            }`}</div>
-                            <div>{timeMSChange(value.prevSecond)}</div>
-                            <div>{`${
-                              value.blindList[getLevel(i)].smallBlind
-                            }/ ${value.blindList[getLevel(i)].bigBlind}(${
-                              value.blindList[getLevel(i)].ante
-                            })`}</div>
-                            <div>
-                              {value.blindList[getLevel(i) + 1].smallBlind &&
-                                `${
-                                  value.blindList[getLevel(i) + 1].smallBlind
-                                }/ ${
-                                  value.blindList[getLevel(i) + 1].bigBlind
-                                }(${value.blindList[getLevel(i) + 1].ante})`}
-                            </div>
-                          </div>
-                          <div className="flex flex-col w-[20%] justify-center text-center border-2">
-                            <div>총 상금</div>
-                            <div>{value.prizeData.totalPrize}</div>
-                            <div>1위</div>
-                            <div>{value.prizeData.prizeStructure[0].prize}</div>
-                          </div>
-                        </div>
-                        {value.generalData.note && (
-                          <div className="border-2 p-2">
-                            {value.generalData.note}
-                          </div>
-                        )}
-                      </div>
-                    )}
-                  </div>
+                {pickPub.games.map((value, i) => (
+                  <OneTouramentInfo
+                    tournament={value}
+                    isClick={toggleTournament === value.id}
+                    toggleTournamentInfo={() => {
+                      toggleTournamentInfo(value.id);
+                    }}
+                  />
                 ))}
               </div>
             </div>
@@ -364,7 +218,7 @@ export default function HoldemPubOnePage() {
                       </tr>
                     </thead>
                     <tbody>
-                      {customUsersData.map((ranking) => (
+                      {/* {customUsersData.map((ranking) => (
                         <tr
                           key={`Ranking-${ranking.id}`}
                           className="text-center text-xs  odd:bg-[#2d394bd1] even:bg-[#303950f7]"
@@ -380,7 +234,7 @@ export default function HoldemPubOnePage() {
                             {ranking.howManyMoneyIn}
                           </td>
                         </tr>
-                      ))}
+                      ))} */}
                     </tbody>
                   </table>
                 </div>
@@ -397,7 +251,7 @@ export default function HoldemPubOnePage() {
                       </tr>
                     </thead>
                     <tbody>
-                      {gamesData.map((game, i) => {
+                      {/* {gamesData.map((game, i) => {
                         return (
                           <tr
                             key={`GameId-${game.id}`}
@@ -440,7 +294,7 @@ export default function HoldemPubOnePage() {
                             </td>
                           </tr>
                         );
-                      })}
+                      })} */}
                     </tbody>
                   </table>
                 </div>
@@ -551,6 +405,9 @@ export default function HoldemPubOnePage() {
       </div>
     );
   } else {
+    if (id !== null) {
+      return <LoadingPage />;
+    }
     return (
       <div className="w-full h-full flex flex-col justify-center  text-center p-10">
         <div> 잘못된 페인지 접근 입니다.</div>

@@ -1,12 +1,12 @@
-import { Timestamp } from 'firebase/firestore';
-import { CostAndChip } from './CostAndChip.interface';
+import { Timestamp } from "firebase/firestore";
+import { CostAndChip } from "./CostAndChip.interface";
 import {
   ADDON_KEY,
   BUYIN_KEY,
   REBUYIN_KEY,
   REENTRY_KEY,
-} from '../const/entry_const';
-import { FirebaseTypeChange } from '../utils/FirebaseTypeChange';
+} from "../const/entry_const";
+import { FirebaseTypeChange } from "../utils/FirebaseTypeChange";
 
 export class GeneralData {
   gameName: string;
@@ -46,16 +46,16 @@ export class GeneralData {
 
   static fromData(data: any): GeneralData {
     try {
-      const gameName = FirebaseTypeChange.stringFromData(data['gameName']);
-      const startTime = FirebaseTypeChange.dateFromData(data['startTime']);
-      const note = FirebaseTypeChange.stringFromData(data['note']);
-      const isPrivate = FirebaseTypeChange.booleanFromData(data['isPrivate']);
-      const addOnCost = FirebaseTypeChange.anyFromData(data['addOnCost']);
-      const buyInCost = FirebaseTypeChange.anyFromData(data['buyInCost']);
-      const reEntryCost = FirebaseTypeChange.anyFromData(data['reEntryCost']);
-      const rebuyCosts = FirebaseTypeChange.listFromData(data['rebuyCosts']);
-      const addedChip = FirebaseTypeChange.numberFromData(data['addedChip']);
-      const tournaSkin = FirebaseTypeChange.numberFromData(data['tournaSkin']);
+      const gameName = FirebaseTypeChange.stringFromData(data["gameName"]);
+      const startTime = FirebaseTypeChange.dateFromData(data["startTime"]);
+      const note = FirebaseTypeChange.stringFromData(data["note"]);
+      const isPrivate = FirebaseTypeChange.booleanFromData(data["isPrivate"]);
+      const addOnCost = FirebaseTypeChange.anyFromData(data["addOnCost"]);
+      const buyInCost = FirebaseTypeChange.anyFromData(data["buyInCost"]);
+      const reEntryCost = FirebaseTypeChange.anyFromData(data["reEntryCost"]);
+      const rebuyCosts = FirebaseTypeChange.listFromData(data["rebuyCosts"]);
+      const addedChip = FirebaseTypeChange.numberFromData(data["addedChip"]);
+      const tournaSkin = FirebaseTypeChange.numberFromData(data["tournaSkin"]);
 
       return new GeneralData(
         gameName,
@@ -116,14 +116,14 @@ export class GeneralData {
   }
   static get empty() {
     return new GeneralData(
-      '',
+      "",
       new Date(),
-      '',
+      "",
       true,
-      { title: ADDON_KEY, cost: 0, chip: 0 },
-      { title: BUYIN_KEY, cost: 0, chip: 0 },
-      { title: REENTRY_KEY, cost: 0, chip: 0 },
-      [{ title: REBUYIN_KEY, cost: 0, chip: 0 }],
+      { title: ADDON_KEY, num: 0, cost: 0, chip: 0 },
+      { title: BUYIN_KEY, num: 0, cost: 0, chip: 0 },
+      { title: REENTRY_KEY, num: 0, cost: 0, chip: 0 },
+      [{ title: REBUYIN_KEY, num: 0, cost: 0, chip: 0 }],
       0,
       0
     );

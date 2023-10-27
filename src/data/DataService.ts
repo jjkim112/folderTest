@@ -12,6 +12,16 @@ import { GamePlayerThumb } from "src/content/admin/storeAddTournament/tournament
 import { Account } from "src/domain/Account.model";
 
 export class DataService {
+  static fetchPubData = async (pubId: string): Promise<Pub | null> => {
+    try {
+      const pubData = await FirebasePub.getPubData(pubId);
+      return pubData;
+    } catch (e) {
+      console.log(`[DataService] fetchPubData e: ${e}`);
+      return null;
+    }
+  };
+
   static addPub = async (
     name: string,
     phone: string,

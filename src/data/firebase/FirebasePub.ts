@@ -5,6 +5,21 @@ import "firebase/compat/firestore";
 import { Game } from "src/content/admin/storeAddTournament/tournamentRegister";
 
 export class FirebasePub {
+  static getPubData = async (pubId: string): Promise<Pub | null> => {
+    try {
+      const firestore = firebase.firestore();
+      const pubDoc = firestore.collection("wwp_pubs").doc(pubId);
+      const pubDocData = await pubDoc.get();
+      if (pubDocData.exists) {
+        return Pub.fromData(pubDocData.data());
+      }
+      return null;
+    } catch (e) {
+      console.log(`[FirebasePub] getPubData e: ${e}`);
+      return null;
+    }
+  };
+
   static getWholePubData = async (): Promise<Pub[]> => {
     const firestore = firebase.firestore();
     const pubCol = firestore.collection("wwp_pubs");

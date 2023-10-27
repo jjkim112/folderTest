@@ -1,9 +1,9 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { wait } from '@testing-library/user-event/dist/utils/misc/wait';
-import { Pub } from '../domain/Pub.model';
-import { DataService } from '../data/DataService';
-import type { PayloadAction } from '@reduxjs/toolkit';
-import { TournamentInfo } from 'src/domain/TournamentInfo.model';
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { wait } from "@testing-library/user-event/dist/utils/misc/wait";
+import { Pub } from "../domain/Pub.model";
+import { DataService } from "../data/DataService";
+import type { PayloadAction } from "@reduxjs/toolkit";
+import { TournamentInfo } from "src/domain/TournamentInfo.model";
 
 export interface PubState {
   pubs: Pub[];
@@ -18,7 +18,7 @@ const initialState: PubState = {
 };
 
 export const pubSlice = createSlice({
-  name: 'pub',
+  name: "pub",
   initialState,
   reducers: {
     pubLoadingStart: (state) => {
@@ -30,22 +30,33 @@ export const pubSlice = createSlice({
     refreshWholePub: (state, action: PayloadAction<Pub[]>) => {
       state.pubs = action.payload;
     },
-    getOnePubData: (state, action: PayloadAction<Pub[]>) => {
-      state.pubs = action.payload;
-    },
-    inputTournament: (state, action: PayloadAction<TournamentInfo>) => {
-      const newTournaId = action.payload.id;
+    inputPubData: (state, action: PayloadAction<Pub>) => {
       let isNew = true;
-      for (var t of state.tournaments) {
-        if (newTournaId === t.id) {
-          const index = state.tournaments.indexOf(t);
-          state.tournaments[index] = action.payload;
+      for (var p of state.pubs) {
+        if (action.payload.id === p.id) {
+          const index = state.pubs.indexOf(p);
+          state.pubs[index] = action.payload;
           isNew = false;
           break;
         }
       }
       if (isNew) {
-        state.tournaments.push(action.payload);
+        state.pubs.push(action.payload);
+      }
+    },
+    resetPubTournaments: (state, action: PayloadAction<TournamentInfo[]>) => {
+      if (action.payload.length == 0) {
+        return;
+      }
+      const pId = action.payload[0].pubId;
+
+      for (var p of state.pubs) {
+        if (pId === p.id) {
+          const index = state.pubs.indexOf(p);
+          state.pubs[index].games = action.payload;
+          state.pubs[index] = state.pubs[index].clone;
+          break;
+        }
       }
     },
   },
@@ -55,6 +66,7 @@ export const {
   pubLoadingStart,
   pubLoadingEnd,
   refreshWholePub,
-  inputTournament,
+  inputPubData,
+  resetPubTournaments,
 } = pubSlice.actions;
 export default pubSlice;

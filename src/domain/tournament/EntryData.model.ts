@@ -97,21 +97,11 @@ export class EntryData {
     );
   }
 
-  static getNumberOfTitle(title: string, entries: CostAndChip[]): number {
-    let count = 0;
-    for (const cac of entries) {
-      if (cac.title === title) {
-        count++;
-      }
-    }
-    return count;
-  }
-
   static getTotalPlayer(entries: CostAndChip[]): number {
     let count = 0;
     for (const cac of entries) {
       if (cac.title === BUYIN_KEY || cac.title === REENTRY_KEY) {
-        count++;
+        count += cac.num;
       }
     }
     return count;
@@ -128,6 +118,7 @@ export class EntryData {
 
     return {
       title: "",
+      num: 0,
       cost: totalCost,
       chip: totalChip,
     };
@@ -137,13 +128,46 @@ export class EntryData {
 
     for (const cac of entries) {
       if (cac.title === ADDON_KEY) {
-        count++;
+        count = cac.num;
       }
     }
 
     return count;
   }
-  static getRebuyInCount(
+  static getReEentryCount(entries: CostAndChip[]): number {
+    let count = 0;
+
+    for (const cac of entries) {
+      if (cac.title === REENTRY_KEY) {
+        count = cac.num;
+      }
+    }
+
+    return count;
+  }
+  static getEntryCount(entries: CostAndChip[]): number {
+    let count = 0;
+
+    for (const cac of entries) {
+      if (cac.title === BUYIN_KEY) {
+        count = cac.num;
+      }
+    }
+
+    return count;
+  }
+  static getRebuyInCount(entries: CostAndChip[], index: number): number {
+    let count = 0;
+
+    for (const cac of entries) {
+      if (cac.title === `re-buy-in-${index}`) {
+        count += cac.num;
+      }
+    }
+
+    return count;
+  }
+  static getRebuyInAllCount(
     entries: CostAndChip[],
     reBuyInLength: number
   ): number {
@@ -152,7 +176,7 @@ export class EntryData {
     for (let index = 0; index < reBuyInLength; index++) {
       for (const cac of entries) {
         if (cac.title === `re-buy-in-${index}`) {
-          count++;
+          count += cac.num;
         }
       }
     }
