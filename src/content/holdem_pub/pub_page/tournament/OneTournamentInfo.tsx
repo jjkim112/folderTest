@@ -444,8 +444,8 @@ function AdditionPart({
             </div>
             {`next : ${injectContent(
               blindInfoStr(tournament.blindList[1]),
-              blindInfoStr(tournament.blindList[blindIndex]),
-              blindInfoStr(tournament.blindList[blindIndex]),
+              blindInfoStr(tournament.blindList[blindIndex + 1]),
+              blindInfoStr(tournament.blindList[blindIndex + 1]),
               "- / - (-)"
             )}`}
           </>
