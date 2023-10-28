@@ -446,19 +446,13 @@ function AdditionPart({
               )}
             </div>
             {`next : ${injectContent(
-              `lv.${tournament.blindList[1].level} ${blindInfoStr(
-                tournament.blindList[1]
-              )}`,
+              `${blindInfoStr(tournament.blindList[1])}`,
               tournament.blindList[blindIndex + 1].isBreak
                 ? "Break"
-                : `lv.${
-                    tournament.blindList[blindIndex + 1].level
-                  } ${blindInfoStr(tournament.blindList[blindIndex + 1])}`,
+                : `${blindInfoStr(tournament.blindList[blindIndex + 1])}`,
               tournament.blindList[blindIndex + 1].isBreak
                 ? "Break"
-                : `lv.${
-                    tournament.blindList[blindIndex + 1].level
-                  } ${blindInfoStr(tournament.blindList[blindIndex + 1])}`,
+                : `${blindInfoStr(tournament.blindList[blindIndex + 1])}`,
               "- / - (-)"
             )}`}
           </>
