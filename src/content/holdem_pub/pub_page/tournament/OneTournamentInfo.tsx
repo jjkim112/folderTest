@@ -398,8 +398,8 @@ function AdditionPart({
         <div className="whitespace-pre-wrap">
           {injectContent(
             "- ( - bb )",
-            `${getAvgChip()}\n( ${getAvgBB()} bb)`,
-            `${getAvgChip()}\n( ${getAvgBB()} bb)`,
+            `${getAvgChip()}\n( ${getAvgBB()} bb )`,
+            `${getAvgChip()}\n( ${getAvgBB()} bb )`,
             "- ( - bb )"
           )}
         </div>
