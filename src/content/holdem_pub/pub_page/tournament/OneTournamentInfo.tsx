@@ -428,7 +428,7 @@ function AdditionPart({
             </div>
             <div>
               {injectContent(
-                timeMSChange(Number(tournament.blindList[0].second)),
+                timeMSChange(Number(tournament.blindList[0].second) * 1000),
                 getLevelRemainTime(),
                 getLevelRemainTime(),
                 "00:00"
