@@ -196,9 +196,7 @@ export default function HoldemPubOnePage() {
                     key={value.id}
                     tournament={value}
                     isClick={toggleTournament === value.id}
-                    toggleTournamentInfo={() => {
-                      toggleTournamentInfo(value.id);
-                    }}
+                    toggleTournamentInfo={toggleTournamentInfo}
                   />
                 ))}
               </div>

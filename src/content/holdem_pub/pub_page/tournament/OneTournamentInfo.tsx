@@ -53,13 +53,13 @@ export default function OneTouramentInfo({
   }, []);
 
   return (
-    <div
-      className="flex flex-col border-b-2 border-amber-100"
-      onClick={() => {
-        toggleTournamentInfo(null);
-      }}
-    >
-      <div className="flex flex-row w-full h-[100px]  px-2">
+    <div className="flex flex-col border-b-2 border-amber-100">
+      <div
+        className="flex flex-row w-full h-[100px]  px-2"
+        onClick={() => {
+          toggleTournamentInfo(isClick ? null : tournament.id);
+        }}
+      >
         {tournament.generalData.startTime >= nowTime && (
           <div className="flex flex-col justify-center text-center w-[30%] rounded-3xl bg-green-500 my-2  text-xs">
             <div className="  ">{"등록 까지"}</div>
@@ -119,13 +119,12 @@ export default function OneTouramentInfo({
         </div>
       </div>
       {isClick && (
-        <div
-          className="w-full h-full flex flex-col p-2"
-          onClick={() => toggleTournamentInfo(null)}
-        >
+        <div className="w-full h-full flex flex-col p-2">
           <AdditionPart tournament={tournament} nowTime={nowTime} />
           {tournament.generalData.note && (
-            <div className="border-2 p-2">{tournament.generalData.note}</div>
+            <div className="border-2 p-2 whitespace-pre-wrap">
+              {tournament.generalData.note}
+            </div>
           )}
         </div>
       )}
@@ -198,11 +197,20 @@ function AdditionPart({
     if (blindIndex !== -1 && blindIndex < tournament.blindList.length) {
       const lastCheckedTime = tournament.lastCheckedTime;
       let totalSecond = 0;
+      const diffTime = Math.floor(
+        (nowTime.getTime() - lastCheckedTime.getTime()) / 1000
+      );
+      const consumeTime = diffTime + tournament.prevSecond;
+
       for (let index = 0; index <= blindIndex; index++) {
         totalSecond += tournament.blindList[index].second;
       }
-      // return totalSecond - tournament.prevSecond;
-      return totalSecond - tournament.prevSecond;
+      if (totalSecond > consumeTime) {
+        return timeMSChange(totalSecond - consumeTime);
+      } else {
+        // 최신화 필요.
+        return "00:00";
+      }
     }
     return 0;
   };
@@ -230,36 +238,29 @@ function AdditionPart({
                 : `LV.${tournament.blindList[blindIndex].level}`
             }`}</div>
             {/* <div>{timeMSChange(tournament.prevSecond)}</div> */}
-            <div>{timeMSChange(getLevelRemainTime())}</div>
+            <div>{getLevelRemainTime()}</div>
             <div>{`${FormatText.toFormatThumbNum(
-              tournament.blindList[blindIndex].smallBlind,
-              0
+              tournament.blindList[blindIndex].smallBlind
             )} / ${FormatText.toFormatThumbNum(
-              tournament.blindList[blindIndex].bigBlind,
-              0
+              tournament.blindList[blindIndex].bigBlind
             )} (${FormatText.toFormatThumbNum(
-              tournament.blindList[blindIndex].ante,
-              0
+              tournament.blindList[blindIndex].ante
             )})`}</div>
-            <div>next</div>
-            {blindIndex >= tournament.blindList.length ? (
+            {blindIndex >= tournament.blindList.length - 1 ? (
               <>
-                <div>-</div>
+                <div>next : -</div>
               </>
             ) : tournament.blindList[blindIndex + 1].isBreak ? (
-              <div>Break</div>
+              <div>next : Break</div>
             ) : (
               <>
                 <div>
-                  {`${FormatText.toFormatThumbNum(
-                    tournament.blindList[blindIndex + 1].smallBlind,
-                    0
+                  {`next : ${FormatText.toFormatThumbNum(
+                    tournament.blindList[blindIndex + 1].smallBlind
                   )} / ${FormatText.toFormatThumbNum(
-                    tournament.blindList[blindIndex + 1].bigBlind,
-                    0
+                    tournament.blindList[blindIndex + 1].bigBlind
                   )} (${FormatText.toFormatThumbNum(
-                    tournament.blindList[blindIndex + 1].ante,
-                    0
+                    tournament.blindList[blindIndex + 1].ante
                   )})`}
                 </div>
               </>
