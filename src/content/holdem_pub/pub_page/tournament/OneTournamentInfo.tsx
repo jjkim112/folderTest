@@ -26,7 +26,7 @@ const timeHMSChange = (difference: number) => {
     .padStart(2, "0");
   return `${remainingHours} : ${remainingMinutes}  : ${remainingSeconds}`;
 };
-const timeMSChange = (difference: number) => {
+const timeMSChangeFromSec = (difference: number) => {
   let remainingMinutes = Math.floor(difference / 60)
     .toString()
     .padStart(2, "0");
@@ -325,7 +325,7 @@ function AdditionPart({
         blindTotalSecond += Number(tournament.blindList[index].second);
       }
       if (blindTotalSecond > playSecond) {
-        return timeMSChange((blindTotalSecond - playSecond) * 1000);
+        return timeMSChangeFromSec(blindTotalSecond - playSecond);
       } else {
         // 최신화 필요.
         return "00:00";
@@ -428,7 +428,7 @@ function AdditionPart({
             </div>
             <div>
               {injectContent(
-                timeMSChange(Number(tournament.blindList[0].second) * 1000),
+                timeMSChangeFromSec(Number(tournament.blindList[0].second)),
                 getLevelRemainTime(),
                 getLevelRemainTime(),
                 "00:00"
