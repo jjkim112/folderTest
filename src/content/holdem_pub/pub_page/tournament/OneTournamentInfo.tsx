@@ -316,16 +316,16 @@ function AdditionPart({
   const getLevelRemainTime = () => {
     if (blindIndex !== -1 && blindIndex < tournament.blindList.length) {
       let blindTotalSecond = 0;
-      const diffTime = Math.floor(
+      const diffSecond = Math.floor(
         (nowTime.getTime() - tournament.lastCheckedTime.getTime()) / 1000
       );
-      const playTime = diffTime + tournament.prevSecond;
+      const playSecond = diffSecond + tournament.prevSecond;
 
       for (let index = 0; index <= blindIndex; index++) {
         blindTotalSecond += Number(tournament.blindList[index].second);
       }
-      if (blindTotalSecond > playTime) {
-        return timeMSChange(blindTotalSecond - playTime);
+      if (blindTotalSecond > playSecond) {
+        return timeMSChange((blindTotalSecond - playSecond) * 1000);
       } else {
         // 최신화 필요.
         return "00:00";
