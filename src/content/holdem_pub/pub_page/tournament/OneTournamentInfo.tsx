@@ -365,7 +365,10 @@ function AdditionPart({
       ) {
         return "- / - (-)";
       }
-      return `${FormatText.toFormatThumbNum(
+      if (v.isBreak) {
+        return "Break";
+      }
+      return `LV.${v.level} ${FormatText.toFormatThumbNum(
         v.smallBlind
       )} / ${FormatText.toFormatThumbNum(
         v.bigBlind
