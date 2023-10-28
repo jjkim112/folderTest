@@ -366,9 +366,9 @@ function AdditionPart({
         return "- / - (-)";
       }
       if (v.isBreak) {
-        return "Break";
+        return "- / - (-)";
       }
-      return `LV.${v.level} ${FormatText.toFormatThumbNum(
+      return `${v.level} ${FormatText.toFormatThumbNum(
         v.smallBlind
       )} / ${FormatText.toFormatThumbNum(
         v.bigBlind
@@ -446,9 +446,19 @@ function AdditionPart({
               )}
             </div>
             {`next : ${injectContent(
-              blindInfoStr(tournament.blindList[1]),
-              blindInfoStr(tournament.blindList[blindIndex + 1]),
-              blindInfoStr(tournament.blindList[blindIndex + 1]),
+              `lv.${tournament.blindList[1].level} ${blindInfoStr(
+                tournament.blindList[1]
+              )}`,
+              tournament.blindList[blindIndex + 1].isBreak
+                ? "Break"
+                : `lv.${
+                    tournament.blindList[blindIndex + 1].level
+                  } ${blindInfoStr(tournament.blindList[blindIndex + 1])}`,
+              tournament.blindList[blindIndex + 1].isBreak
+                ? "Break"
+                : `lv.${
+                    tournament.blindList[blindIndex + 1].level
+                  } ${blindInfoStr(tournament.blindList[blindIndex + 1])}`,
               "- / - (-)"
             )}`}
           </>
