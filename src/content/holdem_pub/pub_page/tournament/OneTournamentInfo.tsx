@@ -368,7 +368,7 @@ function AdditionPart({
       if (v.isBreak) {
         return "- / - (-)";
       }
-      return `${v.level} ${FormatText.toFormatThumbNum(
+      return `${FormatText.toFormatThumbNum(
         v.smallBlind
       )} / ${FormatText.toFormatThumbNum(
         v.bigBlind
