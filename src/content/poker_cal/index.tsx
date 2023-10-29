@@ -277,7 +277,7 @@ const PokerCalPage = () => {
                 temp[cardIndex] = targetCard;
               }
 
-              dispatch(updateCommunitCards(temp));
+              dispatch(updateCommunitCards(temp as string[]));
             });
             setDialogOpen(true);
           }}
