@@ -277,17 +277,13 @@ function AdditionPart({
 
   const getAvgChip = () => {
     if (blindIndex !== -1 && blindIndex < tournament.blindList.length) {
-      if (tournament.blindList[blindIndex].isBreak) {
-        return "0";
-      } else {
-        if (tournament.entryData.remainPlayer > 0) {
-          return FormatText.toFormatThumbNum(
-            Math.floor(
-              EntryData.getTotalCostAndChip(tournament.entryData.entryList)
-                .chip / tournament.entryData.remainPlayer
-            )
-          );
-        }
+      if (tournament.entryData.remainPlayer > 0) {
+        return FormatText.toFormatThumbNum(
+          Math.floor(
+            EntryData.getTotalCostAndChip(tournament.entryData.entryList).chip /
+              tournament.entryData.remainPlayer
+          )
+        );
       }
     }
     return "0";
@@ -295,19 +291,14 @@ function AdditionPart({
 
   const getAvgBB = () => {
     if (blindIndex !== -1 && blindIndex < tournament.blindList.length) {
-      if (tournament.blindList[blindIndex].isBreak) {
-        return "0";
-      } else {
-        const bb = Number(tournament.blindList[blindIndex].bigBlind);
-        if (bb !== 0 && tournament.entryData.remainPlayer > 0) {
-          return FormatText.toFormatThumbNum(
-            Math.floor(
-              EntryData.getTotalCostAndChip(tournament.entryData.entryList)
-                .chip /
-                (bb * tournament.entryData.remainPlayer)
-            )
-          );
-        }
+      const bb = Number(tournament.blindList[blindIndex].bigBlind);
+      if (bb !== 0 && tournament.entryData.remainPlayer > 0) {
+        return FormatText.toFormatThumbNum(
+          Math.floor(
+            EntryData.getTotalCostAndChip(tournament.entryData.entryList).chip /
+              (bb * tournament.entryData.remainPlayer)
+          )
+        );
       }
     }
     return "0";
@@ -361,7 +352,9 @@ function AdditionPart({
         v.bigBlind === undefined ||
         v.bigBlind === null ||
         v.ante === undefined ||
-        v.ante === null
+        v.ante === null ||
+        v.isBreak === undefined ||
+        v.isBreak === null
       ) {
         return "- / - (-)";
       }
@@ -447,10 +440,14 @@ function AdditionPart({
             </div>
             {`next : ${injectContent(
               `${blindInfoStr(tournament.blindList[1])}`,
-              tournament.blindList[blindIndex + 1].isBreak
+              blindIndex === tournament.blindList.length - 1
+                ? "종료"
+                : tournament.blindList[blindIndex + 1].isBreak
                 ? "Break"
                 : `${blindInfoStr(tournament.blindList[blindIndex + 1])}`,
-              tournament.blindList[blindIndex + 1].isBreak
+              blindIndex === tournament.blindList.length - 1
+                ? "종료"
+                : tournament.blindList[blindIndex + 1].isBreak
                 ? "Break"
                 : `${blindInfoStr(tournament.blindList[blindIndex + 1])}`,
               "- / - (-)"
@@ -459,8 +456,8 @@ function AdditionPart({
         )}
       </div>
       <div className="flex flex-col w-[30%] h-[150px] justify-center text-center border-2">
-        <div>총 상금</div>
-        <div>{tournament.prizeData.totalPrize}</div>
+        <div>총 프라이즈</div>
+        <div> {tournament.prizeData.totalPrize ?? ""} </div>
         <div>1위</div>
         <div>
           {tournament.prizeData.prizeStructure.length !== 0

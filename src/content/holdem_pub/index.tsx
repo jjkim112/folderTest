@@ -73,7 +73,7 @@ export default function HoldemPubPage() {
           <CustomScrollMenu data={filters} setData={setFilters} />
         </div>
         <section className="p-1">
-          <div className="text-3xl font-bold text-white pb-2">홈덤 지점</div>
+          <div className="text-3xl font-bold text-white pb-2">홀덤 지점</div>
           <div className="flex flex-col items-center">
             {pubsData.map((pubData, index) => (
               <OnePubThumb key={pubData.id} pubData={pubData} />
