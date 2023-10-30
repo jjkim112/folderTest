@@ -51,6 +51,8 @@ export default function OneTouramentInfo({
   const [nowTime, setNowTime] = useState(new Date());
   const [gameStatus, setGameStatus] = useState<GameStatus>(GameStatus.notStart);
 
+  const [blindIndex, setBlindIndex] = useState(-1);
+
   useEffect(() => {
     const timer = setInterval(() => {
       setNowTime(new Date());
@@ -66,8 +68,8 @@ export default function OneTouramentInfo({
         setGameStatus(GameStatus.notStart);
       }
     } else if (
-      tournament.entryData.reBuyableTime !== null &&
-      tournament.entryData.reBuyableTime > nowTime
+      tournament.entryData.rebuyableLevel !== null &&
+      getRemainRebuyableTime() > 0
     ) {
       if (gameStatus !== GameStatus.registerAble) {
         setGameStatus(GameStatus.registerAble);
@@ -82,18 +84,99 @@ export default function OneTouramentInfo({
           }
         }
 
-        const remainTime = totalBlindSecond - tournament.prevSecond;
-        const diffTime = Math.floor(
-          (nowTime.getTime() - tournament.lastCheckedTime.getTime()) / 1000
-        );
-        if (diffTime < remainTime) {
+        const remainTime = totalBlindSecond - getPrevSecond();
+        if (remainTime > 0) {
           setGameStatus(GameStatus.endRegister);
         } else {
           setGameStatus(GameStatus.finished);
         }
       }
     }
+
+    const blindList = tournament.blindList ?? [];
+    let temp = getPrevSecond();
+    let index = 0;
+    for (var b of blindList) {
+      if (temp >= b.second) {
+        temp -= b.second;
+        index++;
+      } else {
+        break;
+      }
+    }
+    setBlindIndex(index);
   }, [tournament, nowTime]);
+
+  const getPrevSecond = () => {
+    if (tournament.isProgress) {
+      return Math.floor(
+        (tournament.prevSecond * 1000 +
+          nowTime.getTime() -
+          tournament.lastCheckedTime.getTime()) /
+          1000
+      );
+    } else {
+      return tournament.prevSecond;
+    }
+  };
+
+  const getRemainRebuyableTime = () => {
+    try {
+      let remainRebuyTime = 0;
+
+      if (tournament.id !== "") {
+        if (
+          tournament.entryData.rebuyableLevel === null
+          // || tournament.entryData.remainEntry === null
+        ) {
+          remainRebuyTime = 0;
+        } else {
+          let totalRebuyAbleSecond = 0;
+
+          for (let index = 0; index < tournament.blindList.length; index++) {
+            if (
+              !tournament.blindList[index].isBreak &&
+              tournament.blindList[index].level >
+                tournament.entryData.rebuyableLevel
+            ) {
+              break;
+            } else {
+              totalRebuyAbleSecond += Number(
+                tournament.blindList[index].second
+              );
+            }
+          }
+          remainRebuyTime = totalRebuyAbleSecond - tournament.prevSecond;
+        }
+      }
+      if (tournament.isProgress) {
+        remainRebuyTime -= Math.floor(
+          (nowTime.getTime() - tournament.lastCheckedTime.getTime()) / 1000
+        );
+      }
+      return Math.max(remainRebuyTime, 0);
+    } catch (e) {
+      return 0;
+    }
+  };
+
+  const getRemainSecondForStart = () => {
+    return Math.floor(
+      (tournament.generalData.startTime.getTime() - nowTime.getTime()) / 1000
+    );
+  };
+  const getProgressSecond = () => {
+    if (tournament.isProgress) {
+      return Math.floor(
+        (nowTime.getTime() -
+          tournament.lastCheckedTime.getTime() +
+          tournament.prevSecond * 1000) /
+          1000
+      );
+    } else {
+      return tournament.prevSecond;
+    }
+  };
 
   const injectContent = (
     notStartContent: string,
@@ -123,7 +206,9 @@ export default function OneTouramentInfo({
         <div className="w-[30%]">
           <StatusShowPart
             tournament={tournament}
-            nowTime={nowTime}
+            remainSecondForStart={getRemainSecondForStart()}
+            rebuyableSecond={getRemainRebuyableTime()}
+            progressSecond={getProgressSecond()}
             gameStatus={gameStatus}
           />
         </div>
@@ -163,6 +248,8 @@ export default function OneTouramentInfo({
           <AdditionPart
             tournament={tournament}
             nowTime={nowTime}
+            blindIndex={blindIndex}
+            prevSecond={getPrevSecond()}
             gameStatus={gameStatus}
           />
           {tournament.generalData.note && (
@@ -178,11 +265,15 @@ export default function OneTouramentInfo({
 
 function StatusShowPart({
   tournament,
-  nowTime,
+  remainSecondForStart,
+  rebuyableSecond,
+  progressSecond,
   gameStatus,
 }: {
   tournament: TournamentInfo;
-  nowTime: Date;
+  remainSecondForStart: number;
+  rebuyableSecond: number;
+  progressSecond: number;
   gameStatus: GameStatus;
 }) {
   const injectContent = (
@@ -216,7 +307,7 @@ function StatusShowPart({
           {injectContent(
             "등록 까지\n남은 시간",
 
-            tournament.entryData.reBuyableTime !== null
+            tournament.entryData.rebuyableLevel !== null
               ? "추가 등록 까지\n남은 시간"
               : "진행 중",
             "진행 중",
@@ -225,22 +316,9 @@ function StatusShowPart({
         </div>
         <div>
           {injectContent(
-            timeHMSChange(
-              tournament.generalData.startTime.getTime() - nowTime.getTime()
-            ),
-            timeHMSChange(
-              tournament.entryData.reBuyableTime !== null
-                ? tournament.entryData.reBuyableTime.getTime() -
-                    nowTime.getTime()
-                : tournament.prevSecond * 1000 +
-                    nowTime.getTime() -
-                    tournament.lastCheckedTime.getTime()
-            ),
-            timeHMSChange(
-              tournament.prevSecond * 1000 +
-                nowTime.getTime() -
-                tournament.lastCheckedTime.getTime()
-            ),
+            timeHMSChange(remainSecondForStart * 1000),
+            timeHMSChange(rebuyableSecond * 1000),
+            timeHMSChange(progressSecond * 1000),
             "-"
           )}
         </div>
@@ -252,29 +330,16 @@ function StatusShowPart({
 function AdditionPart({
   tournament,
   nowTime,
+  blindIndex,
+  prevSecond,
   gameStatus,
 }: {
   tournament: TournamentInfo;
   nowTime: Date;
+  blindIndex: number;
+  prevSecond: number;
   gameStatus: GameStatus;
 }) {
-  const [blindIndex, setBlindIndex] = useState(-1);
-
-  useEffect(() => {
-    const blindList = tournament.blindList ?? [];
-    let temp = tournament.prevSecond ?? 0; // 500, 700, 1300
-    let index = 0;
-    for (var b of blindList) {
-      if (temp >= b.second) {
-        temp -= b.second;
-        index++;
-      } else {
-        break;
-      }
-    }
-    setBlindIndex(index);
-  }, []);
-
   const getAvgChip = () => {
     if (blindIndex !== -1 && blindIndex < tournament.blindList.length) {
       if (tournament.entryData.remainPlayer > 0) {
@@ -307,16 +372,11 @@ function AdditionPart({
   const getLevelRemainTime = () => {
     if (blindIndex !== -1 && blindIndex < tournament.blindList.length) {
       let blindTotalSecond = 0;
-      const diffSecond = Math.floor(
-        (nowTime.getTime() - tournament.lastCheckedTime.getTime()) / 1000
-      );
-      const playSecond = diffSecond + tournament.prevSecond;
-
       for (let index = 0; index <= blindIndex; index++) {
         blindTotalSecond += Number(tournament.blindList[index].second);
       }
-      if (blindTotalSecond > playSecond) {
-        return timeMSChangeFromSec(blindTotalSecond - playSecond);
+      if (blindTotalSecond > prevSecond) {
+        return timeMSChangeFromSec(blindTotalSecond - prevSecond);
       } else {
         // 최신화 필요.
         return "00:00";

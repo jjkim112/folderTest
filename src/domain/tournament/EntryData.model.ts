@@ -8,20 +8,17 @@ export class EntryData {
   remainPlayer: number;
   rebuyableLevel: number | null;
   remainEntry: number | null;
-  reBuyableTime: Date | null;
 
   constructor(
     entryList: CostAndChip[],
     remainPlayer: number,
     rebuyableLevel: number | null,
-    remainEntry: number | null,
-    reBuyableTime: Date | null
+    remainEntry: number | null
   ) {
     this.entryList = entryList;
     this.remainPlayer = remainPlayer;
     this.rebuyableLevel = rebuyableLevel;
     this.remainEntry = remainEntry;
-    this.reBuyableTime = reBuyableTime;
   }
 
   static fromData(data: any): EntryData {
@@ -36,16 +33,12 @@ export class EntryData {
       const rebuyableLevel = FirebaseTypeChange.numberNullFromData(
         data["rebuyableLevel"]
       );
-      const reBuyableTime = FirebaseTypeChange.dateNullFromData(
-        data["reBuyableTime"]
-      );
 
       return new EntryData(
         entryList,
         remainPlayer,
         rebuyableLevel,
-        remainEntry,
-        reBuyableTime
+        remainEntry
       );
     } catch (error) {
       console.log(`[EntryData Model] fromData e: ${error}`);
@@ -69,7 +62,6 @@ export class EntryData {
       remainPlayer: this.remainPlayer,
       rebuyableLevel: this.rebuyableLevel,
       remainEntry: this.remainEntry,
-      reBuyableTime: this.reBuyableTime,
     };
   }
 
@@ -79,12 +71,11 @@ export class EntryData {
       remainPlayer: this.remainPlayer,
       rebuyableLevel: this.rebuyableLevel,
       remainEntry: this.remainEntry,
-      reBuyableTime: this.reBuyableTime,
     };
   }
 
   static get empty() {
-    return new EntryData([], 0, null, null, null);
+    return new EntryData([], 0, null, null);
   }
 
   get clone() {
@@ -92,8 +83,7 @@ export class EntryData {
       this.entryList.map((e) => ({ ...e })),
       this.remainPlayer,
       this.rebuyableLevel,
-      this.remainEntry,
-      this.reBuyableTime
+      this.remainEntry
     );
   }
 
