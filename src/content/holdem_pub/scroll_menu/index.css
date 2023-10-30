@@ -1,9 +1,0 @@
-/* Chrome, Edge, Safari */
-.flex::-webkit-scrollbar {
-  display: none;
-}
-
-/* Firefox */
-.flex {
-  scrollbar-width: none;
-}
