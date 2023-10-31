@@ -1,14 +1,13 @@
 import { combineReducers } from "@reduxjs/toolkit";
-import pubSlice from "../reducer/pubSlice";
-import gameSlice from "../reducer/gameSlice";
-import pokerCalSlice from "../reducer/pokerCalSlice";
-import userSlice from "../reducer/userSlice";
-import adminPubSlice from "src/reducer/adminPub";
-import authSlice from "src/reducer/authSlice";
+
+import authSlice from "./slice/authSlice";
+import userSlice from "./slice/useSlice";
+import pokerCalSlice from "./slice/pokerCalSlice";
+import gameSlice from "./slice/gameSlice";
+import pubSlice from "./slice/pubSlice";
 
 const rootReducer = combineReducers({
   pub: pubSlice.reducer,
-  admin: adminPubSlice.reducer,
   game: gameSlice.reducer,
   pokerCal: pokerCalSlice.reducer,
   user: userSlice.reducer,

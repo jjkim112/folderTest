@@ -1,8 +1,6 @@
-import { Firestore, QueryDocumentSnapshot } from "firebase/firestore";
-import { Pub } from "../../domain/Pub.model";
+import { Pub } from "../../domain/pub/Pub.model";
 import firebase from "firebase/compat/app";
 import "firebase/compat/firestore";
-import { Game } from "src/content/admin/storeAddTournament/tournamentRegister";
 
 export class FirebasePub {
   static getPubData = async (pubId: string): Promise<Pub | null> => {
@@ -34,22 +32,22 @@ export class FirebasePub {
     return tempList;
   };
 
-  static getWholeGamesData = async (pubId: string): Promise<Game[]> => {
-    const firestore = firebase.firestore();
-    const pubGameCol = firestore
-      .collection("wwp_pubs")
-      .doc(pubId)
-      .collection("games");
-    const gameDocsData = await pubGameCol.get();
+  // static getWholeGamesData = async (pubId: string): Promise<Game[]> => {
+  //   const firestore = firebase.firestore();
+  //   const pubGameCol = firestore
+  //     .collection("wwp_pubs")
+  //     .doc(pubId)
+  //     .collection("games");
+  //   const gameDocsData = await pubGameCol.get();
 
-    let tempList: Game[] = [];
+  //   let tempList: Game[] = [];
 
-    for (var oneDoc of gameDocsData.docs) {
-      tempList.push(Game.fromData(oneDoc.data()));
-    }
+  //   for (var oneDoc of gameDocsData.docs) {
+  //     tempList.push(Game.fromData(oneDoc.data()));
+  //   }
 
-    return tempList;
-  };
+  //   return tempList;
+  // };
 
   static addNewPub = async (
     newPubId: string,

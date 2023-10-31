@@ -1,4 +1,4 @@
-import { TournamentInfo } from "../../domain/TournamentInfo.model";
+import { TournamentInfo } from "../../domain/tournament/TournamentInfo.model";
 import firebase from "firebase/compat/app";
 import "firebase/compat/firestore";
 

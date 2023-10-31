@@ -1,0 +1,42 @@
+.textCut {
+  /* 한 줄 자르기 */
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  /* 여러 줄 자르기 추가 스타일 */
+  white-space: normal;
+  line-height: 1.2;
+  height: 3.6em;
+  text-align: left;
+  word-wrap: break-word;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+
+.basic-box {
+  border-radius: 50px;
+  padding: 0.25rem 1rem;
+  margin: 0px 1rem;
+  background-color: gray;
+  color: black;
+  white-space: nowrap;
+  flex: none;
+
+  &:hover {
+    background-color: blue;
+    color: white;
+    cursor: pointer;
+  }
+}
+
+.categories {
+  display: flex;
+  overflow-x: scroll;
+}
+
+.categories::-webkit-scrollbar {
+  display: none;
+}

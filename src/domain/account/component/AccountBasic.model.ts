@@ -1,4 +1,4 @@
-import { FirebaseTypeChange } from "../utils/FirebaseTypeChange";
+import { FirebaseTypeChange } from "../../../util/commonFunc/firebase/FirebaseTypeChange";
 
 export class AccountBasic {
   email: string;

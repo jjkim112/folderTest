@@ -1,15 +1,10 @@
-import { TournamentInfo } from "src/domain/TournamentInfo.model";
-// import { Game, GamePlayerThumb } from '../domain/Game.model';
-// import { GameTemplate } from '../domain/GameTemplate.model';
-import { Pub } from "../domain/Pub.model";
-// import { User } from '../domain/User.model';
-import { FirebasePub } from "./firebase/FirebasePub";
-import { FirebaseUser } from "./firebase/FirebaseUser";
-import { FirebaseTournament } from "./firebase/FirebaseTournament";
-import { GameTemplate } from "src/domain/pub/GameTemplate.model";
-import { Game } from "src/content/admin/storeAddTournament/tournamentRegister";
-import { GamePlayerThumb } from "src/content/admin/storeAddTournament/tournamentRegister/detailTournaUser";
-import { Account } from "src/domain/Account.model";
+import { TournamentInfo } from "src/domain/tournament/TournamentInfo.model";
+import { Pub } from "../domain/pub/Pub.model";
+import { FirebasePub } from "../data/fireBase/FirebasePub";
+import { FirebaseUser } from "../data/fireBase/FirebaseUser";
+import { FirebaseTournament } from "../data/fireBase/FirebaseTournament";
+import { GameTemplate } from "../domain/pub/component/GameTemplate.model";
+import { Account } from "../domain/account/Account.model";
 
 export class DataService {
   static fetchPubData = async (pubId: string): Promise<Pub | null> => {
@@ -73,15 +68,15 @@ export class DataService {
     }
   };
 
-  static fetchGamesInfo = async (pubId: string): Promise<Game[]> => {
-    try {
-      const games = await FirebasePub.getWholeGamesData(pubId);
-      return games;
-    } catch (e) {
-      console.log(`[DataService] fetchWholePub e: ${e}`);
-      return [];
-    }
-  };
+  // static fetchGamesInfo = async (pubId: string): Promise<Game[]> => {
+  //   try {
+  //     const games = await FirebasePub.getWholeGamesData(pubId);
+  //     return games;
+  //   } catch (e) {
+  //     console.log(`[DataService] fetchWholePub e: ${e}`);
+  //     return [];
+  //   }
+  // };
 
   static updatePubInfo = async (pubId: string): Promise<boolean> => {
     try {
@@ -111,47 +106,47 @@ export class DataService {
     return temp;
   };
 
-  static addGame = async (
-    pubId: string,
-    gameTempId: string,
-    entry: number,
-    note: string,
-    players: GamePlayerThumb[]
-  ): Promise<boolean> => {
-    try {
-      const newId = `${Date.now()}_${gameTempId}`;
-      const nowDate = Date.now();
-      const isSuccess = await FirebasePub.addNewGame(pubId, newId, {
-        id: newId,
-        pubId: pubId,
-        gameTempId: gameTempId,
-        entry: entry,
-        date: nowDate,
-        note: note,
-        players: players,
-      });
+  // static addGame = async (
+  //   pubId: string,
+  //   gameTempId: string,
+  //   entry: number,
+  //   note: string,
+  //   players: GamePlayerThumb[]
+  // ): Promise<boolean> => {
+  //   try {
+  //     const newId = `${Date.now()}_${gameTempId}`;
+  //     const nowDate = Date.now();
+  //     const isSuccess = await FirebasePub.addNewGame(pubId, newId, {
+  //       id: newId,
+  //       pubId: pubId,
+  //       gameTempId: gameTempId,
+  //       entry: entry,
+  //       date: nowDate,
+  //       note: note,
+  //       players: players,
+  //     });
 
-      // TODO 같이 움직여야하는 데이터들은 transaction 에 담아 한번에 처리가능하도록 함수 짜보기
-      let isSucessUser = false;
-      if (isSuccess) {
-        isSucessUser = await FirebaseUser.updateUsersWithGame(
-          players,
-          newId,
-          pubId,
-          gameTempId,
-          entry,
+  //     // TODO 같이 움직여야하는 데이터들은 transaction 에 담아 한번에 처리가능하도록 함수 짜보기
+  //     let isSucessUser = false;
+  //     if (isSuccess) {
+  //       isSucessUser = await FirebaseUser.updateUsersWithGame(
+  //         players,
+  //         newId,
+  //         pubId,
+  //         gameTempId,
+  //         entry,
 
-          new Date(nowDate),
-          note
-        );
-      }
+  //         new Date(nowDate),
+  //         note
+  //       );
+  //     }
 
-      return isSuccess && isSucessUser;
-    } catch (e) {
-      console.log(`[DataService] addGame e: ${e}`);
-      return false;
-    }
-  };
+  //     return isSuccess && isSucessUser;
+  //   } catch (e) {
+  //     console.log(`[DataService] addGame e: ${e}`);
+  //     return false;
+  //   }
+  // };
 
   static fetchWholeUser = async (): Promise<Account[]> => {
     try {
