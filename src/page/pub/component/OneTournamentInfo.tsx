@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { BlindLevel, TournamentInfo } from "src/domain/TournamentInfo.model";
-import { EntryData } from "src/domain/tournament/EntryData.model";
-import { PrizeData } from "src/domain/tournament/PrizeData.model";
-import { FormatText } from "src/utils/format_text";
+import {
+  BlindLevel,
+  TournamentInfo,
+} from "../../../domain/tournament/TournamentInfo.model";
+import { EntryData } from "../../../domain/tournament/component/EntryData.model";
+import { FormatText } from "../../../assets/text/format_text";
 
 interface OneTournamentInfoProps {
   tournament: TournamentInfo;

@@ -1,4 +1,4 @@
-import { FirebaseTypeChange } from "../utils/FirebaseTypeChange";
+import { FirebaseTypeChange } from "../../../util/commonFunc/firebase/FirebaseTypeChange";
 
 export class OpenDayGame {
   startTime: string; // 16:30

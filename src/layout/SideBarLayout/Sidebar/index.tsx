@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { SidebarContext } from "src/contexts/SidebarContext";
+import { SidebarContext } from "../../component/SidebarContext/SidebarContext";
 
 import {
   Box,

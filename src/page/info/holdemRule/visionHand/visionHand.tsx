@@ -1,63 +1,67 @@
-import './HoldemVisionAbility.css';
-import { Accordion, AccordionDetails, AccordionSummary } from '../util/util';
-import { GridExpandMoreIcon } from '@mui/x-data-grid';
-import Typography from '@mui/material/Typography';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import "../../../../styles/page/holdemRule/visionHand/visionHand.css";
+import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
+} from "../../../../component/Accordion/Accordion";
+import { GridExpandMoreIcon } from "@mui/x-data-grid";
+import Typography from "@mui/material/Typography";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 function HoldemVisionAbility() {
   const flushDraw = [
     {
-      image: '/assets/images/vision/flushDraw1.png',
-      percentage: '34.97%',
-      outs: '9개',
-      formula: '1 - (38 ÷ 47) × (37 ÷ 46)\n = 0.34967 * 100 = 34.97%',
+      image: "/assets/images/vision/flushDraw1.png",
+      percentage: "34.97%",
+      outs: "9개",
+      formula: "1 - (38 ÷ 47) × (37 ÷ 46)\n = 0.34967 * 100 = 34.97%",
     },
     {
-      image: '/assets/images/vision/flushDraw2.png',
-      percentage: '19.56%',
-      outs: '9개',
-      formula: '9 ÷ 46\n = 0.1956 * 100 = 19.56%',
+      image: "/assets/images/vision/flushDraw2.png",
+      percentage: "19.56%",
+      outs: "9개",
+      formula: "9 ÷ 46\n = 0.1956 * 100 = 19.56%",
     },
   ];
   const straight = [
     {
-      image: '/assets/images/vision/straight1.png',
-      percentage: '31.45%',
-      outs: '8개',
-      formula: '1 - (39 ÷ 47) × (38 ÷ 46)\n = 0.3145 * 100 = 31.45%',
+      image: "/assets/images/vision/straight1.png",
+      percentage: "31.45%",
+      outs: "8개",
+      formula: "1 - (39 ÷ 47) × (38 ÷ 46)\n = 0.3145 * 100 = 31.45%",
     },
     {
-      image: '/assets/images/vision/straight2.png',
-      percentage: '17.39%',
-      outs: '8개',
-      formula: '8 ÷ 46\n = 0.1739 * 100 = 17.39%',
+      image: "/assets/images/vision/straight2.png",
+      percentage: "17.39%",
+      outs: "8개",
+      formula: "8 ÷ 46\n = 0.1739 * 100 = 17.39%",
     },
   ];
   const flushStraightDarw = [
     {
-      image: '/assets/images/vision/flushStraightDarw1.png',
-      percentage: '31.45%',
-      outs: '15개 뽀쁠 9개 양차 8개 양차랑 뽀쁠이 겹치는 부분2장을뺀',
-      formula: '1 - (32 ÷ 47) × (31 ÷ 46)\n = 0.5411 * 100 = 54.11%',
+      image: "/assets/images/vision/flushStraightDarw1.png",
+      percentage: "31.45%",
+      outs: "15개 뽀쁠 9개 양차 8개 양차랑 뽀쁠이 겹치는 부분2장을뺀",
+      formula: "1 - (32 ÷ 47) × (31 ÷ 46)\n = 0.5411 * 100 = 54.11%",
     },
     {
-      image: '/assets/images/vision/flushStraightDarw2.png',
-      percentage: '32.60%',
-      outs: '15개',
-      formula: '15 ÷ 46\n = 0.3260 * 100 = 32.60%',
+      image: "/assets/images/vision/flushStraightDarw2.png",
+      percentage: "32.60%",
+      outs: "15개",
+      formula: "15 ÷ 46\n = 0.3260 * 100 = 32.60%",
     },
   ];
   const thingShot = [
     {
-      image: '/assets/images/vision/thingShot1.png',
-      percentage: '16.46%',
-      outs: '4개',
-      formula: '1 - (43 ÷ 47) × (42 ÷ 46)\n = 0.1646 * 100 = 16.46%',
+      image: "/assets/images/vision/thingShot1.png",
+      percentage: "16.46%",
+      outs: "4개",
+      formula: "1 - (43 ÷ 47) × (42 ÷ 46)\n = 0.1646 * 100 = 16.46%",
     },
     {
-      image: '/assets/images/vision/thingShot2.png',
-      percentage: '8.69%',
-      outs: '4개',
-      formula: '4 ÷ 46\n = 0.0869 * 100 = 8.69%',
+      image: "/assets/images/vision/thingShot2.png",
+      percentage: "8.69%",
+      outs: "4개",
+      formula: "4 ÷ 46\n = 0.0869 * 100 = 8.69%",
     },
   ];
 

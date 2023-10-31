@@ -2,9 +2,9 @@
 // import { Game } from "./Game.model";
 // import { GameTemplate } from "./GameTemplate.model";
 
-import { BlindLevel, TournamentInfo } from './TournamentInfo.model';
-import { PubBasic } from './pub/PubBasic.model';
-import { FirebaseTypeChange } from './utils/FirebaseTypeChange';
+import { BlindLevel, TournamentInfo } from "../tournament/TournamentInfo.model";
+import { PubBasic } from "../pub/component/PubBasic.model";
+import { FirebaseTypeChange } from "../../util/commonFunc/firebase/FirebaseTypeChange";
 
 export type Links = {
   name: string;
@@ -49,8 +49,8 @@ export class Pub {
 
   static fromData(data: any): Pub {
     try {
-      const id = FirebaseTypeChange.stringFromData(data['id']); // string;
-      const ownerId = FirebaseTypeChange.stringFromData(data['ownerId']); // string;
+      const id = FirebaseTypeChange.stringFromData(data["id"]); // string;
+      const ownerId = FirebaseTypeChange.stringFromData(data["ownerId"]); // string;
       const basicInfo = PubBasic.fromData(data); // PubBasic;
       // const games = TournamentInfo.fromListData(data["games"]); // TournamentInfo[];
 
@@ -63,6 +63,6 @@ export class Pub {
   }
 
   static get empty() {
-    return new Pub('', '', PubBasic.empty, []);
+    return new Pub("", "", PubBasic.empty, []);
   }
 }

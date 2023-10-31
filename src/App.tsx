@@ -1,11 +1,11 @@
-import { useRoutes } from 'react-router-dom';
-import router from 'src/router';
-import { useEffect } from 'react';
-import { DataService } from './data/DataService';
-import { refreshWholePub } from './reducer/pubSlice';
-import { setUsers } from './reducer/userSlice';
-import { useDispatch } from 'react-redux';
-import { AppDispatch } from './store/store';
+import { useRoutes } from "react-router-dom";
+import router from "src/router";
+import { useEffect } from "react";
+import { DataService } from "./data/dataService";
+import { refreshWholePub } from "./redux/slice/pubSlice";
+import { setUsers } from "./redux/slice/useSlice";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "./redux/store";
 
 function App() {
   const content = useRoutes(router);

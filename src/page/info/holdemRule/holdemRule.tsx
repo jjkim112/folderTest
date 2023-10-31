@@ -1,15 +1,13 @@
 import { useNavigate } from "react-router-dom";
-import { HeaderTap } from "../../utils/header/header_tap";
+import { HeaderTap } from "../../../component/Tap/header_tap";
 import { useState } from "react";
-import HandRankings from "./poker_hand_rankings/HandRankings";
-import HoldemPubBase from "./holdem_pub_base/HoldemPubBase";
-import HoldemTermsBase from "./terms_base/HoldemTermsBase";
-import HoldemPubBetRule from "./holdem_pub_bet_rule/HoldemPubBetRule";
-import HoldemPubCardRule from "./holdem_pub_card_rule/HoldemPubCardRule";
-import HoldemVisionAbility from "./holdem_vision_ability/HoldemVisionAbility";
-import HandRankPage from "src/page/hand_rank/HandRankPage";
-import PreFlopRangePage from "src/page/pre_flop_range/PreFlopRangePage";
-import QuotePage from "./quote/QuotePage";
+
+import HoldemPubBase from "../holdemPubManual/holdemPunManual";
+import HoldemTermsBase from "../holdemWords/holdemWords";
+import HoldemPubBetRule from "../holdemRule/betRule/betRule";
+import HoldemPubCardRule from "../holdemRule/playRule/playRule";
+import HoldemVisionAbility from "../holdemRule/visionHand/visionHand";
+import QuotePage from "../quote/QuotePage";
 type Section = {
   label: string;
 };

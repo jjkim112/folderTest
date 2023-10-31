@@ -1,9 +1,9 @@
 import { Timestamp } from "firebase/firestore";
 import { last } from "lodash";
-import { GeneralData } from "./tournament/GeneralData.model";
-import { PrizeData } from "./tournament/PrizeData.model";
-import { EntryData } from "./tournament/EntryData.model";
-import { FirebaseTypeChange } from "./utils/FirebaseTypeChange";
+import { GeneralData } from "./component/GeneralData.model";
+import { PrizeData } from "./component/PrizeData.model";
+import { EntryData } from "./component/EntryData.model";
+import { FirebaseTypeChange } from "../../util/commonFunc/firebase/FirebaseTypeChange";
 
 export class TournamentInfo {
   readonly id: string;

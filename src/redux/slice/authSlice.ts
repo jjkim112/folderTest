@@ -1,11 +1,8 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { wait } from "@testing-library/user-event/dist/utils/misc/wait";
-import { Pub } from "../domain/Pub.model";
-import { DataService } from "../../data/dataService";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import * as CryptoJS from "crypto-js";
 import { useSelector } from "react-redux";
-import { RootState } from "src/store/store";
+import { RootState } from "../store";
 
 export interface AuthState {
   pw: string;

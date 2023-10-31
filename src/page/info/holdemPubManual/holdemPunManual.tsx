@@ -1,6 +1,10 @@
-import "./holdemPubBase.css";
+import "../../../styles/page/holdemPubManual/holdemPubBase.css";
 
-import { Accordion, AccordionDetails, AccordionSummary } from "../util/util";
+import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
+} from "../../../component/Accordion/Accordion";
 import { GridExpandMoreIcon } from "@mui/x-data-grid";
 import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";

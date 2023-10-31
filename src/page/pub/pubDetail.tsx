@@ -1,24 +1,16 @@
-import { Pub } from "../../../domain/Pub.model";
+import { Pub } from "../../domain/pub/Pub.model";
 import { useState, useEffect } from "react";
-import {
-  AiFillPhone,
-  AiFillEnvironment,
-  AiFillCaretDown,
-  AiFillCaretUp,
-} from "react-icons/ai";
-import { AppDispatch, RootState } from "../../../store/store";
+import { AiFillPhone, AiFillEnvironment } from "react-icons/ai";
+import { AppDispatch, RootState } from "../../redux/store";
 import { useDispatch, useSelector } from "react-redux";
-import { DataService } from "../../../data/DataService";
-import { refreshGames } from "../../../reducer/gameSlice";
+import { DataService } from "../../data/dataService";
 import { useNavigate, useParams } from "react-router-dom";
-import { HeaderTap } from "../../../utils/header/header_tap";
-import { refreshWithPubId } from "../../../reducer/userSlice";
-import MapTest from "src/utils/map/Map";
-import { inputPubData, resetPubTournaments } from "src/reducer/pubSlice";
-import { EntryData } from "src/domain/tournament/EntryData.model";
-import { GameTemplate } from "src/domain/pub/GameTemplate.model";
-import LoadingPage from "src/page/utils/LoadingPage";
-import OneTouramentInfo from "./tournament/OneTournamentInfo";
+import { HeaderTap } from "../../component/Tap/header_tap";
+import MapTest from "../../util/commonFunc/map/Map";
+import { inputPubData, resetPubTournaments } from "../../redux/slice/pubSlice";
+import { GameTemplate } from "../../domain/pub/component/GameTemplate.model";
+import LoadingPage from "../../component/PageLoading/pageLoading";
+import OneTouramentInfo from "./component/OneTournamentInfo";
 type Section = {
   label: string;
 };

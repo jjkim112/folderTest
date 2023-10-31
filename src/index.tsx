@@ -1,16 +1,16 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import reportWebVitals from './reportWebVitals';
-import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom';
-import { Provider } from 'react-redux';
-import { store } from './store/store';
-import firebase from 'firebase/compat/app';
-import { SidebarProvider } from './contexts/SidebarContext';
-import { NavermapsProvider } from 'react-naver-maps';
-import App from './App';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import reportWebVitals from "./reportWebVitals";
+import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
+import { Provider } from "react-redux";
+import { store } from "./redux/store";
+import firebase from "firebase/compat/app";
+import { SidebarProvider } from "./layout/component/SidebarContext/SidebarContext";
+import { NavermapsProvider } from "react-naver-maps";
+import App from "./App";
 const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement
+  document.getElementById("root") as HTMLElement
 );
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_API_KEY,

@@ -1,7 +1,11 @@
 import { Timestamp } from "firebase/firestore";
-import { CostAndChip } from "./CostAndChip.interface";
-import { ADDON_KEY, BUYIN_KEY, REENTRY_KEY } from "../const/entry_const";
-import { FirebaseTypeChange } from "../utils/FirebaseTypeChange";
+import { CostAndChip } from "../../../interface/tournaDomain/CostAndChip.interface";
+import {
+  ADDON_KEY,
+  BUYIN_KEY,
+  REENTRY_KEY,
+} from "../../../util/constant/entry_const";
+import { FirebaseTypeChange } from "../../../util/commonFunc/firebase/FirebaseTypeChange";
 
 export class EntryData {
   entryList: CostAndChip[];

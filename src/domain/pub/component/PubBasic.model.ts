@@ -1,7 +1,7 @@
 import { Timestamp } from "firebase/firestore";
 import { GameTemplate } from "./GameTemplate.model";
 import { OpenDayGame } from "./OpenDayGame.model";
-import { FirebaseTypeChange } from "../utils/FirebaseTypeChange";
+import { FirebaseTypeChange } from "../../../util/commonFunc/firebase/FirebaseTypeChange";
 
 export type Link = {
   name: string;

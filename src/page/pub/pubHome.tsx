@@ -1,18 +1,14 @@
 import { useEffect, useState } from "react";
-import Slick from "../../utils/slider/Slick";
-import "./holdemPub.css";
+import "../../styles/page/pub/home/holdemPub.css";
 import { useNavigate } from "react-router-dom";
-import { Pub } from "../../domain/Pub.model";
-import { AppDispatch, RootState } from "../../store/store";
+import { AppDispatch, RootState } from "../../redux/store";
 import { useDispatch, useSelector } from "react-redux";
-import { DataService } from "../../data/DataService";
-import { refreshWholePub } from "../../reducer/pubSlice";
-import { setUsers } from "../../reducer/userSlice";
-import MapMakers from "src/utils/map/MapMaker";
-import SearchBar from "./SearchBar";
-import { ScrollMenu } from "react-horizontal-scrolling-menu";
-import CustomScrollMenu from "./scroll_menu/CustomScrollMenu";
-import { OnePubThumb } from "./OnePubThumb";
+import { DataService } from "../../data/dataService";
+import { refreshWholePub } from "../../redux/slice/pubSlice";
+import MapMakers from "../../util/commonFunc/map/MapMaker";
+import SearchBar from "./component/SearchBar";
+import CustomScrollMenu from "./component/CustomScrollMenu";
+import { OnePubThumb } from "./component/OnePubThumb";
 
 const MenuItem = ({ text }) => {
   return <div className="menu-item">{text}</div>;

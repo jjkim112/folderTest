@@ -1,4 +1,4 @@
-import QuoteOneItem from "./QuoteOneItem";
+import QuoteOneItem from "./component/QuoteOneItem";
 
 const qoutesList = [
   {

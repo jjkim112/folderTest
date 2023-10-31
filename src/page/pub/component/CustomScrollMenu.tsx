@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { useDraggable } from "react-use-draggable-scroll";
-import "./index.css";
+import "../../../styles/page/pub/scroll_menu/customScrollMenu.css";
 
 interface CustomScrollMenuProps {
   data: any[];

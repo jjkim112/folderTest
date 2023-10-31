@@ -1,9 +1,8 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { wait } from "@testing-library/user-event/dist/utils/misc/wait";
-import { Pub } from "../domain/Pub.model";
-import { DataService } from "../data/DataService";
+import { Pub } from "../../domain/pub/Pub.model";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import { TournamentInfo } from "src/domain/TournamentInfo.model";
+import { TournamentInfo } from "../../domain/tournament/TournamentInfo.model";
 
 export interface PubState {
   pubs: Pub[];

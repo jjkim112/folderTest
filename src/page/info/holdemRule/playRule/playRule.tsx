@@ -1,7 +1,11 @@
-import { Accordion, AccordionDetails, AccordionSummary } from '../util/util';
-import { GridExpandMoreIcon } from '@mui/x-data-grid';
-import Typography from '@mui/material/Typography';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
+} from "../../../../component/Accordion/Accordion";
+import { GridExpandMoreIcon } from "@mui/x-data-grid";
+import Typography from "@mui/material/Typography";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 export default function HoldemPubCardRule() {
   return (
@@ -12,7 +16,7 @@ export default function HoldemPubCardRule() {
           aria-controls="panel1d-CardRule"
           id="panel1d-CardRuleHeader"
         >
-          <Typography>{'1. 프리플랍(Pre-Flop)'}</Typography>
+          <Typography>{"1. 프리플랍(Pre-Flop)"}</Typography>
         </AccordionSummary>
         <AccordionDetails>
           <img src="/assets/images/table_card/card1.png" alt="table1" />
@@ -36,7 +40,7 @@ export default function HoldemPubCardRule() {
           aria-controls="panel2d-CardRule"
           id="panel2d-CardRuleHeader"
         >
-          <Typography>{'2. 플랍(Flop)'}</Typography>
+          <Typography>{"2. 플랍(Flop)"}</Typography>
         </AccordionSummary>
         <AccordionDetails>
           <img src="/assets/images/table_card/card2.png" alt="table1" />
@@ -60,7 +64,7 @@ export default function HoldemPubCardRule() {
           aria-controls="panel3d-CardRule"
           id="panel3d-CardRuleHeader"
         >
-          <Typography>{'3. 턴(Turn)'}</Typography>
+          <Typography>{"3. 턴(Turn)"}</Typography>
         </AccordionSummary>
         <AccordionDetails>
           <img src="/assets/images/table_card/card3.png" alt="table1" />
@@ -84,7 +88,7 @@ export default function HoldemPubCardRule() {
           aria-controls="panel4d-CardRule"
           id="panel4d-CardRuleHeader"
         >
-          <Typography>{'4. 리버 (River)'}</Typography>
+          <Typography>{"4. 리버 (River)"}</Typography>
         </AccordionSummary>
         <AccordionDetails>
           <img src="/assets/images/table_card/card4.png" alt="table1" />
@@ -108,7 +112,7 @@ export default function HoldemPubCardRule() {
           aria-controls="panel5d-CardRule"
           id="panel5d-CardRuleHeader"
         >
-          <Typography>{'5. 승리 방식'}</Typography>
+          <Typography>{"5. 승리 방식"}</Typography>
         </AccordionSummary>
         <AccordionDetails>
           <img src="/assets/images/table_card/card5.png" alt="table1" />
@@ -141,7 +145,7 @@ export default function HoldemPubCardRule() {
           aria-controls="panel6d-CardRule"
           id="panel6d-CardRuleHeader"
         >
-          <Typography>{'6. 비교방식(2등인 경우)'}</Typography>
+          <Typography>{"6. 비교방식(2등인 경우)"}</Typography>
         </AccordionSummary>
         <AccordionDetails>
           <img src="/assets/images/table_card/card6.png" alt="table1" />
@@ -165,7 +169,7 @@ export default function HoldemPubCardRule() {
           aria-controls="panel7d-CardRule"
           id="panel7d-CardRuleHeader"
         >
-          <Typography>{'7. 찹(비기는)경우'}</Typography>
+          <Typography>{"7. 찹(비기는)경우"}</Typography>
         </AccordionSummary>
         <AccordionDetails>
           <img src="/assets/images/table_card/card7.png" alt="table1" />

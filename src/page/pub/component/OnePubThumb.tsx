@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Pub } from "src/domain/Pub.model";
+import { Pub } from "../../../domain/pub/Pub.model";
 
 export function OnePubThumb({ pubData }: { pubData: Pub }) {
   const navigate = useNavigate();

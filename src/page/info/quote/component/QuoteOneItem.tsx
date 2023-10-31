@@ -1,6 +1,6 @@
-import { useState } from 'react';
-import './quote.css';
-import Avatar from '@mui/material/Avatar';
+import { useState } from "react";
+import "../../../../styles/page/Quote/quote.css";
+import Avatar from "@mui/material/Avatar";
 type QuoteOneItemProps = {
   pokerQuote: string;
   lifeQuote: string;
@@ -17,7 +17,7 @@ const QuoteOneItem = ({ pokerQuote, lifeQuote }: QuoteOneItemProps) => {
       <Avatar
         alt="Remy Sharp"
         src="/assets/images/gangnaeng.jpg"
-        sx={{ width: '5vw', height: '7vh' }}
+        sx={{ width: "5vw", height: "7vh" }}
         className="self-center"
       />
       <div className="flex flex-col w-full justify-center  text-start text-[1.5vw]">
